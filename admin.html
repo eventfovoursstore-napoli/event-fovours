@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>EVENT FAVOURS · Admin</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./supabase-config.js"></script>
+  <style>
+    :root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#25231f;background:#f7f5f0}*{box-sizing:border-box}body{margin:0}.wrap{max-width:1000px;margin:auto;padding:24px 16px 60px}header{display:flex;justify-content:space-between;align-items:center;margin:12px 0 28px}h1{font-size:1.4rem;margin:0}h2{font-size:1.15rem}.panel,.product{background:#fff;border:1px solid #e7e2d9;border-radius:14px;padding:20px;margin:14px 0}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.full{grid-column:1/-1}label{display:block;font-size:.9rem;font-weight:600}input,textarea,select{display:block;width:100%;margin-top:6px;padding:11px;border:1px solid #ccc5ba;border-radius:8px;font:inherit}textarea{min-height:90px;resize:vertical}button{border:0;border-radius:8px;padding:10px 15px;background:#5b4734;color:white;font:inherit;font-weight:600;cursor:pointer}button.secondary{background:#eee9e1;color:#312b25}button.danger{background:#a63d37}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.muted{color:#716c64}.message{min-height:1.4em;margin:10px 0;color:#8b3d31}.product{display:grid;grid-template-columns:92px 1fr auto;gap:16px;align-items:center}.product img{width:92px;height:92px;object-fit:cover;border-radius:9px;background:#eee}.product h3{margin:0 0 5px}.product p{margin:4px 0}.hidden{display:none!important}#image{padding:8px}@media(max-width:650px){.grid{grid-template-columns:1fr}.full{grid-column:auto}.product{grid-template-columns:68px 1fr}.product img{width:68px;height:68px}.product .actions{grid-column:1/-1;margin:0}header{align-items:flex-start;gap:12px}}
+  </style>
+</head>
+<body>
+<main class="wrap">
+  <header><h1>EVENT FAVOURS <span class="muted">· Amministrazione</span></h1><button id="signout" class="secondary hidden">Esci</button></header>
+  <p id="status" class="message" role="status" aria-live="polite"></p>
+  <section id="config" class="panel">
+    <h2>Collega Supabase</h2>
+    <p class="muted">Inserisci l’URL del progetto e la chiave publishable (o anon) pubblica. Questi valori possono stare nel sito; non usare mai una service_role o secret key.</p>
+    <div class="grid">
+      <label class="full">Project URL<input id="projectUrl" type="url" placeholder="https://xxxx.supabase.co" autocomplete="url"></label>
+      <label class="full">Publishable / anon key<input id="publicKey" type="password" autocomplete="off" placeholder="sb_publishable_… oppure anon key"></label>
+    </div>
+    <div class="actions"><button id="connect">Collega</button></div>
+  </section>
+  <section id="login" class="panel hidden">
+    <h2>Accesso amministratore</h2><div class="grid">
+      <label>Email<input id="email" type="email" autocomplete="username" required></label>
+      <label>Password<input id="password" type="password" autocomplete="current-password" required></label>
+    </div><div class="actions"><button id="loginButton">Accedi</button><button id="changeProject" class="secondary">Cambia progetto</button></div>
+  </section>
+  <section id="manager" class="hidden">
+    <form id="productForm" class="panel">
+      <h2 id="formTitle">Aggiungi prodotto</h2>
+      <input id="productId" type="hidden">
+      <div class="grid">
+        <label>Nome<input id="name" maxlength="120" required></label>
+        <label>Categoria<input id="category" maxlength="80" placeholder="Matrimonio, battesimo…"></label>
+        <label>Prezzo (€)<input id="price" type="number" min="0" step="0.01" required></label>
+        <label>Visibile nel sito<select id="active"><option value="true">Sì</option><option value="false">No</option></select></label>
+        <label class="full">Descrizione<textarea id="description" maxlength="2000"></textarea></label>
+        <label class="full">Foto prodotto<input id="image" type="file" accept="image/jpeg,image/png,image/webp,image/gif"><span class="muted">Puoi scegliere una foto dalla Galleria del telefono (massimo 5 MB).</span></label>
+      </div>
+      <div class="actions"><button type="submit">Salva prodotto</button><button type="button" id="cancelEdit" class="secondary hidden">Annulla modifica</button></div>
+    </form>
+    <section class="panel"><h2>Catalogo</h2><div id="products"></div></section>
+  </section>
+</main>
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  let db = null;
+  const say = (text, bad = true) => { $('status').textContent = text; $('status').style.color = bad ? '#8b3d31' : '#386d45'; };
+  const show = (id, yes) => $(id).classList.toggle('hidden', !yes);
+  const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  function setConnected(connected) { show('config', !connected); show('login', connected); if (!connected) { show('manager', false); show('signout', false); } }
+  function setLoggedIn(loggedIn) { show('login', !loggedIn); show('manager', loggedIn); show('signout', loggedIn); if (loggedIn) loadProducts(); }
+  $('connect').onclick = () => {
+    const url = $('projectUrl').value.trim().replace(/\/$/, '');
+    const key = $('publicKey').value.trim();
+    if (!/^https:\/\/[\w-]+\.supabase\.co$/.test(url) || !key) return say('Controlla URL e chiave pubblica del progetto.');
+    localStorage.setItem('ef_project_url', url); localStorage.setItem('ef_public_key', key);
+    db = window.supabase.createClient(url, key); setConnected(true); say('Progetto collegato. Accedi con l’utente admin.', false);
+  };
+  $('changeProject').onclick = () => { localStorage.removeItem('ef_project_url'); localStorage.removeItem('ef_public_key'); db = null; setConnected(false); };
+  const config = window.EF_SUPABASE_CONFIG || {};
+  const savedUrl = localStorage.getItem('ef_project_url') || config.url;
+  const savedKey = localStorage.getItem('ef_public_key') || config.anonKey;
+  if (savedUrl && savedKey) { $('projectUrl').value = savedUrl; $('publicKey').value = savedKey; db = window.supabase.createClient(savedUrl, savedKey); setConnected(true); }
+  $('loginButton').onclick = async () => {
+    if (!db) return;
+    const {error} = await db.auth.signInWithPassword({email:$('email').value.trim(),password:$('password').value});
+    if (error) return say(error.message);
+    const {data: membership, error: checkError} = await db.from('admin_users').select('user_id').limit(1);
+    if (checkError || !membership?.length) { await db.auth.signOut(); setLoggedIn(false); return say('Questo account non è abilitato come amministratore.'); }
+    say('Accesso effettuato.', false); setLoggedIn(true);
+  };
+  $('signout').onclick = async () => { await db.auth.signOut(); setLoggedIn(false); say('Sei uscito.', false); };
+  async function loadProducts() {
+    const {data, error} = await db.from('products').select('*').order('created_at', {ascending:false});
+    if (error) return say(error.message);
+    $('products').innerHTML = data?.length ? data.map(p => `<article class="product"><img src="${esc(p.image_url || '')}" alt="" onerror="this.style.visibility='hidden'"><div><h3>${esc(p.name)}</h3><p>${esc(p.category || 'Senza categoria')} · € ${Number(p.price).toFixed(2)}</p><p class="muted">${p.active ? 'Visibile' : 'Nascosto'}${p.description ? ' · '+esc(p.description) : ''}</p></div><div class="actions"><button class="secondary" data-edit="${esc(p.id)}">Modifica</button><button class="danger" data-delete="${esc(p.id)}">Elimina</button></div></article>`).join('') : '<p class="muted">Nessun prodotto ancora.</p>';
+    data?.forEach(p => { const edit = $('products').querySelector(`[data-edit="${CSS.escape(String(p.id))}"]`); edit?.addEventListener('click', () => editProduct(p)); const del = $('products').querySelector(`[data-delete="${CSS.escape(String(p.id))}"]`); del?.addEventListener('click', () => deleteProduct(p)); });
+  }
+  function editProduct(p) { $('productId').value=p.id; $('name').value=p.name||''; $('category').value=p.category||''; $('price').value=p.price; $('description').value=p.description||''; $('active').value=String(p.active); $('formTitle').textContent='Modifica prodotto'; show('cancelEdit',true); window.scrollTo({top:0,behavior:'smooth'}); }
+  function resetForm() { $('productForm').reset(); $('productId').value=''; $('formTitle').textContent='Aggiungi prodotto'; show('cancelEdit',false); }
+  $('cancelEdit').onclick = resetForm;
+  $('productForm').onsubmit = async event => {
+    event.preventDefault(); if (!db) return;
+    const id = $('productId').value; const file = $('image').files[0]; let image_url = null;
+    if (file) {
+      if (file.size > 5*1024*1024 || !file.type.startsWith('image/')) return say('Scegli un’immagine valida di massimo 5 MB.');
+      const safeName = file.name.toLowerCase().replace(/[^a-z0-9._-]+/g,'-');
+      const path = `${crypto.randomUUID()}-${safeName}`;
+      const {error: uploadError} = await db.storage.from('product-photos').upload(path,file,{upsert:false,contentType:file.type});
+      if (uploadError) return say(uploadError.message);
+      image_url = db.storage.from('product-photos').getPublicUrl(path).data.publicUrl;
+    }
+    const product = {name:$('name').value.trim(),category:$('category').value.trim()||null,price:Number($('price').value),description:$('description').value.trim()||null,active:$('active').value==='true'};
+    if (image_url) product.image_url=image_url;
+    const result = id ? await db.from('products').update(product).eq('id',id) : await db.from('products').insert(product);
+    if (result.error) return say(result.error.message);
+    resetForm(); say('Prodotto salvato.',false); loadProducts();
+  };
+  async function deleteProduct(p) { if (!confirm(`Eliminare “${p.name}”?`)) return; const {error}=await db.from('products').delete().eq('id',p.id); if(error)return say(error.message); say('Prodotto eliminato.',false); loadProducts(); }
+  if (db) db.auth.getSession().then(({data}) => { if (data.session) setLoggedIn(true); });
+})();
+</script>
+</body>
+</html>
