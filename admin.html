@@ -26,7 +26,7 @@
   </section>
   <section id="login" class="panel hidden">
     <h2>Accesso amministratore</h2><div class="grid">
-      <label>Nome utente<input id="email" type="text" autocomplete="username" placeholder="angela2026" required></label>
+      <label>Email<input id="email" type="email" autocomplete="username" required></label>
       <label>Password<input id="password" type="password" autocomplete="current-password" required></label>
     </div><div class="actions"><button id="loginButton">Accedi</button><button id="changeProject" class="secondary">Cambia progetto</button></div>
   </section>
@@ -70,8 +70,7 @@
   if (savedUrl && savedKey) { $('projectUrl').value = savedUrl; $('publicKey').value = savedKey; db = window.supabase.createClient(savedUrl, savedKey); setConnected(true); }
   $('loginButton').onclick = async () => {
     if (!db) return;
-    const loginName = $('email').value.trim();
-    const email = loginName.toLowerCase() === 'angela2026' ? 'eventfavours.store@gmail.com' : loginName;
+    const email = $('email').value.trim();
     const {data: authData, error} = await db.auth.signInWithPassword({email,password:$('password').value});
     if (error) return say(error.message);
     const {data: membership, error: checkError} = await db.from('admin_users').select('user_id').eq('user_id', authData.user.id).maybeSingle();
