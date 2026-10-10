@@ -26,9 +26,9 @@
   </section>
   <section id="login" class="panel hidden">
     <h2>Accesso amministratore</h2><div class="grid">
-      <label>Email<input id="email" type="email" autocomplete="username" required></label>
+      <label>Nome utente<input id="username" type="text" autocomplete="username" placeholder="angela2026" required></label>
       <label>Password<input id="password" type="password" autocomplete="current-password" required></label>
-    </div><div class="actions"><button id="loginButton">Accedi</button><button id="changeProject" class="secondary">Cambia progetto</button></div>
+    </div><p class="muted">Al primo accesso da questo dispositivo, collega l’email Supabase una sola volta. Poi userai solo nome utente e password.</p><div class="actions"><button id="loginButton">Accedi</button><button id="linkAccount" class="secondary">Collega email una volta</button><button id="changeProject" class="secondary">Cambia progetto</button></div>
   </section>
   <section id="manager" class="hidden">
     <form id="productForm" class="panel">
@@ -68,11 +68,22 @@
   const savedUrl = localStorage.getItem('ef_project_url') || config.url;
   const savedKey = localStorage.getItem('ef_public_key') || config.anonKey;
   if (savedUrl && savedKey) { $('projectUrl').value = savedUrl; $('publicKey').value = savedKey; db = window.supabase.createClient(savedUrl, savedKey); setConnected(true); }
+  $('linkAccount').onclick = () => {
+    const value = window.prompt('Inserisci l’email Supabase dell’account amministratore. Sarà salvata solo in questo browser e non nel sito pubblico.');
+    if (value === null) return;
+    const email = value.trim().toLowerCase();
+    if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)) return say('Inserisci un indirizzo email valido.');
+    localStorage.setItem('ef_admin_login_email', email);
+    say('Email collegata su questo dispositivo. Ora puoi accedere con angela2026 e la password.', false);
+  };
   $('loginButton').onclick = async () => {
     if (!db) return;
-    const email = $('email').value.trim();
+    const username = $('username').value.trim().toLowerCase();
+    if (username !== 'angela2026') return say('Nome utente non riconosciuto.');
+    const email = localStorage.getItem('ef_admin_login_email');
+    if (!email) return say('Prima seleziona “Collega email una volta” su questo dispositivo.');
     const {data: authData, error} = await db.auth.signInWithPassword({email,password:$('password').value});
-    if (error) return say(error.message);
+    if (error) return say('Credenziali non valide. Controlla password e invito email.');
     const {data: membership, error: checkError} = await db.from('admin_users').select('user_id').eq('user_id', authData.user.id).maybeSingle();
     if (checkError || !membership) { await db.auth.signOut(); setLoggedIn(false); return say('Questo account non è abilitato come amministratore.'); }
     say('Accesso effettuato.', false); setLoggedIn(true);
