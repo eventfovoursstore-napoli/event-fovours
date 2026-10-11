@@ -138,7 +138,22 @@ function initializeLocalPreview() {
   const show = (id, yes) => $(id).classList.toggle('hidden', !yes);
   const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   function setConnected(connected) { show('config', !connected); show('login', connected); if (!connected) { show('manager', false); show('signout', false); } }
-  function setLoggedIn(loggedIn) { show('login', !loggedIn); show('manager', loggedIn); show('signout', loggedIn); show('commercePanel',loggedIn); if (loggedIn) { loadProducts(); loadCommerce(); } }\n  async function authorizeCurrentSession() {\n    if (!db) return false;\n    const {data: {session}} = await db.auth.getSession();\n    if (!session?.user) { setLoggedIn(false); return false; }\n    const {data: membership, error} = await db.from('admin_users').select('user_id').eq('user_id', session.user.id).maybeSingle();\n    if (error || !membership) {\n      await db.auth.signOut();\n      setLoggedIn(false);\n      say('Accesso Google completato, ma questo account non è ancora abilitato come amministratore.');\n      return false;\n    }\n    say('Accesso amministratore effettuato.', false);\n    setLoggedIn(true);\n    return true;\n  }
+  function setLoggedIn(loggedIn) { show('login', !loggedIn); show('manager', loggedIn); show('signout', loggedIn); show('commercePanel',loggedIn); if (loggedIn) { loadProducts(); loadCommerce(); } }
+  async function authorizeCurrentSession() {
+    if (!db) return false;
+    const {data: {session}} = await db.auth.getSession();
+    if (!session?.user) { setLoggedIn(false); return false; }
+    const {data: membership, error} = await db.from('admin_users').select('user_id').eq('user_id', session.user.id).maybeSingle();
+    if (error || !membership) {
+      await db.auth.signOut();
+      setLoggedIn(false);
+      say('Accesso Google completato, ma questo account non è ancora abilitato come amministratore.');
+      return false;
+    }
+    say('Accesso amministratore effettuato.', false);
+    setLoggedIn(true);
+    return true;
+  }
   $('connect').onclick = () => {
     const url = $('projectUrl').value.trim().replace(/\/$/, '');
     const key = $('publicKey').value.trim();
@@ -161,7 +176,13 @@ function initializeLocalPreview() {
     if (checkError || !membership) { await db.auth.signOut(); setLoggedIn(false); return say('Questo account non è abilitato come amministratore.'); }
     say('Accesso effettuato.', false); setLoggedIn(true);
   };
-  $('googleLogin').onclick = async () => {\n    if (!db) return say('Collega prima il progetto Supabase.');\n    const redirectTo = new URL(location.pathname, location.origin).href;\n    const {error} = await db.auth.signInWithOAuth({provider:'google',options:{redirectTo,queryParams:{prompt:'select_account'}}});\n    if (error) say(`Accesso Google non riuscito: ${error.message}`);\n  };\n  $('signout').onclick = async () => { await db.auth.signOut(); setLoggedIn(false); say('Sei uscito.', false); };
+  $('googleLogin').onclick = async () => {
+    if (!db) return say('Collega prima il progetto Supabase.');
+    const redirectTo = new URL(location.pathname, location.origin).href;
+    const {error} = await db.auth.signInWithOAuth({provider:'google',options:{redirectTo,queryParams:{prompt:'select_account'}}});
+    if (error) say(`Accesso Google non riuscito: ${error.message}`);
+  };
+  $('signout').onclick = async () => { await db.auth.signOut(); setLoggedIn(false); say('Sei uscito.', false); };
   async function loadProducts() {
     const {data, error} = await db.from('products').select('*').order('created_at', {ascending:false});
     if (error) return say(error.message);
