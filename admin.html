@@ -32,7 +32,7 @@
     <h2>Accesso amministratore</h2><div class="grid">
       <label>Email<input id="email" type="email" autocomplete="username" placeholder="nome@esempio.it" required></label>
       <label>Password<input id="password" type="password" autocomplete="current-password" required></label>
-    </div><p class="muted">Accedi con l’email e la password del tuo account amministratore.</p><div class="actions"><button id="loginButton">Accedi</button><button id="changeProject" class="secondary">Cambia progetto</button></div>
+    </div><p class="muted">Accedi con l’email e la password oppure con Google. Solo gli account abilitati possono aprire il pannello.</p><div class="actions"><button id="loginButton">Accedi</button><button id="googleLogin" class="secondary" type="button">Continua con Google</button><button id="changeProject" class="secondary">Cambia progetto</button></div>
   </section>
   <section id="manager" class="hidden">
     <section class="panel">
@@ -138,7 +138,7 @@ function initializeLocalPreview() {
   const show = (id, yes) => $(id).classList.toggle('hidden', !yes);
   const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   function setConnected(connected) { show('config', !connected); show('login', connected); if (!connected) { show('manager', false); show('signout', false); } }
-  function setLoggedIn(loggedIn) { show('login', !loggedIn); show('manager', loggedIn); show('signout', loggedIn); show('commercePanel',loggedIn); if (loggedIn) { loadProducts(); loadCommerce(); } }
+  function setLoggedIn(loggedIn) { show('login', !loggedIn); show('manager', loggedIn); show('signout', loggedIn); show('commercePanel',loggedIn); if (loggedIn) { loadProducts(); loadCommerce(); } }\n  async function authorizeCurrentSession() {\n    if (!db) return false;\n    const {data: {session}} = await db.auth.getSession();\n    if (!session?.user) { setLoggedIn(false); return false; }\n    const {data: membership, error} = await db.from('admin_users').select('user_id').eq('user_id', session.user.id).maybeSingle();\n    if (error || !membership) {\n      await db.auth.signOut();\n      setLoggedIn(false);\n      say('Accesso Google completato, ma questo account non è ancora abilitato come amministratore.');\n      return false;\n    }\n    say('Accesso amministratore effettuato.', false);\n    setLoggedIn(true);\n    return true;\n  }
   $('connect').onclick = () => {
     const url = $('projectUrl').value.trim().replace(/\/$/, '');
     const key = $('publicKey').value.trim();
@@ -161,7 +161,7 @@ function initializeLocalPreview() {
     if (checkError || !membership) { await db.auth.signOut(); setLoggedIn(false); return say('Questo account non è abilitato come amministratore.'); }
     say('Accesso effettuato.', false); setLoggedIn(true);
   };
-  $('signout').onclick = async () => { await db.auth.signOut(); setLoggedIn(false); say('Sei uscito.', false); };
+  $('googleLogin').onclick = async () => {\n    if (!db) return say('Collega prima il progetto Supabase.');\n    const redirectTo = new URL(location.pathname, location.origin).href;\n    const {error} = await db.auth.signInWithOAuth({provider:'google',options:{redirectTo,queryParams:{prompt:'select_account'}}});\n    if (error) say(`Accesso Google non riuscito: ${error.message}`);\n  };\n  $('signout').onclick = async () => { await db.auth.signOut(); setLoggedIn(false); say('Sei uscito.', false); };
   async function loadProducts() {
     const {data, error} = await db.from('products').select('*').order('created_at', {ascending:false});
     if (error) return say(error.message);
@@ -200,7 +200,7 @@ function initializeLocalPreview() {
   }
   function exportSubscribers(rows){if(!rows.length)return;const csv='email,consenso\r\n'+rows.map(r=>`"${String(r.email).replaceAll('"','""')}","${new Date(r.consent_at).toISOString()}"`).join('\r\n');const url=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='event-favours-iscritti-consenzienti.csv';a.click();URL.revokeObjectURL(url);}
   async function sendMarketingCampaign(recipientCount){const subject=$('campaignSubject').value.trim(),message=$('campaignMessage').value.trim();if(subject.length<3||message.length<10)return $('commerceStatus').textContent='Inserisci oggetto e messaggio della campagna.';if(!confirm(`Inviare questa email pubblicitaria a ${recipientCount} iscritti che hanno dato il consenso?`))return;const button=$('sendCampaign');button.disabled=true;button.textContent='Invio in corso…';const{data,error}=await db.functions.invoke('send-marketing-campaign',{body:{subject,message}});button.disabled=false;button.textContent='Invia campagna';$('commerceStatus').textContent=error?`Invio non riuscito: ${error.message}`:data?.ok?`Campagna inviata a ${data.recipients} contatti. ID Brevo: ${data.campaign_id}`:data?.error||'Invio non riuscito.';if(data?.ok){$('campaignSubject').value='';$('campaignMessage').value='';}}
-  if (db) db.auth.getSession().then(({data}) => { if (data.session) setLoggedIn(true); });
+  if (db) authorizeCurrentSession();
 })();
 </script>
 </body>
