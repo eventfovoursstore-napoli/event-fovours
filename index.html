@@ -183,7 +183,7 @@ if(!isLocalPreview)loadSupabaseCatalog();
   const isStandalone=()=>window.matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
   const isLocalHost=['localhost','127.0.0.1'].includes(location.hostname);
   function setInstallVisibility(installed){appInstalled=installed;floatingInstall.hidden=installed||isLocalHost;if(installed){banner.classList.remove('show');banner.setAttribute('aria-hidden','true');return}if(!inviteDismissedThisPage&&isMobile()&&!isLocalHost)showInvite()}
-  function showInvite(){if(appInstalled||isStandalone()||isLocalHost)return;const title=byId('installTitle'),desc=byId('installDescription');title.textContent=isMobile()?'Porta EVENT FAVOURS con te':'Installa EVENT FAVOURS sul computer';desc.textContent=deferredInstall?'Un tocco e lo shop sarà sulla schermata Home.':'Aggiungi lo shop alla schermata Home o alle app del computer.';installButton.textContent=deferredInstall?'Installa adesso':'Aggiungi';banner.classList.add('show');banner.setAttribute('aria-hidden','false')}
+  function showInvite(){if(appInstalled||isStandalone()||isLocalHost||inviteDismissedThisPage)return;const title=byId('installTitle'),desc=byId('installDescription');title.textContent=isMobile()?'Porta EVENT FAVOURS con te':'Installa EVENT FAVOURS sul computer';desc.textContent=deferredInstall?'Un tocco e lo shop sarà sulla schermata Home.':'Aggiungi lo shop alla schermata Home o alle app del computer.';installButton.textContent=deferredInstall?'Installa adesso':'Aggiungi';banner.classList.add('show');banner.setAttribute('aria-hidden','false')}
   async function detectInstalledApp(){
     if(isStandalone())return true;
     if('getInstalledRelatedApps'in navigator){
@@ -224,11 +224,10 @@ if(!isLocalPreview)loadSupabaseCatalog();
   const refreshWhenVisible=()=>{if(document.visibilityState==='visible')refreshInstallState()};
   window.addEventListener('focus',refreshInstallState);
   document.addEventListener('visibilitychange',refreshWhenVisible);
-  if(!isLocalHost)window.setTimeout(()=>{refreshInstallState();if(!appInstalled&&isMobile())showInvite()},1600);
+  if(!isLocalHost)window.setTimeout(async()=>{await refreshInstallState();if(!appInstalled&&isMobile())showInvite()},1600);
 
   if('serviceWorker'in navigator&&!isLocalHost)navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
   if(!isLocalHost)setupPushPromo();
-  if(window.matchMedia('(max-width:760px)').matches||/Android|iPhone|iPad|iPod/i.test(navigator.userAgent))window.setTimeout(showInvite,1600);
 
   async function setupPushPromo(){
     const section=byId('pushPromo'), button=byId('pushSubscribe'), dismiss=byId('pushDismiss'), status=byId('pushPromoStatus');
