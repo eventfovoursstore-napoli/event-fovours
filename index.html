@@ -44,7 +44,7 @@ footer{background:#f7efe3;border-top:1px solid var(--line);padding:28px 22px;tex
 .side-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.side-logo{width:190px;height:95px;object-fit:contain}.side-close{width:42px;height:42px;border:1px solid #eadfce;border-radius:50%;background:#fff;color:#76500f;font-size:24px}.side-kicker{margin:0;color:#9a7228;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase}.side-intro{margin:-9px 0 2px;color:#766554;font:17px/1.45 Georgia,serif}.side-nav{display:grid;gap:7px}.side-nav a,.side-nav button{width:100%;display:flex;align-items:center;gap:13px;padding:13px 14px;border:1px solid transparent;border-radius:14px;background:transparent;color:#382719;text-decoration:none;text-align:left;font-weight:700;transition:background .2s,border-color .2s}.side-nav a:hover,.side-nav button:hover{background:white;border-color:#eadfce}.side-nav svg{width:21px;height:21px;flex:0 0 21px;fill:none;stroke:#a77a22;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.side-feature{margin-top:auto;padding:17px;border:1px solid #ead7b4;border-radius:18px;background:linear-gradient(135deg,#fff8e9,#f4e6cc)}.side-feature strong{display:block;color:#76500f;font:20px Georgia,serif}.side-feature p{margin:7px 0 13px;color:#766554;font-size:13px;line-height:1.5}.side-install{width:100%;display:flex;align-items:center;justify-content:center;gap:9px;border:0;border-radius:24px;padding:12px 15px;background:#a77a22;color:white;font-weight:700}.side-install svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .install-banner{position:fixed;z-index:45;left:50%;bottom:calc(14px + env(safe-area-inset-bottom));width:min(650px,calc(100vw - 24px));display:flex;align-items:center;gap:13px;padding:13px 14px;border:1px solid #e8d8ba;border-radius:20px;background:#fffdf9f5;box-shadow:0 16px 45px #3827192b;backdrop-filter:blur(14px);opacity:0;visibility:hidden;pointer-events:none;transform:translate(-50%,18px);transition:opacity .3s,transform .3s,visibility .3s}.install-banner.show{opacity:1;visibility:visible;pointer-events:auto;transform:translate(-50%,0)}.install-icon{width:54px;height:54px;flex:0 0 54px;display:grid;place-items:center;border-radius:15px;background:#f7efe3;overflow:hidden}.install-icon img{width:100%;height:100%;object-fit:cover}.install-copy{min-width:0;flex:1}.install-copy strong{display:block;color:#76500f;font:17px/1.2 Georgia,serif}.install-copy span{display:block;margin-top:4px;color:#766554;font-size:12px;line-height:1.35}.install-actions{display:flex;align-items:center;gap:6px}.install-actions .pill{white-space:nowrap;padding:10px 15px}.install-close{width:34px;height:34px;border:0;border-radius:50%;background:transparent;color:#766554;font-size:22px}.install-close:hover{background:#f7efe3}.install-guide{z-index:60}
 @media(max-width:560px){.top-brand{gap:8px}.menu-toggle{width:40px;height:40px;flex-basis:40px}.brand-logo{width:168px;height:84px}.install-banner{gap:10px;padding:11px}.install-icon{width:46px;height:46px;flex-basis:46px}.install-copy strong{font-size:15px}.install-copy span{font-size:11px}.install-actions{gap:2px}.install-actions .pill{padding:9px 11px;font-size:12px}.install-close{width:30px;height:30px}}
-@media(prefers-reduced-motion:reduce){.menu-toggle,.side-shade,.side-drawer,.install-banner{transition:none}}
+@media(prefers-reduced-motion:reduce){.menu-toggle,.side-shade,.side-drawer,.install-banner{transition:none}}.install-floating{position:fixed;z-index:44;left:20px;bottom:calc(22px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:8px;min-height:54px;padding:10px 16px;border:1px solid #9b711f;border-radius:28px;background:linear-gradient(135deg,#b78b37,#8c651d);color:#fff;box-shadow:0 9px 26px #50381042;font-weight:700;letter-spacing:.01em;transition:transform .2s,box-shadow .2s}.install-floating:hover{transform:translateY(-3px);box-shadow:0 13px 32px #50381054}.install-floating svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}.install-floating[hidden]{display:none!important}@media(max-width:560px){.install-floating{left:13px;bottom:calc(16px + env(safe-area-inset-bottom));min-height:50px;padding:9px 13px;font-size:13px}.install-banner{bottom:calc(76px + env(safe-area-inset-bottom))}}
 
 /* Gold line icons for store navigation */
 .nav-action{display:flex;align-items:center;gap:7px;white-space:nowrap;color:#76500f}.nav-action svg{width:19px;height:19px;flex:0 0 19px;fill:none;stroke:#a77a22;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.nav-action:hover svg{stroke:#76500f}.cart-count{min-width:21px;height:21px;display:inline-grid;place-items:center;border-radius:50%;padding:0 5px;background:#a77a22;color:white;font-size:11px;font-weight:700}
@@ -82,7 +82,7 @@ footer{background:#f7efe3;border-top:1px solid var(--line);padding:28px 22px;tex
 </aside>
 <aside id="installBanner" class="install-banner" aria-hidden="true" aria-label="Installa EVENT FAVOURS">
   <span class="install-icon"><img src="./assets/event-favours-app-icon.svg" alt=""></span>
-  <span class="install-copy"><strong>Metti EVENT FAVOURS nella Home del telefono</strong><span>Aggiungi l’icona alla schermata Home e riapri lo shop con un tocco.</span></span>
+  <span class="install-copy"><strong id="installTitle">Porta EVENT FAVOURS con te</strong><span id="installDescription">Installa lo shop sulla schermata Home e riaprilo con un tocco.</span></span>
   <span class="install-actions"><button id="installAction" type="button" class="pill">Aggiungi</button><button id="dismissInstall" class="install-close" type="button" aria-label="Chiudi invito">×</button></span>
 </aside>
 <section class="hero"><div class="hero-inner">
@@ -175,20 +175,57 @@ if(!isLocalPreview)loadSupabaseCatalog();
   menuButton.addEventListener('click',()=>{const opening=!menu.classList.contains('open');menu.classList.toggle('open',opening);shade.classList.toggle('open',opening);menu.setAttribute('aria-hidden',String(!opening));shade.setAttribute('aria-hidden',String(!opening));menuButton.setAttribute('aria-expanded',String(opening));document.body.classList.toggle('menu-open',opening)});
   window.closeSideMenu=closeMenu;
   document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeMenu();closeInstallGuide()}});
-  let deferredInstall=null;
-  const banner=byId('installBanner'), installButton=byId('installAction'), dismissedKey='ef_install_invite_dismissed_v1';
+  let deferredInstall=null, inviteDismissedThisPage=false, appInstalled=false;
+  const banner=byId('installBanner'), installButton=byId('installAction'), floatingInstall=byId('installFloatingAction');
   const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+  const isAndroid=/Android/i.test(navigator.userAgent);
+  const isMobile=()=>isIOS||isAndroid||window.matchMedia('(max-width: 760px)').matches;
   const isStandalone=()=>window.matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
-  function showInvite(){if(isStandalone()||localStorage.getItem(dismissedKey)==='1')return;const mobile=window.matchMedia('(max-width: 760px)').matches||/Android|iPhone|iPad|iPod/i.test(navigator.userAgent);if(!mobile&&!deferredInstall)return;installButton.textContent=deferredInstall?'Installa sul telefono':(isIOS?'Aggiungi a Home':'Aggiungi a Home');banner.classList.add('show');banner.setAttribute('aria-hidden','false')}
-  window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();deferredInstall=event;showInvite()});
-  function openInstallGuide(){byId('installGuideSteps').textContent=isIOS?'Su iPhone o iPad: apri questa pagina in Safari, tocca Condividi, scegli “Aggiungi alla schermata Home” e poi tocca Aggiungi.':'Su Android: apri il menu ⋮ del browser e scegli “Installa app” oppure “Aggiungi a schermata Home”.';byId('installGuide').classList.add('show')}
-  window.closeInstallGuide=()=>byId('installGuide').classList.remove('show');
-  async function handleInstall(){if(deferredInstall){const promptEvent=deferredInstall;deferredInstall=null;try{await promptEvent.prompt();const choice=await promptEvent.userChoice;if(choice.outcome==='accepted'){localStorage.setItem(dismissedKey,'1');banner.classList.remove('show')}else showInvite()}catch{openInstallGuide()}return}openInstallGuide()}
-  installButton.addEventListener('click',handleInstall);
-  byId('sideInstallAction').addEventListener('click',()=>{closeMenu();handleInstall()});
-  byId('dismissInstall').addEventListener('click',()=>{banner.classList.remove('show');banner.setAttribute('aria-hidden','true');localStorage.setItem(dismissedKey,'1')});
-  window.addEventListener('appinstalled',()=>{banner.classList.remove('show');banner.setAttribute('aria-hidden','true');localStorage.setItem(dismissedKey,'1')});
   const isLocalHost=['localhost','127.0.0.1'].includes(location.hostname);
+  function setInstallVisibility(installed){appInstalled=installed;floatingInstall.hidden=installed||isLocalHost;if(installed){banner.classList.remove('show');banner.setAttribute('aria-hidden','true');return}if(!inviteDismissedThisPage&&isMobile()&&!isLocalHost)showInvite()}
+  function showInvite(){if(appInstalled||isStandalone()||isLocalHost)return;const title=byId('installTitle'),desc=byId('installDescription');title.textContent=isMobile()?'Porta EVENT FAVOURS con te':'Installa EVENT FAVOURS sul computer';desc.textContent=deferredInstall?'Un tocco e lo shop sarà sulla schermata Home.':'Aggiungi lo shop alla schermata Home o alle app del computer.';installButton.textContent=deferredInstall?'Installa adesso':'Aggiungi';banner.classList.add('show');banner.setAttribute('aria-hidden','false')}
+  async function detectInstalledApp(){
+    if(isStandalone())return true;
+    if('getInstalledRelatedApps'in navigator){
+      try{
+        const apps=await navigator.getInstalledRelatedApps();
+        const id=new URL('./',location.href).href, manifest=new URL('./manifest.webmanifest',location.href).href;
+        if(apps.some(app=>app.platform==='webapp'&&(app.id===id||app.url===manifest)))return true;
+      }catch{}
+    }
+    return false;
+  }
+  async function refreshInstallState(){setInstallVisibility(await detectInstalledApp())}
+  window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();deferredInstall=event;showInvite()});
+  function openInstallGuide(){
+    const text=isIOS
+      ?'Su iPhone: apri EVENT FAVOURS in Safari, tocca Condividi e scegli “Aggiungi alla schermata Home”.'
+      :isAndroid
+        ?'Su Android: apri questa pagina in Chrome. Tocca ⋮ e scegli “Installa app” (oppure “Aggiungi a schermata Home”). Se non compare, resta su questa pagina per qualche secondo e riprova.'
+        :'Su computer: in Chrome usa l’icona Installa nella barra degli indirizzi oppure ⋮ → “Installa EVENT FAVOURS”. In Edge: ⋯ → App → “Installa questo sito come app”.';
+    byId('installGuideSteps').textContent=text;
+    byId('installGuide').classList.add('show');
+  }
+  window.closeInstallGuide=()=>byId('installGuide').classList.remove('show');
+  async function handleInstall(){
+    if(deferredInstall){
+      const promptEvent=deferredInstall;deferredInstall=null;
+      try{await promptEvent.prompt();const choice=await promptEvent.userChoice;if(choice.outcome==='accepted'){banner.classList.remove('show');banner.setAttribute('aria-hidden','true');inviteDismissedThisPage=true;setInstallVisibility(true)}else showInvite()}
+      catch{openInstallGuide()}
+      return;
+    }
+    openInstallGuide();
+  }
+  installButton.addEventListener('click',handleInstall);
+  floatingInstall.addEventListener('click',handleInstall);
+  byId('sideInstallAction').addEventListener('click',()=>{closeMenu();handleInstall()});
+  byId('dismissInstall').addEventListener('click',()=>{inviteDismissedThisPage=true;banner.classList.remove('show');banner.setAttribute('aria-hidden','true')});
+  window.addEventListener('appinstalled',()=>{inviteDismissedThisPage=false;setInstallVisibility(true)});
+  const refreshWhenVisible=()=>{if(document.visibilityState==='visible')refreshInstallState()};
+  window.addEventListener('focus',refreshInstallState);
+  document.addEventListener('visibilitychange',refreshWhenVisible);
+  if(!isLocalHost)window.setTimeout(()=>{refreshInstallState();if(!appInstalled&&isMobile())showInvite()},1600);
+
   if('serviceWorker'in navigator&&!isLocalHost)navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
   if(!isLocalHost)setupPushPromo();
   if(window.matchMedia('(max-width:760px)').matches||/Android|iPhone|iPad|iPod/i.test(navigator.userAgent))window.setTimeout(showInvite,1600);
@@ -238,6 +275,7 @@ if(!isLocalPreview)loadSupabaseCatalog();
   <div class="whatsapp-chat-head"><span class="whatsapp-chat-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20.2 11.8a8.2 8.2 0 0 1-12.1 7.1L4 20l1.2-4A8.2 8.2 0 1 1 20.2 11.8Z"></path><path d="M8.7 8.2c.2-.5.4-.5.7-.5h.5c.2 0 .4.1.5.4l.7 1.6c.1.2 0 .4-.1.6l-.5.6c-.2.2-.2.4-.1.6.5.8 1.2 1.5 2.1 2 .2.1.4.1.6-.1l.7-.8c.2-.2.4-.2.6-.1l1.5.7c.3.1.4.3.4.5 0 .4-.2 1.2-.8 1.6-.5.4-1.2.6-1.9.4-1.1-.3-2.4-.9-3.8-2.2-1.1-1-1.9-2.3-2.1-3.3-.2-.9.2-1.6.5-2Z"></path></svg></span><span class="whatsapp-chat-title"><strong>EVENT FAVOURS</strong><span>Informazioni e preventivi</span></span><button class="whatsapp-chat-close" type="button" onclick="dismissWhatsAppWelcome()" aria-label="Chiudi messaggio">×</button></div>
   <div class="whatsapp-chat-body"><div class="whatsapp-chat-message">Ciao! 👋 Ti serve una mano? Vuoi chiedere informazioni o un preventivo?<span class="whatsapp-chat-time">adesso</span></div><div class="whatsapp-chat-actions"><button class="whatsapp-chat-yes" type="button" onclick="openWhatsAppInfo()">Sì, vorrei informazioni</button><button class="whatsapp-chat-later" type="button" onclick="dismissWhatsAppWelcome()">Più tardi</button></div><p class="whatsapp-chat-hint">Ti risponderemo su WhatsApp.</p></div>
 </aside>
+<button id="installFloatingAction" class="install-floating" type="button" aria-label="Installa EVENT FAVOURS" title="Installa EVENT FAVOURS" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 18v3h14v-3"></path></svg><span>Installa app</span></button>
 <button id="whatsappFloat" class="whatsapp-float" type="button" onclick="toggleWhatsAppWelcome()" aria-label="Apri il messaggio WhatsApp" title="Informazioni e preventivi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 11.8a8.2 8.2 0 0 1-12.1 7.1L4 20l1.2-4A8.2 8.2 0 1 1 20.2 11.8Z"></path><path d="M8.7 8.2c.2-.5.4-.5.7-.5h.5c.2 0 .4.1.5.4l.7 1.6c.1.2 0 .4-.1.6l-.5.6c-.2.2-.2.4-.1.6.5.8 1.2 1.5 2.1 2 .2.1.4.1.6-.1l.7-.8c.2-.2.4-.2.6-.1l1.5.7c.3.1.4.3.4.5 0 .4-.2 1.2-.8 1.6-.5.4-1.2.6-1.9.4-1.1-.3-2.4-.9-3.8-2.2-1.1-1-1.9-2.3-2.1-3.3-.2-.9.2-1.6.5-2Z"></path></svg><span class="whatsapp-badge" aria-hidden="true">1</span></button>
 <script>
 function dismissWhatsAppWelcome(){const panel=document.getElementById('whatsappWelcome');panel.classList.remove('show');try{sessionStorage.setItem('ef_whatsapp_welcome_dismissed_v1','1')}catch{}}
