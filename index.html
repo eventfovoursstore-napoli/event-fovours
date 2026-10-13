@@ -205,6 +205,11 @@ if(!isLocalPreview)loadSupabaseCatalog();
   }
   window.closeInstallGuide=()=>byId('installGuide').classList.remove('show');
   async function handleInstall(){
+    if(isAndroid&&isStandalone()&&!appInstalled){
+      const target='intent://'+location.host+location.pathname+location.search+'#Intent;scheme=https;package=com.android.chrome;end';
+      location.href=target;
+      return;
+    }
     if(deferredInstall){
       const promptEvent=deferredInstall;deferredInstall=null;
       try{await promptEvent.prompt();const choice=await promptEvent.userChoice;if(choice.outcome==='accepted'){banner.classList.remove('show');banner.setAttribute('aria-hidden','true');inviteDismissedThisPage=true;setInstallVisibility(true)}else showInvite()}
