@@ -1,0 +1,7 @@
+project_id = "ithmcqkoxficjtaqvgkg"
+
+[functions.push-subscriptions]
+verify_jwt = false
+
+[functions.send-product-notification]
+verify_jwt = true
