@@ -12,7 +12,7 @@
     }
   </script>
   <style>
-    :root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#25231f;background:#f7f5f0}*{box-sizing:border-box}body{margin:0}.wrap{max-width:1000px;margin:auto;padding:24px 16px 60px}header{display:flex;justify-content:space-between;align-items:center;margin:12px 0 28px}h1{font-size:1.4rem;margin:0}.admin-brand{display:flex;align-items:center;gap:8px;text-decoration:none}.admin-brand img{display:block;width:220px;height:110px;object-fit:contain}.admin-title{color:#716c64;font-size:1rem}h2{font-size:1.15rem}.panel,.product{background:#fff;border:1px solid #e7e2d9;border-radius:14px;padding:20px;margin:14px 0}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.full{grid-column:1/-1}label{display:block;font-size:.9rem;font-weight:600}input,textarea,select{display:block;width:100%;margin-top:6px;padding:11px;border:1px solid #ccc5ba;border-radius:8px;font:inherit}textarea{min-height:90px;resize:vertical}button{border:0;border-radius:8px;padding:10px 15px;background:#5b4734;color:white;font:inherit;font-weight:600;cursor:pointer}button.secondary{background:#eee9e1;color:#312b25}button.danger{background:#a63d37}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.muted{color:#716c64}.message{min-height:1.4em;margin:10px 0;color:#8b3d31}.product{display:grid;grid-template-columns:92px 1fr auto;gap:16px;align-items:center}.product img{width:92px;height:92px;object-fit:cover;border-radius:9px;background:#eee}.product h3{margin:0 0 5px}.product p{margin:4px 0}.hidden{display:none!important}#image{padding:8px}@media(max-width:650px){.grid{grid-template-columns:1fr}.full{grid-column:auto}.product{grid-template-columns:68px 1fr}.product img{width:68px;height:68px}.product .actions{grid-column:1/-1;margin:0}header{align-items:flex-start;gap:12px}.admin-brand img{width:155px;height:78px}.admin-title{font-size:.9rem}}
+    :root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#25231f;background:#f7f5f0}*{box-sizing:border-box}body{margin:0}.wrap{max-width:1000px;margin:auto;padding:24px 16px 60px}header{display:flex;justify-content:space-between;align-items:center;margin:12px 0 28px}h1{font-size:1.4rem;margin:0}.admin-brand{display:flex;align-items:center;gap:8px;text-decoration:none}.admin-brand img{display:block;width:220px;height:110px;object-fit:contain}.admin-title{color:#716c64;font-size:1rem}h2{font-size:1.15rem}.panel,.product{background:#fff;border:1px solid #e7e2d9;border-radius:14px;padding:20px;margin:14px 0}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.full{grid-column:1/-1}label{display:block;font-size:.9rem;font-weight:600}input,textarea,select{display:block;width:100%;margin-top:6px;padding:11px;border:1px solid #ccc5ba;border-radius:8px;font:inherit}textarea{min-height:90px;resize:vertical}button{border:0;border-radius:8px;padding:10px 15px;background:#5b4734;color:white;font:inherit;font-weight:600;cursor:pointer}button.secondary{background:#eee9e1;color:#312b25}button.danger{background:#a63d37}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.muted{color:#716c64}.message{min-height:1.4em;margin:10px 0;color:#8b3d31}.product{display:grid;grid-template-columns:92px 1fr auto;gap:16px;align-items:center}.product img{width:92px;height:92px;object-fit:cover;border-radius:9px;background:#eee}.product h3{margin:0 0 5px}.product p{margin:4px 0}.hidden{display:none!important}#image{padding:8px}.notify-choice{display:flex;align-items:flex-start;gap:10px;padding:12px;border:1px solid #ead7b4;border-radius:10px;background:#fff9e9}.notify-choice input{width:auto;flex:0 0 auto;margin:3px 0 0}.notify-choice span{font-weight:600}@media(max-width:650px){.grid{grid-template-columns:1fr}.full{grid-column:auto}.product{grid-template-columns:68px 1fr}.product img{width:68px;height:68px}.product .actions{grid-column:1/-1;margin:0}header{align-items:flex-start;gap:12px}.admin-brand img{width:155px;height:78px}.admin-title{font-size:.9rem}}
   </style>
 </head>
 <body>
@@ -70,6 +70,7 @@
         <label>Visibile nel sito<select id="active"><option value="true">Sì</option><option value="false">No</option></select></label>
         <label class="full">Descrizione<textarea id="description" maxlength="2000"></textarea></label>
         <label class="full">Foto prodotto<input id="image" type="file" accept="image/jpeg,image/png,image/webp,image/gif"><span class="muted">Puoi scegliere una foto dalla Galleria del telefono (massimo 5 MB).</span></label>
+        <label class="full notify-choice" id="notifyChoice"><input id="sendPushNotification" type="checkbox"><span>Invia una notifica ai clienti che l’hanno attivata quando pubblichi questo prodotto.</span></label>
       </div>
       <div class="actions"><button type="submit">Salva prodotto</button><button type="button" id="cancelEdit" class="secondary hidden">Annulla modifica</button></div>
     </form>
@@ -115,19 +116,20 @@ function initializeLocalPreview() {
   };
   function draw() {
     $('products').innerHTML = products.length ? products.map(p => `<article class="product"><img src="${esc(p.image_url || '')}" alt=""><div><h3>${esc(p.name)}</h3><p>${esc(p.category || 'Senza categoria')} · ${Number(p.price)>0?'€ '+Number(p.price).toFixed(2):'Prezzo da definire'}</p><p class="muted">${p.active ? 'Visibile' : 'Nascosto'}${p.description ? ' · '+esc(p.description) : ''}</p></div><div class="actions"><button class="secondary" data-local-edit="${esc(p.id)}">Modifica</button><button class="danger" data-local-delete="${esc(p.id)}">Elimina</button></div></article>`).join('') : '<p class="muted">Nessun prodotto di anteprima. Aggiungine uno qui sopra.</p>';
-    $('products').querySelectorAll('[data-local-edit]').forEach(b => b.onclick = () => { const p=products.find(x=>x.id===b.dataset.localEdit); if(!p)return; $('productId').value=p.id; $('name').value=p.name; $('category').value=p.category||''; $('price').value=p.price; $('description').value=p.description||''; $('active').value=String(p.active); $('formTitle').textContent='Modifica prodotto'; show('cancelEdit',true); window.scrollTo({top:0,behavior:'smooth'}); });
+    $('products').querySelectorAll('[data-local-edit]').forEach(b => b.onclick = () => { const p=products.find(x=>x.id===b.dataset.localEdit); if(!p)return; $('productId').value=p.id; $('name').value=p.name; $('category').value=p.category||''; $('price').value=p.price; $('description').value=p.description||''; $('active').value=String(p.active); $('sendPushNotification').checked=false; $('sendPushNotification').disabled=true; $('notifyChoice').classList.add('hidden'); $('formTitle').textContent='Modifica prodotto'; show('cancelEdit',true); window.scrollTo({top:0,behavior:'smooth'}); });
     $('products').querySelectorAll('[data-local-delete]').forEach(b => b.onclick = () => { products=products.filter(p=>p.id!==b.dataset.localDelete); localStorage.setItem(key,JSON.stringify(products)); draw(); say('Rimosso dall’anteprima locale.'); });
   }
   $('productForm').onsubmit = async e => {
     e.preventDefault(); const file=$('image').files[0]; let image_url=null;
     if(file){if(!file.type.startsWith('image/')||file.size>2*1024*1024)return say('Per l’anteprima scegli un’immagine sotto 2 MB.');image_url=await new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(file);});}
     const id=$('productId').value; const old=products.find(p=>p.id===id);
+    const wantsNotification=$('sendPushNotification').checked;
     const p={id:id||crypto.randomUUID(),name:$('name').value.trim(),category:$('category').value.trim(),price:Number($('price').value),description:$('description').value.trim(),active:$('active').value==='true',image_url:image_url||old?.image_url||''};
     products=id?products.map(x=>x.id===id?p:x):[p,...products];
     try{localStorage.setItem(key,JSON.stringify(products));}catch{return say('Spazio del browser esaurito: prova una foto più piccola.');}
-    $('productForm').reset(); $('productId').value=''; $('formTitle').textContent='Aggiungi prodotto'; show('cancelEdit',false); draw(); say('Salvato solo nell’anteprima locale.');
+    $('productForm').reset(); $('productId').value=''; $('formTitle').textContent='Aggiungi prodotto'; $('sendPushNotification').checked=false; $('sendPushNotification').disabled=false; $('notifyChoice').classList.remove('hidden'); draw(); say(wantsNotification?'Salvato solo nell’anteprima locale: la notifica si invia dopo la pubblicazione online.':'Salvato solo nell’anteprima locale.');
   };
-  $('cancelEdit').onclick=()=>{$('productForm').reset();$('productId').value='';$('formTitle').textContent='Aggiungi prodotto';show('cancelEdit',false);};
+  $('cancelEdit').onclick=()=>{$('productForm').reset();$('productId').value='';$('formTitle').textContent='Aggiungi prodotto';$('sendPushNotification').checked=false;$('sendPushNotification').disabled=false;$('notifyChoice').classList.remove('hidden');show('cancelEdit',false);};
   draw(); say('Modalità locale attiva. Nessuna modifica viene inviata a Supabase.'); return true;
 }
 (() => {
@@ -189,8 +191,8 @@ function initializeLocalPreview() {
     $('products').innerHTML = data?.length ? data.map(p => `<article class="product"><img src="${esc(p.image_url || '')}" alt="" onerror="this.style.visibility='hidden'"><div><h3>${esc(p.name)}</h3><p>${esc(p.category || 'Senza categoria')} · € ${Number(p.price).toFixed(2)}</p><p class="muted">${p.active ? 'Visibile' : 'Nascosto'}${p.description ? ' · '+esc(p.description) : ''}</p></div><div class="actions"><button class="secondary" data-edit="${esc(p.id)}">Modifica</button><button class="danger" data-delete="${esc(p.id)}">Elimina</button></div></article>`).join('') : '<p class="muted">Nessun prodotto ancora.</p>';
     data?.forEach(p => { const edit = $('products').querySelector(`[data-edit="${CSS.escape(String(p.id))}"]`); edit?.addEventListener('click', () => editProduct(p)); const del = $('products').querySelector(`[data-delete="${CSS.escape(String(p.id))}"]`); del?.addEventListener('click', () => deleteProduct(p)); });
   }
-  function editProduct(p) { $('productId').value=p.id; $('name').value=p.name||''; $('category').value=p.category||''; $('price').value=p.price; $('description').value=p.description||''; $('active').value=String(p.active); $('formTitle').textContent='Modifica prodotto'; show('cancelEdit',true); window.scrollTo({top:0,behavior:'smooth'}); }
-  function resetForm() { $('productForm').reset(); $('productId').value=''; $('formTitle').textContent='Aggiungi prodotto'; show('cancelEdit',false); }
+  function editProduct(p) { $('productId').value=p.id; $('name').value=p.name||''; $('category').value=p.category||''; $('price').value=p.price; $('description').value=p.description||''; $('active').value=String(p.active); $('sendPushNotification').checked=false; $('sendPushNotification').disabled=true; $('notifyChoice').classList.add('hidden'); $('formTitle').textContent='Modifica prodotto'; show('cancelEdit',true); window.scrollTo({top:0,behavior:'smooth'}); }
+  function resetForm() { $('productForm').reset(); $('productId').value=''; $('formTitle').textContent='Aggiungi prodotto'; $('sendPushNotification').checked=false; $('sendPushNotification').disabled=false; $('notifyChoice').classList.remove('hidden'); show('cancelEdit',false); }
   $('cancelEdit').onclick = resetForm;
   $('productForm').onsubmit = async event => {
     event.preventDefault(); if (!db) return;
@@ -205,9 +207,17 @@ function initializeLocalPreview() {
     }
     const product = {name:$('name').value.trim(),category:$('category').value.trim()||null,price:Number($('price').value),description:$('description').value.trim()||null,active:$('active').value==='true'};
     if (image_url) product.image_url=image_url;
-    const result = id ? await db.from('products').update(product).eq('id',id) : await db.from('products').insert(product);
+    const wantsNotification = !id && $('sendPushNotification').checked && product.active;
+    const result = id ? await db.from('products').update(product).eq('id',id) : await db.from('products').insert(product).select('id').single();
     if (result.error) return say(result.error.message);
-    resetForm(); say('Prodotto salvato.',false); loadProducts();
+    let noticeMessage='Prodotto salvato.', noticeError=false;
+    if (wantsNotification) {
+      const {data:pushData,error:pushError}=await db.functions.invoke('send-product-notification',{body:{productId:result.data?.id}});
+      if(pushError){noticeMessage='Prodotto salvato, ma la notifica non è partita. '+pushError.message;noticeError=true}
+      else if(Number(pushData?.sent)===0)noticeMessage='Prodotto pubblicato. Nessun cliente ha attivato le notifiche.';
+      else noticeMessage=`Prodotto salvato e avviso inviato a ${pushData.sent} clienti.`;
+    }
+    resetForm(); say(noticeMessage,noticeError); loadProducts();
   };
   async function deleteProduct(p) { if (!confirm(`Eliminare “${p.name}”?`)) return; const {error}=await db.from('products').delete().eq('id',p.id); if(error)return say(error.message); say('Prodotto eliminato.',false); loadProducts(); }
   async function loadCommerce() {
