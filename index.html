@@ -76,7 +76,7 @@ footer{background:#f7efe3;border-top:1px solid var(--line);padding:28px 22px;tex
 </aside>
 <aside id="installBanner" class="install-banner" aria-hidden="true" aria-label="Installa EVENT FAVOURS">
   <span class="install-icon"><img src="./assets/event-favours-app-icon.svg" alt=""></span>
-  <span class="install-copy"><strong>EVENT FAVOURS sul tuo telefono</strong><span>Aggiungi lo shop alla schermata Home e riaprilo in un tocco.</span></span>
+  <span class="install-copy"><strong>Metti EVENT FAVOURS nella Home del telefono</strong><span>Aggiungi l’icona alla schermata Home e riapri lo shop con un tocco.</span></span>
   <span class="install-actions"><button id="installAction" type="button" class="pill">Aggiungi</button><button id="dismissInstall" class="install-close" type="button" aria-label="Chiudi invito">×</button></span>
 </aside>
 <section class="hero"><div class="hero-inner">
@@ -174,7 +174,7 @@ if(!isLocalPreview)loadSupabaseCatalog();
   const banner=byId('installBanner'), installButton=byId('installAction'), dismissedKey='ef_install_invite_dismissed_v1';
   const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
   const isStandalone=()=>window.matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
-  function showInvite(){if(isStandalone()||localStorage.getItem(dismissedKey)==='1')return;const mobile=window.matchMedia('(max-width: 760px)').matches||/Android|iPhone|iPad|iPod/i.test(navigator.userAgent);if(!mobile&&!deferredInstall)return;installButton.textContent=deferredInstall?'Installa app':(isIOS?'Come aggiungerla':'Installa / Aggiungi');banner.classList.add('show');banner.setAttribute('aria-hidden','false')}
+  function showInvite(){if(isStandalone()||localStorage.getItem(dismissedKey)==='1')return;const mobile=window.matchMedia('(max-width: 760px)').matches||/Android|iPhone|iPad|iPod/i.test(navigator.userAgent);if(!mobile&&!deferredInstall)return;installButton.textContent=deferredInstall?'Installa sul telefono':(isIOS?'Aggiungi a Home':'Aggiungi a Home');banner.classList.add('show');banner.setAttribute('aria-hidden','false')}
   window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();deferredInstall=event;showInvite()});
   function openInstallGuide(){byId('installGuideSteps').textContent=isIOS?'Su iPhone o iPad: apri questa pagina in Safari, tocca Condividi, scegli “Aggiungi alla schermata Home” e poi tocca Aggiungi.':'Su Android: apri il menu ⋮ del browser e scegli “Installa app” oppure “Aggiungi a schermata Home”.';byId('installGuide').classList.add('show')}
   window.closeInstallGuide=()=>byId('installGuide').classList.remove('show');
@@ -186,7 +186,7 @@ if(!isLocalPreview)loadSupabaseCatalog();
   const isLocalHost=['localhost','127.0.0.1'].includes(location.hostname);
   if('serviceWorker'in navigator&&!isLocalHost)navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
   if(!isLocalHost)setupPushPromo();
-  if(window.matchMedia('(max-width:760px)').matches||/Android|iPhone|iPad|iPod/i.test(navigator.userAgent))window.setTimeout(showInvite,3200);
+  if(window.matchMedia('(max-width:760px)').matches||/Android|iPhone|iPad|iPod/i.test(navigator.userAgent))window.setTimeout(showInvite,1600);
 
   async function setupPushPromo(){
     const section=byId('pushPromo'), button=byId('pushSubscribe'), dismiss=byId('pushDismiss'), status=byId('pushPromoStatus');
