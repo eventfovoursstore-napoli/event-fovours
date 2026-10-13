@@ -1,0 +1,26 @@
+{
+  "id": "https://eventfovoursstore-napoli.github.io/event-fovours/admin/",
+  "name": "EVENT FAVOURS · Admin",
+  "short_name": "EF Admin",
+  "description": "Gestisci prodotti e foto di EVENT FAVOURS.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fbf7f2",
+  "theme_color": "#a77a22",
+  "icons": [
+    {
+      "src": "../assets/app-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "../assets/app-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
