@@ -28,5 +28,13 @@
       "purpose": "any"
     }
   ],
-  "id": "./"
+  "id": "https://eventfovoursstore-napoli.github.io/event-fovours/",
+  "related_applications": [
+    {
+      "platform": "webapp",
+      "url": "https://eventfovoursstore-napoli.github.io/event-fovours/manifest.webmanifest",
+      "id": "https://eventfovoursstore-napoli.github.io/event-fovours/"
+    }
+  ],
+  "prefer_related_applications": false
 }
