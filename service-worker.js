@@ -1,4 +1,4 @@
-const CACHE_NAME='event-favours-shell-v6';
+const CACHE_NAME='event-favours-shell-v7';
 const APP_SHELL=['./','./index.html','./admin.html','./manifest.webmanifest','./admin.webmanifest','./assets/event-favours-logo.jpg','./assets/event-favours-app-icon.svg','./assets/app-icon-192.png','./assets/app-icon-512.png','./privacy.html','./condizioni.html','./recesso.html'];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE_NAME).then(cache=>cache.addAll(APP_SHELL)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('event-favours-shell-')&&key!==CACHE_NAME).map(key=>caches.delete(key)))).then(()=>self.clients.claim()))});
