@@ -32,7 +32,7 @@
     <h2>Accesso amministratore</h2><div class="grid">
       <label>Email<input id="email" type="email" autocomplete="username" placeholder="nome@esempio.it" required></label>
       <label>Password<input id="password" type="password" autocomplete="current-password" required></label>
-    </div><p class="muted">Accedi con l’email e la password oppure con Google. Solo gli account abilitati possono aprire il pannello.</p><div class="actions"><button id="loginButton">Accedi</button><button id="googleLogin" class="secondary" type="button">Continua con Google</button><button id="changeProject" class="secondary">Cambia progetto</button></div>
+    </div><p class="muted">Accedi con l’email e la password oppure con GitHub. Solo gli account abilitati possono aprire il pannello.</p><div class="actions"><button id="loginButton">Accedi</button><button id="githubLogin" class="secondary" type="button">Continua con GitHub</button><button id="changeProject" class="secondary">Cambia progetto</button></div>
   </section>
   <section id="manager" class="hidden">
     <section class="panel">
@@ -147,7 +147,7 @@ function initializeLocalPreview() {
     if (error || !membership) {
       await db.auth.signOut();
       setLoggedIn(false);
-      say('Accesso Google completato, ma questo account non è ancora abilitato come amministratore.');
+      say('Accesso completato, ma questo account non è abilitato come amministratore.');
       return false;
     }
     say('Accesso amministratore effettuato.', false);
@@ -176,11 +176,11 @@ function initializeLocalPreview() {
     if (checkError || !membership) { await db.auth.signOut(); setLoggedIn(false); return say('Questo account non è abilitato come amministratore.'); }
     say('Accesso effettuato.', false); setLoggedIn(true);
   };
-  $('googleLogin').onclick = async () => {
+  $('githubLogin').onclick = async () => {
     if (!db) return say('Collega prima il progetto Supabase.');
     const redirectTo = new URL(location.pathname, location.origin).href;
-    const {error} = await db.auth.signInWithOAuth({provider:'google',options:{redirectTo,queryParams:{prompt:'select_account'}}});
-    if (error) say(`Accesso Google non riuscito: ${error.message}`);
+    const {error} = await db.auth.signInWithOAuth({provider:'github',options:{redirectTo}});
+    if (error) say(`Accesso GitHub non riuscito: ${error.message}`);
   };
   $('signout').onclick = async () => { await db.auth.signOut(); setLoggedIn(false); say('Sei uscito.', false); };
   async function loadProducts() {
