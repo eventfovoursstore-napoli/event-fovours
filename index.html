@@ -9,6 +9,23 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="EVENT FAVOURS">
 <title>EVENT FAVOURS — Bomboniere per ogni occasione</title>
+<script>
+window.EF_SUPABASE_READY = new Promise(resolve => {
+  if (['localhost', '127.0.0.1'].includes(location.hostname)) { resolve(false); return; }
+  let finished = false;
+  const finish = ok => { if (finished) return; finished = true; clearTimeout(timeout); resolve(ok); };
+  const timeout = setTimeout(() => finish(false), 10000);
+  const config = document.createElement('script');
+  const sdk = document.createElement('script');
+  config.src = './supabase-config.js?v=mobile-safe-1';
+  config.onload = () => finish(true);
+  config.onerror = () => finish(false);
+  sdk.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+  sdk.onload = () => document.head.appendChild(config);
+  sdk.onerror = () => finish(false);
+  document.head.appendChild(sdk);
+});
+</script>
 <style>
 :root{--gold:#a77a22;--gold2:#c49b45;--ink:#382719;--cream:#fbf7f0;--pink:#f7e5e2;--line:#eadfce}
 *{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:#fffdf9}button,input,select,textarea{font:inherit}button{cursor:pointer}
@@ -116,8 +133,6 @@ footer{background:#f7efe3;border-top:1px solid var(--line);padding:28px 22px;tex
 <div class="modal-back" id="cartModal" onclick="if(event.target===this)closeCart()"><div class="modal"><div class="modal-head"><h2>Il tuo carrello</h2><button class="close" onclick="closeCart()">×</button></div><div id="cartContent"></div></div></div>
 <div class="modal-back" id="accountModal" onclick="if(event.target===this)closeAccount()"><div class="modal"><div class="modal-head"><h2>Area clienti</h2><button class="close" onclick="closeAccount()">×</button></div><div id="accountContent"></div></div></div>
 <div class="modal-back install-guide" id="installGuide" onclick="if(event.target===this)closeInstallGuide()"><div class="modal"><div class="modal-head"><h2>Aggiungi EVENT FAVOURS</h2><button class="close" type="button" aria-label="Chiudi" onclick="closeInstallGuide()">×</button></div><p id="installGuideSteps" class="notice"></p><button class="pill" type="button" onclick="closeInstallGuide()">Ho capito</button></div></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="./supabase-config.js?v=wa-20261013"></script>
 <script>
 const products=[];
 let category="Tutte",cart=[],selected=null;
@@ -162,7 +177,7 @@ function sendWhatsAppOrder(){const phone=((isLocalPreview?shopSettings.phone:(wi
 if(isLocalPreview){applyShopSettings();renderCategories()}
 initHeroSlider();
 renderProducts();
-if(!isLocalPreview)loadSupabaseCatalog();
+if(!isLocalPreview)window.EF_SUPABASE_READY.then(ok=>{if(ok)loadSupabaseCatalog()});
 
 (function setupInstallAndMenu(){
   const byId=id=>document.getElementById(id);
@@ -229,7 +244,7 @@ if(!isLocalPreview)loadSupabaseCatalog();
   if(!isLocalHost)window.setTimeout(async()=>{await refreshInstallState();if(!appInstalled&&isMobile())showInvite()},1600);
 
   if('serviceWorker'in navigator&&!isLocalHost)navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
-  if(!isLocalHost)setupPushPromo();
+  if(!isLocalHost)window.EF_SUPABASE_READY.then(ok=>{if(ok)setupPushPromo()});
 
   async function setupPushPromo(){
     const section=byId('pushPromo'), button=byId('pushSubscribe'), dismiss=byId('pushDismiss'), status=byId('pushPromoStatus');
