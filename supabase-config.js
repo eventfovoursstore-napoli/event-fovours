@@ -3,5 +3,5 @@
 window.EF_SUPABASE_CONFIG = {
   url: "https://ithmcqkoxficjtaqvgkg.supabase.co",
   anonKey: "sb_publishable_jT0e1smhoom4XJOv8ueOLA_b7A4-q7H",
-  whatsapp: ""
+  whatsapp: "+393345385735"
 };
