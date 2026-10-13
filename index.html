@@ -116,8 +116,8 @@ footer{background:#f7efe3;border-top:1px solid var(--line);padding:28px 22px;tex
 <div class="modal-back" id="cartModal" onclick="if(event.target===this)closeCart()"><div class="modal"><div class="modal-head"><h2>Il tuo carrello</h2><button class="close" onclick="closeCart()">×</button></div><div id="cartContent"></div></div></div>
 <div class="modal-back" id="accountModal" onclick="if(event.target===this)closeAccount()"><div class="modal"><div class="modal-head"><h2>Area clienti</h2><button class="close" onclick="closeAccount()">×</button></div><div id="accountContent"></div></div></div>
 <div class="modal-back install-guide" id="installGuide" onclick="if(event.target===this)closeInstallGuide()"><div class="modal"><div class="modal-head"><h2>Aggiungi EVENT FAVOURS</h2><button class="close" type="button" aria-label="Chiudi" onclick="closeInstallGuide()">×</button></div><p id="installGuideSteps" class="notice"></p><button class="pill" type="button" onclick="closeInstallGuide()">Ho capito</button></div></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"><\/script>
-<script src="./supabase-config.js?v=wa-20261013"><\/script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./supabase-config.js?v=wa-20261013"></script>
 <script>
 const products=[];
 let category="Tutte",cart=[],selected=null;
