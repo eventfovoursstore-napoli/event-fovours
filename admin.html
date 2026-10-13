@@ -90,7 +90,7 @@
     </section>
   </section>
 </main>
-<aside id="adminInstallBanner" class="admin-install hidden" aria-live="polite"><span class="admin-install-icon" aria-hidden="true">📲</span><div class="admin-install-copy"><strong>Gestisci lo shop dal telefono</strong><small>Aggiungi EVENT FAVOURS Admin alla schermata Home.</small><p id="adminInstallHelp" class="install-help muted" hidden></p></div><button id="adminInstallAction" type="button">Installa</button><button id="adminInstallDismiss" class="close-install" type="button" aria-label="Chiudi">×</button></aside>
+<aside id="adminInstallBanner" class="admin-install hidden" aria-live="polite"><span class="admin-install-icon" aria-hidden="true">📲</span><div class="admin-install-copy"><strong>Gestisci lo shop dal telefono</strong><small>Aggiungi EVENT FAVOURS Admin alla schermata Home.</small><p id="adminInstallHelp" class="install-help muted" hidden></p></div><button id="adminInstallAction" type="button">Installa</button><a id="adminOpenInChrome" class="secondary" hidden style="text-decoration:none;text-align:center" href="#">Apri in Chrome</a><button id="adminInstallDismiss" class="close-install" type="button" aria-label="Chiudi">×</button></aside>
 <script>
 // Local preview deliberately uses browser-only demo data and never contacts Supabase.
 function initializeLocalPreview() {
@@ -249,9 +249,32 @@ function initializeLocalPreview() {
   const mobile=()=>matchMedia('(max-width: 760px)').matches||/Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
   const show=()=>{if(!standalone()&&mobile()&&localStorage.getItem(dismissed)!=='1')banner.classList.remove('hidden')};
   window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();promptEvent=event;show()});
-  function showHelp(){help.hidden=false;help.textContent=/iPhone|iPad|iPod/i.test(navigator.userAgent)?'Su iPhone: apri questa pagina in Safari, tocca Condividi e scegli “Aggiungi alla schermata Home”.':'Su Android: apri il menu ⋮ del browser e scegli “Installa app” oppure “Aggiungi a schermata Home”.';}
-  async function install(){if(standalone())return;if(promptEvent){const saved=promptEvent;promptEvent=null;try{await saved.prompt();const choice=await saved.userChoice;if(choice.outcome==='accepted'){banner.classList.add('hidden');localStorage.setItem(dismissed,'1')}else showHelp()}catch{showHelp()}}else showHelp()}
-  action.addEventListener('click',install);topButton.addEventListener('click',()=>{banner.classList.remove('hidden');install()});
+  const openChrome=document.getElementById('adminOpenInChrome');
+  function showHelp(){
+    help.hidden=false;
+    if(/Android/i.test(navigator.userAgent)&&standalone()){
+      help.textContent='Hai aperto l’admin dentro l’app dello shop. Aprilo in Chrome per installare una seconda icona dedicata.';
+      openChrome.hidden=false;
+      openChrome.href='intent://'+location.host+location.pathname+location.search+'#Intent;scheme=https;package=com.android.chrome;end';
+      action.textContent='Mostra istruzioni';
+      return;
+    }
+    if(/iPhone|iPad|iPod/i.test(navigator.userAgent)){
+      help.textContent='Su iPhone: apri questa pagina in Safari, tocca Condividi e scegli “Aggiungi alla schermata Home”.';
+    }else{
+      help.textContent='Apri questa pagina in Chrome, poi usa ⋮ → “Installa app” oppure “Aggiungi a schermata Home”.';
+    }
+  }
+  async function install(){
+    if(standalone()){showHelp();return}
+    if(promptEvent){
+      const saved=promptEvent;promptEvent=null;
+      try{await saved.prompt();const choice=await saved.userChoice;if(choice.outcome==='accepted'){banner.classList.add('hidden');localStorage.setItem(dismissed,'1')}else showHelp()}
+      catch{showHelp()}
+    }else showHelp();
+  }
+  action.addEventListener('click',install);
+  topButton.addEventListener('click',()=>{banner.classList.remove('hidden');install()});
   document.getElementById('adminInstallDismiss').addEventListener('click',()=>{banner.classList.add('hidden');localStorage.setItem(dismissed,'1')});
   window.addEventListener('appinstalled',()=>{banner.classList.add('hidden');localStorage.setItem(dismissed,'1')});
   if('serviceWorker'in navigator&&!['localhost','127.0.0.1'].includes(location.hostname))navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
