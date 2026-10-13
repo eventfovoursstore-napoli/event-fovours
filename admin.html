@@ -2,7 +2,13 @@
 <html lang="it">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#a77a22">
+  <link rel="manifest" href="./admin.webmanifest">
+  <link rel="icon" type="image/png" sizes="192x192" href="./assets/app-icon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/app-icon-180.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="EF Admin">
   <meta name="robots" content="noindex,nofollow">
   <title>EVENT FAVOURS · Admin</title>
   <script>
@@ -12,12 +18,12 @@
     }
   </script>
   <style>
-    :root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#25231f;background:#f7f5f0}*{box-sizing:border-box}body{margin:0}.wrap{max-width:1000px;margin:auto;padding:24px 16px 60px}header{display:flex;justify-content:space-between;align-items:center;margin:12px 0 28px}h1{font-size:1.4rem;margin:0}.admin-brand{display:flex;align-items:center;gap:8px;text-decoration:none}.admin-brand img{display:block;width:220px;height:110px;object-fit:contain}.admin-title{color:#716c64;font-size:1rem}h2{font-size:1.15rem}.panel,.product{background:#fff;border:1px solid #e7e2d9;border-radius:14px;padding:20px;margin:14px 0}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.full{grid-column:1/-1}label{display:block;font-size:.9rem;font-weight:600}input,textarea,select{display:block;width:100%;margin-top:6px;padding:11px;border:1px solid #ccc5ba;border-radius:8px;font:inherit}textarea{min-height:90px;resize:vertical}button{border:0;border-radius:8px;padding:10px 15px;background:#5b4734;color:white;font:inherit;font-weight:600;cursor:pointer}button.secondary{background:#eee9e1;color:#312b25}button.danger{background:#a63d37}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.muted{color:#716c64}.message{min-height:1.4em;margin:10px 0;color:#8b3d31}.product{display:grid;grid-template-columns:92px 1fr auto;gap:16px;align-items:center}.product img{width:92px;height:92px;object-fit:cover;border-radius:9px;background:#eee}.product h3{margin:0 0 5px}.product p{margin:4px 0}.hidden{display:none!important}#image{padding:8px}.notify-choice{display:flex;align-items:flex-start;gap:10px;padding:12px;border:1px solid #ead7b4;border-radius:10px;background:#fff9e9}.notify-choice input{width:auto;flex:0 0 auto;margin:3px 0 0}.notify-choice span{font-weight:600}@media(max-width:650px){.grid{grid-template-columns:1fr}.full{grid-column:auto}.product{grid-template-columns:68px 1fr}.product img{width:68px;height:68px}.product .actions{grid-column:1/-1;margin:0}header{align-items:flex-start;gap:12px}.admin-brand img{width:155px;height:78px}.admin-title{font-size:.9rem}}
+    :root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#25231f;background:#f7f5f0}*{box-sizing:border-box}body{margin:0}.wrap{max-width:1000px;margin:auto;padding:24px 16px 60px}header{display:flex;justify-content:space-between;align-items:center;margin:12px 0 28px}h1{font-size:1.4rem;margin:0}.admin-brand{display:flex;align-items:center;gap:8px;text-decoration:none}.admin-brand img{display:block;width:220px;height:110px;object-fit:contain}.admin-title{color:#716c64;font-size:1rem}h2{font-size:1.15rem}.panel,.product{background:#fff;border:1px solid #e7e2d9;border-radius:14px;padding:20px;margin:14px 0}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.full{grid-column:1/-1}label{display:block;font-size:.9rem;font-weight:600}input,textarea,select{display:block;width:100%;margin-top:6px;padding:11px;border:1px solid #ccc5ba;border-radius:8px;font:inherit}textarea{min-height:90px;resize:vertical}button{border:0;border-radius:8px;padding:10px 15px;background:#5b4734;color:white;font:inherit;font-weight:600;cursor:pointer}button.secondary{background:#eee9e1;color:#312b25}button.danger{background:#a63d37}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.muted{color:#716c64}.message{min-height:1.4em;margin:10px 0;color:#8b3d31}.product{display:grid;grid-template-columns:92px 1fr auto;gap:16px;align-items:center}.product img{width:92px;height:92px;object-fit:cover;border-radius:9px;background:#eee}.product h3{margin:0 0 5px}.product p{margin:4px 0}.hidden{display:none!important}#image{padding:8px}.notify-choice{display:flex;align-items:flex-start;gap:10px;padding:12px;border:1px solid #ead7b4;border-radius:10px;background:#fff9e9}.notify-choice input{width:auto;flex:0 0 auto;margin:3px 0 0}.notify-choice span{font-weight:600}.admin-install{position:fixed;z-index:30;left:14px;right:14px;bottom:calc(14px + env(safe-area-inset-bottom));max-width:540px;margin:auto;padding:14px 16px;border:1px solid #dfc997;border-radius:18px;background:#fffdf8;box-shadow:0 12px 38px #38271928;display:flex;align-items:center;gap:12px}.admin-install.hidden{display:none}.admin-install-icon{font-size:28px}.admin-install-copy{flex:1;line-height:1.35}.admin-install-copy strong{display:block;color:#382719}.admin-install-copy small{color:#716c64}.admin-install button{white-space:nowrap}.admin-install .close-install{background:transparent;color:#716c64;padding:5px 8px;font-size:20px}.install-help{margin-top:7px!important;font-size:.84rem}.install-help[hidden]{display:none}@media(max-width:650px){.grid{grid-template-columns:1fr}.full{grid-column:auto}.product{grid-template-columns:68px 1fr}.product img{width:68px;height:68px}.product .actions{grid-column:1/-1;margin:0}header{align-items:flex-start;gap:12px}.admin-brand img{width:155px;height:78px}.admin-title{font-size:.9rem}}
   </style>
 </head>
 <body>
 <main class="wrap">
-  <header><a class="admin-brand" href="./index.html" aria-label="Vai alla vetrina EVENT FAVOURS"><img src="./assets/event-favours-logo.jpg" alt="EVENT FAVOURS"><span class="admin-title">· Amministrazione</span></a><button id="signout" class="secondary hidden">Esci</button></header>
+  <header><a class="admin-brand" href="./index.html" aria-label="Vai alla vetrina EVENT FAVOURS"><img src="./assets/event-favours-logo.jpg" alt="EVENT FAVOURS"><span class="admin-title">· Amministrazione</span></a><div style="display:flex;gap:8px;align-items:center"><button id="adminInstallTop" class="secondary" type="button">📲 Installa sul telefono</button><button id="signout" class="secondary hidden">Esci</button></div></header>
   <p id="status" class="message" role="status" aria-live="polite"></p>
   <section id="config" class="panel">
     <h2>Collega Supabase</h2>
@@ -84,6 +90,7 @@
     </section>
   </section>
 </main>
+<aside id="adminInstallBanner" class="admin-install hidden" aria-live="polite"><span class="admin-install-icon" aria-hidden="true">📲</span><div class="admin-install-copy"><strong>Gestisci lo shop dal telefono</strong><small>Aggiungi EVENT FAVOURS Admin alla schermata Home.</small><p id="adminInstallHelp" class="install-help muted" hidden></p></div><button id="adminInstallAction" type="button">Installa</button><button id="adminInstallDismiss" class="close-install" type="button" aria-label="Chiudi">×</button></aside>
 <script>
 // Local preview deliberately uses browser-only demo data and never contacts Supabase.
 function initializeLocalPreview() {
@@ -232,6 +239,24 @@ function initializeLocalPreview() {
   function exportSubscribers(rows){if(!rows.length)return;const csv='email,consenso\r\n'+rows.map(r=>`"${String(r.email).replaceAll('"','""')}","${new Date(r.consent_at).toISOString()}"`).join('\r\n');const url=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='event-favours-iscritti-consenzienti.csv';a.click();URL.revokeObjectURL(url);}
   async function sendMarketingCampaign(recipientCount){const subject=$('campaignSubject').value.trim(),message=$('campaignMessage').value.trim();if(subject.length<3||message.length<10)return $('commerceStatus').textContent='Inserisci oggetto e messaggio della campagna.';if(!confirm(`Inviare questa email pubblicitaria a ${recipientCount} iscritti che hanno dato il consenso?`))return;const button=$('sendCampaign');button.disabled=true;button.textContent='Invio in corso…';const{data,error}=await db.functions.invoke('send-marketing-campaign',{body:{subject,message}});button.disabled=false;button.textContent='Invia campagna';$('commerceStatus').textContent=error?`Invio non riuscito: ${error.message}`:data?.ok?`Campagna inviata a ${data.recipients} contatti. ID Brevo: ${data.campaign_id}`:data?.error||'Invio non riuscito.';if(data?.ok){$('campaignSubject').value='';$('campaignMessage').value='';}}
   if (db) authorizeCurrentSession();
+})();
+</script>
+<script>
+(function setupAdminInstall(){
+  const banner=document.getElementById('adminInstallBanner'), help=document.getElementById('adminInstallHelp');
+  const action=document.getElementById('adminInstallAction'), topButton=document.getElementById('adminInstallTop');
+  const dismissed='ef_admin_install_dismissed_v1'; let promptEvent=null;
+  const standalone=()=>matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+  const mobile=()=>matchMedia('(max-width: 760px)').matches||/Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  const show=()=>{if(!standalone()&&mobile()&&localStorage.getItem(dismissed)!=='1')banner.classList.remove('hidden')};
+  window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();promptEvent=event;show()});
+  function showHelp(){help.hidden=false;help.textContent=/iPhone|iPad|iPod/i.test(navigator.userAgent)?'Su iPhone: apri questa pagina in Safari, tocca Condividi e scegli “Aggiungi alla schermata Home”.':'Su Android: apri il menu ⋮ del browser e scegli “Installa app” oppure “Aggiungi a schermata Home”.';}
+  async function install(){if(standalone())return;if(promptEvent){const saved=promptEvent;promptEvent=null;try{await saved.prompt();const choice=await saved.userChoice;if(choice.outcome==='accepted'){banner.classList.add('hidden');localStorage.setItem(dismissed,'1')}else showHelp()}catch{showHelp()}}else showHelp()}
+  action.addEventListener('click',install);topButton.addEventListener('click',()=>{banner.classList.remove('hidden');install()});
+  document.getElementById('adminInstallDismiss').addEventListener('click',()=>{banner.classList.add('hidden');localStorage.setItem(dismissed,'1')});
+  window.addEventListener('appinstalled',()=>{banner.classList.add('hidden');localStorage.setItem(dismissed,'1')});
+  if('serviceWorker'in navigator&&!['localhost','127.0.0.1'].includes(location.hostname))navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
+  if(mobile())setTimeout(show,1200);
 })();
 </script>
 </body>
