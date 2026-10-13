@@ -298,6 +298,13 @@ function initializeLocalPreview() {
     }
   }
   async function install(){
+    if(standalone()&&/Android/i.test(navigator.userAgent)){
+      const target='intent://'+location.host+location.pathname+location.search+'#Intent;scheme=https;package=com.android.chrome;end';
+      openChrome.href=target;
+      location.href=target;
+      window.setTimeout(showHelp,900);
+      return;
+    }
     if(standalone()){showHelp();return}
     if(promptEvent){
       const saved=promptEvent;promptEvent=null;
