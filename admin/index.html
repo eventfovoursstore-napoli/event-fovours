@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#a77a22">
+  <link rel="manifest" href="./admin.webmanifest">
+  <link rel="icon" type="image/png" sizes="192x192" href="../assets/app-icon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/app-icon-180.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="EF Admin">
+  <meta name="robots" content="noindex,nofollow">
+  <title>EVENT FAVOURS · Admin</title>
+  <script>
+    if (!['localhost', '127.0.0.1'].includes(location.hostname)) {
+      document.write('<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"><\/script>');
+      document.write('<script src="../supabase-config.js"><\/script>');
+    }
+  </script>
+  <style>
+:root{font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:#35261e;background:#faf7f2;--ink:#35261e;--muted:#81766e;--gold:#a77a22;--gold-dark:#805a19;--line:#eee4d8;--paper:#fffdfa;--shadow:0 16px 42px #3f27100d}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:20px}body{margin:0;background:radial-gradient(ellipse at 80% 0,#f3e6d45c,transparent 36%),#faf7f2;color:var(--ink)}button,input,textarea,select{font:inherit}button{border:0;border-radius:12px;padding:12px 17px;background:var(--gold);color:white;font-weight:700;cursor:pointer;transition:transform .18s,background .18s,box-shadow .18s}button:hover{background:var(--gold-dark);transform:translateY(-1px);box-shadow:0 8px 18px #a77a2224}button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #d4b773;outline-offset:2px}button.secondary{background:#f2eee8;color:#493a30;border:1px solid #e9dfd2}button.secondary:hover{background:#eae1d5}.danger{background:#a8453f}.wrap{max-width:1480px;margin:auto;padding:18px 26px 72px}
+header{min-height:84px;display:flex;justify-content:space-between;align-items:center;gap:18px;margin:0 0 25px;padding:8px 2px;border-bottom:1px solid #ebe1d6}.admin-brand{display:flex;align-items:center;gap:12px;text-decoration:none}.admin-brand img{display:block;width:186px;height:92px;object-fit:contain}.admin-title{border-left:1px solid #e6d9c7;padding-left:13px;color:#81694e;font-size:.9rem;font-weight:700;letter-spacing:.04em}.hidden{display:none!important}
+.panel,.product{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:26px;margin:0 0 20px;box-shadow:var(--shadow)}h1,h2,h3,p{margin-top:0}h1{font:clamp(1.6rem,3vw,2.25rem)/1.14 Georgia,serif;letter-spacing:-.025em;margin-bottom:8px}h2{font:1.42rem Georgia,serif;margin-bottom:7px}h3{font-size:1rem;margin:24px 0 10px}.muted{color:var(--muted);line-height:1.55}.message{min-height:1.4em;margin:8px 0 14px;color:#8b3d31;font-size:.94rem}
+#config,#login{max-width:720px;margin:36px auto 20px;padding:32px;background:linear-gradient(145deg,#fffefa,#fff9f3);border-color:#eadfce}#config h2,#login h2{font-size:1.65rem}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.full{grid-column:1/-1}label{display:block;font-size:.88rem;font-weight:650;color:#514238}input,textarea,select{display:block;width:100%;margin-top:7px;padding:12px 13px;border:1px solid #e2d7c9;border-radius:11px;background:#fff;color:var(--ink);font-size:.96rem;transition:border-color .18s,box-shadow .18s}input:focus,textarea:focus,select:focus{outline:0;border-color:#bd9a54;box-shadow:0 0 0 3px #a77a221a}input[type=color]{height:47px;padding:5px}textarea{min-height:96px;resize:vertical;line-height:1.5}.actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:18px}.actions a:hover{background:#eae1d5!important}.github-login{display:inline-flex;align-items:center;gap:9px}.github-login svg{width:20px;height:20px;flex:0 0 auto}
+#manager:not(.hidden){display:grid;grid-template-columns:230px minmax(0,1fr);gap:24px;align-items:start}.admin-sidebar{position:sticky;top:16px;align-self:start;padding:19px 14px;background:#fffdfa;border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow)}.sidebar-brand{padding:7px 10px 16px;border-bottom:1px solid var(--line);margin-bottom:12px}.sidebar-brand small,.eyebrow{display:block;color:var(--gold);text-transform:uppercase;letter-spacing:.14em;font-size:.69rem;font-weight:800}.sidebar-brand strong{display:block;margin-top:8px;font:1.18rem Georgia,serif}.admin-nav{display:grid;gap:5px}.admin-nav a{display:flex;align-items:center;gap:11px;padding:12px 11px;border-radius:12px;color:#59493d;text-decoration:none;font-size:.91rem;font-weight:650;transition:background .18s,color .18s}.admin-nav a:hover{background:#f8f1e7;color:#795719}.nav-icon{width:23px;text-align:center;font-size:1.1rem}.sidebar-note{margin:18px 4px 3px;padding:13px;border-radius:13px;background:#fbf5e9;color:#7d684f;font-size:.78rem;line-height:1.45}.admin-content{min-width:0}.welcome-card{position:relative;overflow:hidden;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:28px 31px;margin-bottom:20px;border-radius:22px;color:#fff;background:linear-gradient(118deg,#76542e,#a77a22 55%,#c39a53);box-shadow:0 18px 40px #a77a2228}.welcome-card:after{content:"";position:absolute;width:280px;height:280px;right:-56px;top:-150px;border:1px solid #ffffff42;border-radius:50%;box-shadow:0 0 0 24px #ffffff0c,0 0 0 50px #ffffff0a}.welcome-card .eyebrow{color:#f9e7bd}.welcome-card h1{color:white}.welcome-card p{margin:0;color:#fff8e9c9}.welcome-mark{font-size:3.4rem;z-index:1;filter:drop-shadow(0 7px 8px #50340a44)}
+.content-panel{scroll-margin-top:18px}.section-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid #f0e8dd}.section-heading p{margin:6px 0 0;max-width:680px}.heading-mark{flex:0 0 43px;width:43px;height:43px;display:grid;place-items:center;border-radius:14px;background:#faf0e4;color:#8f6827;font-size:1.25rem}
+.product-editor{border-color:#e9ddca}.editor-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(230px,.6fr);gap:20px}.editor-main,.editor-aside{display:grid;align-content:start;gap:14px}.editor-card{padding:19px;border:1px solid #eee4d8;border-radius:16px;background:#fff}.editor-card h3{margin:0 0 14px;font:1.05rem Georgia,serif}.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}.photo-help{display:block;margin-top:7px;font-size:.8rem;color:var(--muted);font-weight:450}.photo-card{padding:19px;border:1px dashed #d8c9b5;border-radius:16px;background:#fcf8f1}.photo-card h3{margin:0 0 12px;font:1.05rem Georgia,serif}.notify-choice{display:flex;align-items:flex-start;gap:11px;padding:14px;border:1px solid #ead7b4;border-radius:13px;background:#fff9e9}.notify-choice input{width:19px;height:19px;flex:0 0 auto;margin:1px 0 0;accent-color:var(--gold)}.notify-choice span{font-weight:600;line-height:1.4}.editor-actions{justify-content:space-between;border-top:1px solid var(--line);padding-top:17px;margin-top:20px}
+.product{display:grid;grid-template-columns:80px minmax(0,1fr) auto;gap:15px;align-items:center;padding:15px 17px;margin:12px 0;border-radius:16px;box-shadow:none}.product img{width:80px;height:80px;object-fit:cover;border-radius:13px;background:#f5eee4}.product h3{margin:0 0 5px;font:1.1rem Georgia,serif}.product p{margin:4px 0;font-size:.88rem;line-height:1.45}.product .actions{margin:0}
+#commercePanel .actions{margin:14px 0}#newsletterSubscribers{padding:11px 14px;background:#fcf8f2;border:1px solid var(--line);border-radius:13px}#newsletterSubscribers p{margin:4px 0}#campaignMessage{min-height:180px}
+#image{padding:9px}.admin-install{position:fixed;z-index:30;left:14px;right:14px;bottom:calc(14px + env(safe-area-inset-bottom));max-width:540px;margin:auto;padding:14px 16px;border:1px solid #dfc997;border-radius:18px;background:#fffdf8;box-shadow:0 12px 38px #38271928;display:flex;align-items:center;gap:12px}.admin-install.hidden{display:none}.admin-install-icon{font-size:28px}.admin-install-copy{flex:1;line-height:1.35}.admin-install-copy strong{display:block;color:#382719}.admin-install-copy small{color:#716c64}.admin-install button,.admin-install a{white-space:nowrap}.admin-install .close-install{background:transparent;color:#716c64;padding:5px 8px;font-size:20px;box-shadow:none}.install-help{margin-top:7px!important;font-size:.84rem}.install-help[hidden]{display:none}
+@media(max-width:960px){#manager:not(.hidden){grid-template-columns:190px minmax(0,1fr);gap:16px}.admin-sidebar{padding:14px 9px}.admin-nav a{padding:11px 9px}.editor-grid{grid-template-columns:1fr}.editor-aside{grid-template-columns:1fr 1fr}}
+@media(max-width:680px){.wrap{padding:10px 12px 42px}header{min-height:68px;margin-bottom:18px;gap:8px}.admin-brand{gap:5px}.admin-brand img{width:128px;height:64px}.admin-title{padding-left:8px;font-size:.75rem}.panel{padding:19px 16px;border-radius:17px;margin-bottom:14px}.grid{grid-template-columns:1fr;gap:13px}.full{grid-column:auto}#config,#login{margin:20px auto;padding:23px 19px}#manager:not(.hidden){display:block}.admin-sidebar{position:static;margin-bottom:14px;padding:10px;border-radius:15px}.sidebar-brand{display:none}.admin-nav{display:flex;overflow-x:auto;gap:6px;padding-bottom:2px}.admin-nav a{flex:0 0 auto;padding:10px 12px;font-size:.81rem;background:#fbf7f2}.nav-icon{width:auto}.sidebar-note{display:none}.welcome-card{padding:21px 20px;border-radius:18px;margin-bottom:14px}.welcome-card h1{font-size:1.55rem}.welcome-card p{font-size:.9rem}.welcome-mark{font-size:2.2rem}.section-heading{gap:10px}.section-heading h2{font-size:1.22rem}.heading-mark{width:37px;height:37px;flex-basis:37px}.field-row,.editor-aside{grid-template-columns:1fr}.product{grid-template-columns:58px minmax(0,1fr);gap:11px;padding:12px}.product img{width:58px;height:58px}.product .actions{grid-column:1/-1}.product .actions button{flex:1}.admin-install{padding:12px;gap:8px}.admin-install-copy small{font-size:.76rem}.admin-install button,.admin-install a{padding:10px 12px;font-size:.82rem}.admin-install .close-install{padding:5px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header><a class="admin-brand" href="../index.html" aria-label="Vai alla vetrina EVENT FAVOURS"><img src="../assets/event-favours-logo.jpg" alt="EVENT FAVOURS"><span class="admin-title">· Amministrazione</span></a><div style="display:flex;gap:8px;align-items:center"><button id="adminInstallTop" class="secondary" type="button">📲 Installa sul telefono</button><button id="signout" class="secondary hidden">Esci</button></div></header>
+  <p id="status" class="message" role="status" aria-live="polite"></p>
+  <section id="config" class="panel">
+    <h2>Collega Supabase</h2>
+    <p class="muted">Inserisci l’URL del progetto e la chiave publishable (o anon) pubblica. Questi valori possono stare nel sito; non usare mai una service_role o secret key.</p>
+    <div class="grid">
+      <label class="full">Project URL<input id="projectUrl" type="url" placeholder="https://xxxx.supabase.co" autocomplete="url"></label>
+      <label class="full">Publishable / anon key<input id="publicKey" type="password" autocomplete="off" placeholder="sb_publishable_… oppure anon key"></label>
+    </div>
+    <div class="actions"><button id="connect">Collega</button></div>
+  </section>
+  <section id="login" class="panel hidden">
+    <h2>Accesso amministratore</h2><div class="grid">
+      <label>Email<input id="email" type="email" autocomplete="username" placeholder="nome@esempio.it" required></label>
+      <label>Password<input id="password" type="password" autocomplete="current-password" required></label>
+    </div><p class="muted">Accedi con l’email e la password oppure con GitHub. Solo gli account abilitati possono aprire il pannello.</p><div class="actions"><button id="loginButton">Accedi</button><button id="githubLogin" class="secondary github-login" type="button"><svg aria-hidden="true" viewBox="0 0 24 24"><path fill="currentColor" d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.76-.24.76-.53v-2.03c-3.1.67-3.76-1.32-3.76-1.32-.5-1.28-1.23-1.62-1.23-1.62-1.01-.69.08-.68.08-.68 1.12.08 1.71 1.15 1.71 1.15 1 .1.76 2.06 3.56 1.5.1-.72.4-1.2.72-1.48-2.48-.28-5.09-1.24-5.09-5.52 0-1.22.44-2.21 1.15-2.99-.12-.28-.5-1.42.11-2.96 0 0 .94-.3 3.05 1.14a10.6 10.6 0 0 1 5.56 0c2.12-1.44 3.05-1.14 3.05-1.14.61 1.54.23 2.68.11 2.96.72.78 1.15 1.77 1.15 2.99 0 4.29-2.62 5.24-5.11 5.51.4.35.76 1.03.76 2.08V22c0 .29.2.64.77.53A11.1 11.1 0 0 0 12 .9Z"/></svg>Continua con GitHub</button></div>
+  </section>
+  <section id="manager" class="hidden">
+    <aside class="admin-sidebar" aria-label="Navigazione amministratore">
+      <div class="sidebar-brand"><small>Area riservata</small><strong>EVENT FAVOURS</strong></div>
+      <nav class="admin-nav">
+        <a href="#overview"><span class="nav-icon">✦</span>Panoramica</a>
+        <a href="#shopSettings"><span class="nav-icon">🎨</span>Pagina shop</a>
+        <a href="#productForm"><span class="nav-icon">＋</span>Aggiungi prodotto</a>
+        <a href="#productsCatalog"><span class="nav-icon">🎁</span>Catalogo</a>
+        <a href="#commercePanel"><span class="nav-icon">✉</span>Clienti e newsletter</a>
+      </nav>
+      <div class="sidebar-note">Il tuo spazio per curare il catalogo e la vetrina del negozio.</div>
+    </aside>
+    <div class="admin-content">
+      <section class="welcome-card" id="overview"><div><span class="eyebrow">Il tuo spazio creativo</span><h1>Gestiamo ogni dettaglio con cura.</h1><p>Aggiorna lo shop e racconta le tue nuove creazioni.</p></div><span class="welcome-mark" aria-hidden="true">🎀</span></section>
+    <section class="panel content-panel" id="shopSettings">
+      <div class="section-heading"><div><span class="eyebrow">La tua vetrina</span><h2>Personalizza la pagina dello shop</h2><p class="muted">Modifica testi, immagini, occasioni e colori del tuo negozio.</p></div><span class="heading-mark">✦</span></div>
+      <div class="grid">
+        <label>Nome negozio<input id="shopName" maxlength="60"></label>
+        <label>Sottotitolo sotto al nome<input id="shopTagline" maxlength="100"></label>
+        <label>Frase sopra al titolo<input id="heroEyebrow" maxlength="100"></label>
+        <label>Testo del pulsante principale<input id="heroButton" maxlength="60"></label>
+        <label class="full">Titolo principale<textarea id="heroTitle" maxlength="180"></textarea></label>
+        <label class="full">Descrizione iniziale<textarea id="heroDescription" maxlength="500"></textarea></label>
+        <label class="full">Foto principale<input id="heroImage" type="file" accept="image/jpeg,image/png,image/webp,image/gif"><span class="muted">Foto sotto 2 MB in anteprima.</span></label>
+        <label class="full">Categorie dello shop, una per riga<textarea id="shopCategories" maxlength="500" placeholder="Matrimonio&#10;Battesimo&#10;Comunione"></textarea></label>
+        <label>Titolo sezione occasioni<input id="categoriesTitle" maxlength="100"></label>
+        <label>Descrizione sezione occasioni<input id="categoriesDescription" maxlength="200"></label>
+        <label>Titolo catalogo<input id="catalogTitle" maxlength="100"></label>
+        <label>Descrizione catalogo<input id="catalogDescription" maxlength="200"></label>
+        <label>Colore principale<input id="themeColor" type="color"></label>
+        <label>Colore di sfondo<input id="themeBackground" type="color"></label>
+        <label class="full">Testo del piè di pagina<textarea id="footerText" maxlength="400"></textarea></label>
+        <label>Testo ordini nel piè di pagina<input id="footerOrderText" maxlength="160"></label>
+        <label>Testo consegna nel piè di pagina<input id="footerShippingText" maxlength="160"></label>
+        <label>Numero WhatsApp con prefisso internazionale<input id="shopPhone" type="tel" placeholder="39…"></label>
+      </div>
+      <div class="actions"><button type="button" id="saveShop">Salva pagina shop</button><a id="openShop" href="../index.html" target="_blank" rel="noopener" style="display:inline-block;text-decoration:none;border-radius:8px;padding:10px 15px;background:#eee9e1;color:#312b25;font-weight:600">Apri anteprima shop</a></div>
+    </section>
+    <form id="productForm" class="panel content-panel product-editor">
+      <div class="section-heading"><div><span class="eyebrow">Il catalogo</span><h2 id="formTitle">Aggiungi prodotto</h2><p class="muted">Inserisci le informazioni essenziali e scegli la foto dalla galleria del telefono.</p></div><span class="heading-mark">＋</span></div>
+      <input id="productId" type="hidden">
+      <div class="editor-grid">
+        <div class="editor-main">
+          <div class="editor-card"><h3>Informazioni prodotto</h3>
+            <label>Nome prodotto<input id="name" maxlength="120" placeholder="Es. Orsetto con fiocco dorato" required></label>
+            <div class="field-row"><label>Categoria<input id="category" maxlength="80" placeholder="Matrimonio, battesimo…"></label>
+            <label>Prezzo indicativo (€)<input id="price" type="number" min="0" step="0.01" placeholder="0,00" required></label></div>
+            <label>Descrizione<textarea id="description" maxlength="2000" placeholder="Racconta materiali, colori e dettagli della creazione…"></textarea></label>
+          </div>
+          <div class="editor-card"><h3>Foto del prodotto</h3><label>Carica una foto<input id="image" type="file" accept="image/jpeg,image/png,image/webp,image/gif"><span class="photo-help">Scegli un’immagine dalla galleria. JPG, PNG o WebP, massimo 5 MB.</span></label></div>
+        </div>
+        <div class="editor-aside">
+          <div class="editor-card"><h3>Pubblicazione</h3><label>Visibile nello shop<select id="active"><option value="true">Sì, mostra il prodotto</option><option value="false">No, tienilo nascosto</option></select></label><p class="photo-help">Puoi nascondere un prodotto senza eliminarlo.</p></div>
+          <div class="photo-card"><h3>Novità per i clienti</h3><label class="notify-choice" id="notifyChoice"><input id="sendPushNotification" type="checkbox"><span>Avvisa con una notifica chi ha scelto di ricevere aggiornamenti.</span></label></div>
+        </div>
+      </div>
+      <div class="actions editor-actions"><div class="actions" style="margin:0"><button type="submit">Salva prodotto</button><button type="button" id="cancelEdit" class="secondary hidden">Annulla modifica</button></div><span class="muted">Puoi aggiornare i dettagli in qualsiasi momento.</span></div>
+    </form>
+    <section class="panel content-panel" id="productsCatalog"><div class="section-heading"><div><span class="eyebrow">Le tue creazioni</span><h2>Catalogo prodotti</h2><p class="muted">Modifica i dettagli o scegli cosa mostrare nella vetrina.</p></div><span class="heading-mark">🎁</span></div><div id="products"></div></section>
+    <section class="panel content-panel" id="commercePanel"><div class="section-heading"><div><span class="eyebrow">Community</span><h2>Clienti e newsletter</h2><p class="muted">Puoi scaricare solo gli indirizzi che hanno dato il consenso alle offerte. Le richieste d’ordine e le spese di spedizione si concordano direttamente su WhatsApp; il sito non incassa pagamenti.</p></div><span class="heading-mark">✉</span></div>
+      <div class="actions"><button type="button" class="secondary" id="exportNewsletter">Esporta iscritti consenzienti (CSV)</button></div>
+      <p id="commerceStatus" class="muted" aria-live="polite"></p>
+      <h3>Iscritti alla newsletter</h3><div id="newsletterSubscribers"><p class="muted">Accedi per caricare la lista.</p></div>
+      <h3>Invia email pubblicitaria</h3><p class="muted">La campagna viene inviata soltanto agli iscritti attivi che hanno dato il consenso. Brevo inserisce il link per disiscriversi.</p>
+      <label>Oggetto email<input id="campaignSubject" maxlength="140" placeholder="Una novità per il tuo evento"></label><label>Messaggio<textarea id="campaignMessage" maxlength="10000" rows="8" placeholder="Scrivi qui l’offerta o la novità…"></textarea></label><button type="button" id="sendCampaign">Invia campagna</button>
+    </section>
+    </div>
+  </section>
+</main>
+<aside id="adminInstallBanner" class="admin-install hidden" aria-live="polite"><span class="admin-install-icon" aria-hidden="true">📲</span><div class="admin-install-copy"><strong>Gestisci lo shop dal telefono</strong><small>Aggiungi EVENT FAVOURS Admin alla schermata Home.</small><p id="adminInstallHelp" class="install-help muted" hidden></p></div><button id="adminInstallAction" type="button">Installa</button><a id="adminOpenInChrome" class="secondary" hidden style="text-decoration:none;text-align:center" href="#">Apri in Chrome</a><button id="adminInstallDismiss" class="close-install" type="button" aria-label="Chiudi">×</button></aside>
+<script>
+// Local preview deliberately uses browser-only demo data and never contacts Supabase.
+function initializeLocalPreview() {
+  const $ = id => document.getElementById(id);
+  const localMode = ['localhost', '127.0.0.1'].includes(location.hostname);
+  if (!localMode) return false;
+  const show = (id, yes) => $(id).classList.toggle('hidden', !yes);
+  const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const key = 'ef_local_preview_products_v1';
+  const settingsKey = 'ef_local_preview_settings_v1';
+  const defaultSettings = {shopName:'EVENT FAVOURS',shopTagline:'BOMBONIERE PER OGNI OCCASIONE',heroEyebrow:'Piccoli dettagli, grandi emozioni',heroTitle:'Bomboniere che rendono speciale ogni evento',heroDescription:'Idee curate con amore per matrimonio, battesimo, comunione, laurea e ogni momento da ricordare.',heroButton:'Scopri le collezioni →',heroImage:'',categories:['Matrimonio','Battesimo','Comunione','Laurea','Compleanno','Anniversario','Altre occasioni'],categoriesTitle:'Per ogni occasione',categoriesDescription:'Trova lo stile perfetto per il tuo evento.',catalogTitle:'Le nostre bomboniere',catalogDescription:'Prezzi dimostrativi, personalizzabili secondo le tue esigenze.',themeColor:'#a77a22',themeBackground:'#fffdf9',footerText:'Bomboniere e dettagli personalizzati per i tuoi momenti più belli.',footerOrderText:'Ordini e preventivi via WhatsApp',footerShippingText:'Spedizione da concordare',phone:''};
+  let settings = {...defaultSettings};
+  try { settings = {...settings,...JSON.parse(localStorage.getItem(settingsKey)||'{}')}; } catch {}
+  let products = [];
+  try { products = JSON.parse(localStorage.getItem(key) || '[]'); } catch { products = []; }
+  if (!Array.isArray(products)) products = [];
+  products = products.filter(p => !String(p.id).startsWith('sample-'));
+  localStorage.setItem(key, JSON.stringify(products));
+  show('config', false); show('login', false); show('manager', true); show('signout', false); show('commercePanel',false);
+  document.querySelector('header').insertAdjacentHTML('afterend', '<aside class="panel" style="border-color:#caa96a;background:#fff9e9"><strong>Anteprima locale</strong><p class="muted">Nessun account o password. I prodotti e le foto restano salvati solo in questo browser e non vengono inviati online.</p></aside>');
+  const say = text => { $('status').textContent = text; $('status').style.color = '#386d45'; };
+  for (const id of ['shopName','shopTagline','heroEyebrow','heroTitle','heroDescription','heroButton','categoriesTitle','categoriesDescription','catalogTitle','catalogDescription','themeColor','themeBackground','footerText','footerOrderText','footerShippingText','shopPhone']) $(id).value = settings[id] || '';
+  $('shopCategories').value = (settings.categories||[]).join('\n');
+  $('saveShop').onclick = async () => {
+    const file=$('heroImage').files[0]; let heroImage=settings.heroImage||'';
+    if(file){if(!file.type.startsWith('image/')||file.size>2*1024*1024)return say('Per l’anteprima scegli una foto principale sotto 2 MB.');heroImage=await new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(file);});}
+    settings={shopName:$('shopName').value.trim(),shopTagline:$('shopTagline').value.trim(),heroEyebrow:$('heroEyebrow').value.trim(),heroTitle:$('heroTitle').value.trim(),heroDescription:$('heroDescription').value.trim(),heroButton:$('heroButton').value.trim(),heroImage,categories:$('shopCategories').value.split('\n').map(x=>x.trim()).filter(Boolean),categoriesTitle:$('categoriesTitle').value.trim(),categoriesDescription:$('categoriesDescription').value.trim(),catalogTitle:$('catalogTitle').value.trim(),catalogDescription:$('catalogDescription').value.trim(),themeColor:$('themeColor').value,themeBackground:$('themeBackground').value,footerText:$('footerText').value.trim(),footerOrderText:$('footerOrderText').value.trim(),footerShippingText:$('footerShippingText').value.trim(),phone:$('shopPhone').value.replace(/\D/g,'')};
+    try{localStorage.setItem(settingsKey,JSON.stringify(settings));}catch{return say('Spazio browser esaurito: riduci la dimensione della foto.');}
+    say('Pagina shop salvata in locale. Apri l’anteprima per vederla.');
+  };
+  function draw() {
+    $('products').innerHTML = products.length ? products.map(p => `<article class="product"><img src="${esc(p.image_url || '')}" alt=""><div><h3>${esc(p.name)}</h3><p>${esc(p.category || 'Senza categoria')} · ${Number(p.price)>0?'€ '+Number(p.price).toFixed(2):'Prezzo da definire'}</p><p class="muted">${p.active ? 'Visibile' : 'Nascosto'}${p.description ? ' · '+esc(p.description) : ''}</p></div><div class="actions"><button class="secondary" data-local-edit="${esc(p.id)}">Modifica</button><button class="danger" data-local-delete="${esc(p.id)}">Elimina</button></div></article>`).join('') : '<p class="muted">Nessun prodotto di anteprima. Aggiungine uno qui sopra.</p>';
+    $('products').querySelectorAll('[data-local-edit]').forEach(b => b.onclick = () => { const p=products.find(x=>x.id===b.dataset.localEdit); if(!p)return; $('productId').value=p.id; $('name').value=p.name; $('category').value=p.category||''; $('price').value=p.price; $('description').value=p.description||''; $('active').value=String(p.active); $('sendPushNotification').checked=false; $('sendPushNotification').disabled=true; $('notifyChoice').classList.add('hidden'); $('formTitle').textContent='Modifica prodotto'; show('cancelEdit',true); window.scrollTo({top:0,behavior:'smooth'}); });
+    $('products').querySelectorAll('[data-local-delete]').forEach(b => b.onclick = () => { products=products.filter(p=>p.id!==b.dataset.localDelete); localStorage.setItem(key,JSON.stringify(products)); draw(); say('Rimosso dall’anteprima locale.'); });
+  }
+  $('productForm').onsubmit = async e => {
+    e.preventDefault(); const file=$('image').files[0]; let image_url=null;
+    if(file){if(!file.type.startsWith('image/')||file.size>2*1024*1024)return say('Per l’anteprima scegli un’immagine sotto 2 MB.');image_url=await new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(file);});}
+    const id=$('productId').value; const old=products.find(p=>p.id===id);
+    const wantsNotification=$('sendPushNotification').checked;
+    const p={id:id||crypto.randomUUID(),name:$('name').value.trim(),category:$('category').value.trim(),price:Number($('price').value),description:$('description').value.trim(),active:$('active').value==='true',image_url:image_url||old?.image_url||''};
+    products=id?products.map(x=>x.id===id?p:x):[p,...products];
+    try{localStorage.setItem(key,JSON.stringify(products));}catch{return say('Spazio del browser esaurito: prova una foto più piccola.');}
+    $('productForm').reset(); $('productId').value=''; $('formTitle').textContent='Aggiungi prodotto'; $('sendPushNotification').checked=false; $('sendPushNotification').disabled=false; $('notifyChoice').classList.remove('hidden'); draw(); say(wantsNotification?'Salvato solo nell’anteprima locale: la notifica si invia dopo la pubblicazione online.':'Salvato solo nell’anteprima locale.');
+  };
+  $('cancelEdit').onclick=()=>{$('productForm').reset();$('productId').value='';$('formTitle').textContent='Aggiungi prodotto';$('sendPushNotification').checked=false;$('sendPushNotification').disabled=false;$('notifyChoice').classList.remove('hidden');show('cancelEdit',false);};
+  draw(); say('Modalità locale attiva. Nessuna modifica viene inviata a Supabase.'); return true;
+}
+(() => {
+  if (initializeLocalPreview()) return;
+  const $ = id => document.getElementById(id);
+  let db = null;
+  const say = (text, bad = true) => { $('status').textContent = text; $('status').style.color = bad ? '#8b3d31' : '#386d45'; };
+  const show = (id, yes) => $(id).classList.toggle('hidden', !yes);
+  const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  function setConnected(connected) { show('config', !connected); show('login', connected); if (!connected) { show('manager', false); show('signout', false); } }
+  function setLoggedIn(loggedIn) { show('login', !loggedIn); show('manager', loggedIn); show('signout', loggedIn); show('commercePanel',loggedIn); if (loggedIn) { loadProducts(); loadCommerce(); } }
+  async function authorizeCurrentSession() {
+    if (!db) return false;
+    const {data: {session}} = await db.auth.getSession();
+    if (!session?.user) { setLoggedIn(false); return false; }
+    const {data: membership, error} = await db.from('admin_users').select('user_id').eq('user_id', session.user.id).maybeSingle();
+    if (error || !membership) {
+      await db.auth.signOut();
+      setLoggedIn(false);
+      say('Accesso completato, ma questo account non è abilitato come amministratore.');
+      return false;
+    }
+    say('Accesso amministratore effettuato.', false);
+    setLoggedIn(true);
+    return true;
+  }
+  $('connect').onclick = () => {
+    const url = $('projectUrl').value.trim().replace(/\/$/, '');
+    const key = $('publicKey').value.trim();
+    if (!/^https:\/\/[\w-]+\.supabase\.co$/.test(url) || !key) return say('Controlla URL e chiave pubblica del progetto.');
+    localStorage.setItem('ef_project_url', url); localStorage.setItem('ef_public_key', key);
+    db = window.supabase.createClient(url, key); setConnected(true); say('Progetto collegato. Accedi con l’utente admin.', false);
+  };
+  const config = window.EF_SUPABASE_CONFIG || {};
+  const savedUrl = localStorage.getItem('ef_project_url') || config.url;
+  const savedKey = localStorage.getItem('ef_public_key') || config.anonKey;
+  if (savedUrl && savedKey) { $('projectUrl').value = savedUrl; $('publicKey').value = savedKey; db = window.supabase.createClient(savedUrl, savedKey); setConnected(true); }
+  $('loginButton').onclick = async () => {
+    if (!db) return;
+    const email = $('email').value.trim().toLowerCase();
+    if (!email) return say('Inserisci la tua email.');
+    const {data: authData, error} = await db.auth.signInWithPassword({email,password:$('password').value});
+    if (error) return say('Email o password non valide. Controlla le credenziali del tuo account Supabase.');
+    const {data: membership, error: checkError} = await db.from('admin_users').select('user_id').eq('user_id', authData.user.id).maybeSingle();
+    if (checkError || !membership) { await db.auth.signOut(); setLoggedIn(false); return say('Questo account non è abilitato come amministratore.'); }
+    say('Accesso effettuato.', false); setLoggedIn(true);
+  };
+  $('githubLogin').onclick = async () => {
+    if (!db) return say('Collega prima il progetto Supabase.');
+    const redirectTo = new URL('../admin.html', location.href).href;
+    const {error} = await db.auth.signInWithOAuth({provider:'github',options:{redirectTo}});
+    if (error) say(`Accesso GitHub non riuscito: ${error.message}`);
+  };
+  $('signout').onclick = async () => { await db.auth.signOut(); setLoggedIn(false); say('Sei uscito.', false); };
+  async function loadProducts() {
+    const {data, error} = await db.from('products').select('*').order('created_at', {ascending:false});
+    if (error) return say(error.message);
+    $('products').innerHTML = data?.length ? data.map(p => `<article class="product"><img src="${esc(p.image_url || '')}" alt="" onerror="this.style.visibility='hidden'"><div><h3>${esc(p.name)}</h3><p>${esc(p.category || 'Senza categoria')} · € ${Number(p.price).toFixed(2)}</p><p class="muted">${p.active ? 'Visibile' : 'Nascosto'}${p.description ? ' · '+esc(p.description) : ''}</p></div><div class="actions"><button class="secondary" data-edit="${esc(p.id)}">Modifica</button><button class="danger" data-delete="${esc(p.id)}">Elimina</button></div></article>`).join('') : '<p class="muted">Nessun prodotto ancora.</p>';
+    data?.forEach(p => { const edit = $('products').querySelector(`[data-edit="${CSS.escape(String(p.id))}"]`); edit?.addEventListener('click', () => editProduct(p)); const del = $('products').querySelector(`[data-delete="${CSS.escape(String(p.id))}"]`); del?.addEventListener('click', () => deleteProduct(p)); });
+  }
+  function editProduct(p) { $('productId').value=p.id; $('name').value=p.name||''; $('category').value=p.category||''; $('price').value=p.price; $('description').value=p.description||''; $('active').value=String(p.active); $('sendPushNotification').checked=false; $('sendPushNotification').disabled=true; $('notifyChoice').classList.add('hidden'); $('formTitle').textContent='Modifica prodotto'; show('cancelEdit',true); window.scrollTo({top:0,behavior:'smooth'}); }
+  function resetForm() { $('productForm').reset(); $('productId').value=''; $('formTitle').textContent='Aggiungi prodotto'; $('sendPushNotification').checked=false; $('sendPushNotification').disabled=false; $('notifyChoice').classList.remove('hidden'); show('cancelEdit',false); }
+  $('cancelEdit').onclick = resetForm;
+  $('productForm').onsubmit = async event => {
+    event.preventDefault(); if (!db) return;
+    const id = $('productId').value; const file = $('image').files[0]; let image_url = null;
+    if (file) {
+      if (file.size > 5*1024*1024 || !file.type.startsWith('image/')) return say('Scegli un’immagine valida di massimo 5 MB.');
+      const safeName = file.name.toLowerCase().replace(/[^a-z0-9._-]+/g,'-');
+      const path = `${crypto.randomUUID()}-${safeName}`;
+      const {error: uploadError} = await db.storage.from('product-photos').upload(path,file,{upsert:false,contentType:file.type});
+      if (uploadError) return say(uploadError.message);
+      image_url = db.storage.from('product-photos').getPublicUrl(path).data.publicUrl;
+    }
+    const product = {name:$('name').value.trim(),category:$('category').value.trim()||null,price:Number($('price').value),description:$('description').value.trim()||null,active:$('active').value==='true'};
+    if (image_url) product.image_url=image_url;
+    const wantsNotification = !id && $('sendPushNotification').checked && product.active;
+    const result = id ? await db.from('products').update(product).eq('id',id) : await db.from('products').insert(product).select('id').single();
+    if (result.error) return say(result.error.message);
+    let noticeMessage='Prodotto salvato.', noticeError=false;
+    if (wantsNotification) {
+      const {data:pushData,error:pushError}=await db.functions.invoke('send-product-notification',{body:{productId:result.data?.id}});
+      if(pushError){noticeMessage='Prodotto salvato, ma la notifica non è partita. '+pushError.message;noticeError=true}
+      else if(Number(pushData?.sent)===0)noticeMessage='Prodotto pubblicato. Nessun cliente ha attivato le notifiche.';
+      else noticeMessage=`Prodotto salvato e avviso inviato a ${pushData.sent} clienti.`;
+    }
+    resetForm(); say(noticeMessage,noticeError); loadProducts();
+  };
+  async function deleteProduct(p) { if (!confirm(`Eliminare “${p.name}”?`)) return; const {error}=await db.from('products').delete().eq('id',p.id); if(error)return say(error.message); say('Prodotto eliminato.',false); loadProducts(); }
+  async function loadCommerce() {
+    show('commercePanel',true);
+    const subscribers=await db.from('newsletter_subscribers').select('email,consent_at').is('unsubscribed_at',null).order('consent_at',{ascending:false});
+    $('newsletterSubscribers').innerHTML=subscribers.error?'<p class="muted">Lista disponibile dopo la configurazione del database.</p>':subscribers.data?.length?subscribers.data.map(s=>`<p>${esc(s.email)} · consenso ${esc(new Date(s.consent_at).toLocaleDateString('it-IT'))}</p>`).join(''):'<p class="muted">Nessun iscritto consenziente al momento.</p>';
+    $('exportNewsletter').disabled=!!subscribers.error||!subscribers.data?.length;
+    $('exportNewsletter').onclick=()=>exportSubscribers(subscribers.data||[]);
+    $('sendCampaign').disabled=!!subscribers.error||!subscribers.data?.length;
+    $('sendCampaign').onclick=()=>sendMarketingCampaign(subscribers.data?.length||0);
+  }
+  function exportSubscribers(rows){if(!rows.length)return;const csv='email,consenso\r\n'+rows.map(r=>`"${String(r.email).replaceAll('"','""')}","${new Date(r.consent_at).toISOString()}"`).join('\r\n');const url=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='event-favours-iscritti-consenzienti.csv';a.click();URL.revokeObjectURL(url);}
+  async function sendMarketingCampaign(recipientCount){const subject=$('campaignSubject').value.trim(),message=$('campaignMessage').value.trim();if(subject.length<3||message.length<10)return $('commerceStatus').textContent='Inserisci oggetto e messaggio della campagna.';if(!confirm(`Inviare questa email pubblicitaria a ${recipientCount} iscritti che hanno dato il consenso?`))return;const button=$('sendCampaign');button.disabled=true;button.textContent='Invio in corso…';const{data,error}=await db.functions.invoke('send-marketing-campaign',{body:{subject,message}});button.disabled=false;button.textContent='Invia campagna';$('commerceStatus').textContent=error?`Invio non riuscito: ${error.message}`:data?.ok?`Campagna inviata a ${data.recipients} contatti. ID Brevo: ${data.campaign_id}`:data?.error||'Invio non riuscito.';if(data?.ok){$('campaignSubject').value='';$('campaignMessage').value='';}}
+  if (db) authorizeCurrentSession();
+})();
+</script>
+<script>
+(function setupAdminInstall(){
+  const banner=document.getElementById('adminInstallBanner'), help=document.getElementById('adminInstallHelp');
+  const action=document.getElementById('adminInstallAction'), topButton=document.getElementById('adminInstallTop');
+  const dismissed='ef_admin_install_dismissed_v1'; let promptEvent=null;
+  const standalone=()=>matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+  const mobile=()=>matchMedia('(max-width: 760px)').matches||/Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  const show=()=>{if(!standalone()&&mobile()&&localStorage.getItem(dismissed)!=='1')banner.classList.remove('hidden')};
+  window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();promptEvent=event;show()});
+  const openChrome=document.getElementById('adminOpenInChrome');
+  function showHelp(){
+    help.hidden=false;
+    if(/Android/i.test(navigator.userAgent)&&standalone()){
+      help.textContent='Hai aperto l’admin dentro l’app dello shop. Aprilo in Chrome per installare una seconda icona dedicata.';
+      openChrome.hidden=false;
+      openChrome.href='intent://'+location.host+location.pathname+location.search+'#Intent;scheme=https;package=com.android.chrome;end';
+      action.textContent='Mostra istruzioni';
+      return;
+    }
+    if(/iPhone|iPad|iPod/i.test(navigator.userAgent)){
+      help.textContent='Su iPhone: apri questa pagina in Safari, tocca Condividi e scegli “Aggiungi alla schermata Home”.';
+    }else{
+      help.textContent='Apri questa pagina in Chrome, poi usa ⋮ → “Installa app” oppure “Aggiungi a schermata Home”.';
+    }
+  }
+  async function install(){
+    if(standalone()&&/Android/i.test(navigator.userAgent)){
+      const target='intent://'+location.host+location.pathname+location.search+'#Intent;scheme=https;package=com.android.chrome;end';
+      openChrome.href=target;
+      location.href=target;
+      window.setTimeout(showHelp,900);
+      return;
+    }
+    if(standalone()){showHelp();return}
+    if(promptEvent){
+      const saved=promptEvent;promptEvent=null;
+      try{await saved.prompt();const choice=await saved.userChoice;if(choice.outcome==='accepted'){banner.classList.add('hidden');localStorage.setItem(dismissed,'1')}else showHelp()}
+      catch{showHelp()}
+    }else showHelp();
+  }
+  action.addEventListener('click',install);
+  topButton.addEventListener('click',()=>{banner.classList.remove('hidden');install()});
+  document.getElementById('adminInstallDismiss').addEventListener('click',()=>{banner.classList.add('hidden');localStorage.setItem(dismissed,'1')});
+  window.addEventListener('appinstalled',()=>{banner.classList.add('hidden');localStorage.setItem(dismissed,'1')});
+  if('serviceWorker'in navigator&&!['localhost','127.0.0.1'].includes(location.hostname))navigator.serviceWorker.register('../service-worker.js').catch(()=>{});
+  if(mobile())setTimeout(show,1200);
+})();
+</script>
+</body>
+</html>
+
+
+
