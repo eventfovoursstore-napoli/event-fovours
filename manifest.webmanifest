@@ -1,0 +1,31 @@
+{
+  "name": "EVENT FAVOURS — Bomboniere per ogni occasione",
+  "short_name": "EVENT FAVOURS",
+  "description": "Scopri bomboniere curate con amore e chiedi un preventivo per il tuo evento.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fbf7f0",
+  "theme_color": "#a77a22",
+  "icons": [
+    {
+      "src": "./assets/event-favours-app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "./assets/app-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./assets/app-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

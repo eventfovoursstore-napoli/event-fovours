@@ -3,6 +3,11 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#a77a22">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="./assets/app-icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="./assets/app-icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="EVENT FAVOURS">
 <title>EVENT FAVOURS — Bomboniere per ogni occasione</title>
 <style>
 :root{--gold:#a77a22;--gold2:#c49b45;--ink:#382719;--cream:#fbf7f0;--pink:#f7e5e2;--line:#eadfce}
@@ -30,19 +35,47 @@ footer{background:#f7efe3;border-top:1px solid var(--line);padding:28px 22px;tex
 .top{padding:8px 20px}.brand-logo{width:220px;height:110px}.hero{margin:14px auto 22px}.hero-inner{min-height:310px;border-radius:20px}.hero-copy{padding:clamp(22px,3.5vw,44px)}.hero h1{font-size:clamp(32px,4.2vw,49px);margin:11px 0}.hero p{font-size:16px;line-height:1.48}.hero-art{min-height:310px}.hero-arrow{width:38px;height:38px}.hero-caption{bottom:15px}.hero-dots{bottom:47px}
 @media(max-width:850px){.top{padding:6px 15px}.brand-logo{width:175px;height:88px}.hero{margin:10px auto 18px}.hero-inner{min-height:0}.hero-art{min-height:235px}.hero-copy{padding:21px 25px 25px}.hero h1{font-size:clamp(30px,7vw,40px);margin:9px 0}.hero p{font-size:15px;margin:5px 0 14px}.hero-caption{left:16px;right:16px;bottom:13px}.hero-dots{right:16px;bottom:45px}}
 @media(max-width:480px){.top{padding:3px 10px;gap:6px}.brand-logo{width:148px;height:74px}nav{gap:2px}nav button{padding:8px 9px}.hero{padding-left:11px;padding-right:11px;margin:8px auto 14px}.hero-inner{border-radius:16px}.hero-art{min-height:195px}.hero-copy{padding:17px 20px 21px}.hero h1{font-size:clamp(28px,7vw,34px);line-height:1.07}.hero p{font-size:14px;line-height:1.42}.hero-copy .pill{padding:10px 16px;font-size:14px}.hero-arrow{width:33px;height:33px;font-size:19px}.hero-caption strong{font-size:16px}.hero-caption span{font-size:10px}.hero-dot{width:7px;height:7px}.hero-dot.active{width:20px}.hero-dots{bottom:42px}}
+
+/* Installable shop and soft side drawer */
+.top-brand{display:flex;align-items:center;gap:14px;min-width:0}
+.menu-toggle{width:46px;height:46px;flex:0 0 46px;display:grid;place-items:center;border:1px solid #eadfce;border-radius:50%;background:#fffdf9;color:#76500f;box-shadow:0 5px 16px #38271912;transition:transform .2s,background .2s}.menu-toggle:hover{background:#f7efe3;transform:translateY(-1px)}.menu-toggle svg{width:21px;height:21px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round}
+.side-shade{position:fixed;inset:0;z-index:40;background:#21160fb8;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .28s,visibility .28s}.side-shade.open{opacity:1;visibility:visible;pointer-events:auto}
+.side-drawer{position:fixed;z-index:41;inset:0 auto 0 0;width:min(390px,88vw);height:100dvh;overflow:auto;padding:22px 20px calc(26px + env(safe-area-inset-bottom));background:linear-gradient(160deg,#fffdf9,#f7efe3);box-shadow:18px 0 55px #21160f35;transform:translateX(-105%);transition:transform .32s cubic-bezier(.22,.75,.25,1);display:flex;flex-direction:column;gap:16px}.side-drawer.open{transform:translateX(0)}body.menu-open{overflow:hidden}
+.side-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.side-logo{width:190px;height:95px;object-fit:contain}.side-close{width:42px;height:42px;border:1px solid #eadfce;border-radius:50%;background:#fff;color:#76500f;font-size:24px}.side-kicker{margin:0;color:#9a7228;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase}.side-intro{margin:-9px 0 2px;color:#766554;font:17px/1.45 Georgia,serif}.side-nav{display:grid;gap:7px}.side-nav a,.side-nav button{width:100%;display:flex;align-items:center;gap:13px;padding:13px 14px;border:1px solid transparent;border-radius:14px;background:transparent;color:#382719;text-decoration:none;text-align:left;font-weight:700;transition:background .2s,border-color .2s}.side-nav a:hover,.side-nav button:hover{background:white;border-color:#eadfce}.side-nav svg{width:21px;height:21px;flex:0 0 21px;fill:none;stroke:#a77a22;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.side-feature{margin-top:auto;padding:17px;border:1px solid #ead7b4;border-radius:18px;background:linear-gradient(135deg,#fff8e9,#f4e6cc)}.side-feature strong{display:block;color:#76500f;font:20px Georgia,serif}.side-feature p{margin:7px 0 13px;color:#766554;font-size:13px;line-height:1.5}.side-install{width:100%;display:flex;align-items:center;justify-content:center;gap:9px;border:0;border-radius:24px;padding:12px 15px;background:#a77a22;color:white;font-weight:700}.side-install svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.install-banner{position:fixed;z-index:45;left:50%;bottom:calc(14px + env(safe-area-inset-bottom));width:min(650px,calc(100vw - 24px));display:flex;align-items:center;gap:13px;padding:13px 14px;border:1px solid #e8d8ba;border-radius:20px;background:#fffdf9f5;box-shadow:0 16px 45px #3827192b;backdrop-filter:blur(14px);opacity:0;visibility:hidden;pointer-events:none;transform:translate(-50%,18px);transition:opacity .3s,transform .3s,visibility .3s}.install-banner.show{opacity:1;visibility:visible;pointer-events:auto;transform:translate(-50%,0)}.install-icon{width:54px;height:54px;flex:0 0 54px;display:grid;place-items:center;border-radius:15px;background:#f7efe3;overflow:hidden}.install-icon img{width:100%;height:100%;object-fit:cover}.install-copy{min-width:0;flex:1}.install-copy strong{display:block;color:#76500f;font:17px/1.2 Georgia,serif}.install-copy span{display:block;margin-top:4px;color:#766554;font-size:12px;line-height:1.35}.install-actions{display:flex;align-items:center;gap:6px}.install-actions .pill{white-space:nowrap;padding:10px 15px}.install-close{width:34px;height:34px;border:0;border-radius:50%;background:transparent;color:#766554;font-size:22px}.install-close:hover{background:#f7efe3}.install-guide{z-index:60}
+@media(max-width:560px){.top-brand{gap:8px}.menu-toggle{width:40px;height:40px;flex-basis:40px}.brand-logo{width:168px;height:84px}.install-banner{gap:10px;padding:11px}.install-icon{width:46px;height:46px;flex-basis:46px}.install-copy strong{font-size:15px}.install-copy span{font-size:11px}.install-actions{gap:2px}.install-actions .pill{padding:9px 11px;font-size:12px}.install-close{width:30px;height:30px}}
+@media(prefers-reduced-motion:reduce){.menu-toggle,.side-shade,.side-drawer,.install-banner{transition:none}}
 </style>
 </head>
 <body>
 <header><div class="top">
-  <div class="brand"><img class="brand-logo" src="./assets/event-favours-logo.jpg" alt="EVENT FAVOURS — Bomboniere per ogni occasione"></div>
+  <div class="top-brand"><button id="menuToggle" class="menu-toggle" type="button" aria-label="Apri il menu" aria-expanded="false" aria-controls="sideDrawer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button><div class="brand"><img class="brand-logo" src="./assets/event-favours-logo.jpg" alt="EVENT FAVOURS — Bomboniere per ogni occasione"></div></div>
   <nav><button onclick="document.getElementById('catalogo').scrollIntoView({behavior:'smooth'})"><span class="nav-label">Catalogo</span> ◇</button><button onclick="openAccount()"><span class="nav-label" id="accountLabel">Accedi / Registrati</span> 👤</button><button onclick="openCart()">🛒 <span id="cartCount">0</span></button></nav>
 </div></header>
+<div id="sideShade" class="side-shade" onclick="closeSideMenu()" aria-hidden="true"></div>
+<aside id="sideDrawer" class="side-drawer" aria-hidden="true" aria-label="Menu EVENT FAVOURS">
+  <div class="side-head"><img class="side-logo" src="./assets/event-favours-logo.jpg" alt="EVENT FAVOURS"><button class="side-close" type="button" aria-label="Chiudi il menu" onclick="closeSideMenu()">×</button></div>
+  <p class="side-kicker">BOMBONIERE PER OGNI OCCASIONE</p>
+  <p class="side-intro">Piccoli dettagli, grandi emozioni. Trova l’idea giusta per il tuo giorno speciale.</p>
+  <nav class="side-nav" aria-label="Navigazione shop">
+    <a href="#catalogo" onclick="closeSideMenu()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h6v6H4zM14 5h6v6h-6zM4 15h6v6H4zM14 15h6v6h-6z"></path></svg>Scopri il catalogo</a>
+    <a href="#occasioni" onclick="closeSideMenu()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-8.8-8.3A5.1 5.1 0 0 1 12 6a5.1 5.1 0 0 1 8.8 5.7C19 15.6 12 20 12 20z"></path></svg>Occasioni speciali</a>
+    <button type="button" onclick="closeSideMenu();openAccount()"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"></circle><path d="M5 20c.7-3.5 3.1-5.3 7-5.3s6.3 1.8 7 5.3"></path></svg>Area clienti</button>
+    <button type="button" onclick="closeSideMenu();openCart()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.1 11.3a2 2 0 0 0 2 1.7h8.5a2 2 0 0 0 1.9-1.4L21 9H6"></path><circle cx="10" cy="20" r="1"></circle><circle cx="18" cy="20" r="1"></circle></svg>Il tuo carrello</button>
+  </nav>
+  <div class="side-feature"><strong>Porta EVENT FAVOURS con te</strong><p>Aggiungi lo shop alla schermata Home: ritroverai le tue creazioni preferite con un tocco.</p><button id="sideInstallAction" class="side-install" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 18v3h14v-3"></path></svg>Aggiungi al telefono</button></div>
+</aside>
+<aside id="installBanner" class="install-banner" aria-hidden="true" aria-label="Installa EVENT FAVOURS">
+  <span class="install-icon"><img src="./assets/event-favours-app-icon.svg" alt=""></span>
+  <span class="install-copy"><strong>EVENT FAVOURS sul tuo telefono</strong><span>Aggiungi lo shop alla schermata Home e riaprilo in un tocco.</span></span>
+  <span class="install-actions"><button id="installAction" type="button" class="pill">Aggiungi</button><button id="dismissInstall" class="install-close" type="button" aria-label="Chiudi invito">×</button></span>
+</aside>
 <section class="hero"><div class="hero-inner">
   <div class="hero-copy"><span class="eyebrow" id="heroEyebrow">Piccoli dettagli, grandi emozioni</span><h1 id="heroTitle">Bomboniere che rendono speciale ogni evento</h1><p id="heroDescription">Idee curate con amore per matrimonio, battesimo, comunione, laurea e ogni momento da ricordare.</p><button class="pill" id="heroButton" onclick="document.getElementById('catalogo').scrollIntoView({behavior:'smooth'})">Scopri le collezioni →</button></div>
   <div class="hero-art"><div class="hero-slider" id="heroSlider"><img class="hero-slide active" src="./assets/prodotto-cuore-dorato.jpg" alt="Cuore decorativo dorato su una tavola elegante"><img class="hero-slide" src="./assets/orsetto-dorato.jpg" alt="Orsetto dorato con fiocco tra palloncini"><img class="hero-slide" src="./assets/orsetti-battesimo.jpg" alt="Orsetti dorati per una nascita"><img class="hero-slide" src="./assets/prodotto-matrimonio-dorato.jpg" alt="Dettaglio dorato per un matrimonio"></div><img class="hero-custom" src="" alt="Foto principale EVENT FAVOURS"><div class="hero-controls"><button class="hero-arrow" type="button" aria-label="Foto precedente" onclick="changeHeroSlide(-1)">‹</button><button class="hero-arrow" type="button" aria-label="Foto successiva" onclick="changeHeroSlide(1)">›</button></div><div class="hero-dots" id="heroDots" aria-label="Scegli una foto"></div><div class="hero-caption"><strong id="heroCaption">Dettagli che fanno festa</strong><span id="heroCount">01 / 04</span></div></div>
 </div></section>
 <main class="wrap">
-  <div class="section-head"><div><h2 id="categoriesTitle">Per ogni occasione</h2><p id="categoriesDescription">Trova lo stile perfetto per il tuo evento.</p></div></div>
+  <div class="section-head" id="occasioni"><div><h2 id="categoriesTitle">Per ogni occasione</h2><p id="categoriesDescription">Trova lo stile perfetto per il tuo evento.</p></div></div>
   <div class="categories" id="categories">
     <button class="category active" onclick="setCategory('Tutte',this)"><span>💍</span>Tutte</button>
     <button class="category" onclick="setCategory('Matrimonio',this)"><span>🤍</span>Matrimonio</button>
@@ -62,6 +95,7 @@ footer{background:#f7efe3;border-top:1px solid var(--line);padding:28px 22px;tex
 <div class="modal-back" id="productModal" onclick="if(event.target===this)closeModal()"><div class="modal"><div class="modal-head"><h2 id="detailTitle">Personalizza prodotto</h2><button class="close" onclick="closeModal()">×</button></div><div id="detailContent"></div></div></div>
 <div class="modal-back" id="cartModal" onclick="if(event.target===this)closeCart()"><div class="modal"><div class="modal-head"><h2>Il tuo carrello</h2><button class="close" onclick="closeCart()">×</button></div><div id="cartContent"></div></div></div>
 <div class="modal-back" id="accountModal" onclick="if(event.target===this)closeAccount()"><div class="modal"><div class="modal-head"><h2>Area clienti</h2><button class="close" onclick="closeAccount()">×</button></div><div id="accountContent"></div></div></div>
+<div class="modal-back install-guide" id="installGuide" onclick="if(event.target===this)closeInstallGuide()"><div class="modal"><div class="modal-head"><h2>Aggiungi EVENT FAVOURS</h2><button class="close" type="button" aria-label="Chiudi" onclick="closeInstallGuide()">×</button></div><p id="installGuideSteps" class="notice"></p><button class="pill" type="button" onclick="closeInstallGuide()">Ho capito</button></div></div>
 <script>
 if (!['localhost', '127.0.0.1'].includes(location.hostname)) {
   document.write('<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"><\/script>');
@@ -113,6 +147,31 @@ if(isLocalPreview){applyShopSettings();renderCategories()}
 initHeroSlider();
 renderProducts();
 if(!isLocalPreview)loadSupabaseCatalog();
+
+(function setupInstallAndMenu(){
+  const byId=id=>document.getElementById(id);
+  const menu=byId('sideDrawer'), shade=byId('sideShade'), menuButton=byId('menuToggle');
+  function closeMenu(){menu.classList.remove('open');shade.classList.remove('open');menu.setAttribute('aria-hidden','true');shade.setAttribute('aria-hidden','true');menuButton.setAttribute('aria-expanded','false');document.body.classList.remove('menu-open')}
+  menuButton.addEventListener('click',()=>{const opening=!menu.classList.contains('open');menu.classList.toggle('open',opening);shade.classList.toggle('open',opening);menu.setAttribute('aria-hidden',String(!opening));shade.setAttribute('aria-hidden',String(!opening));menuButton.setAttribute('aria-expanded',String(opening));document.body.classList.toggle('menu-open',opening)});
+  window.closeSideMenu=closeMenu;
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeMenu();closeInstallGuide()}});
+  let deferredInstall=null;
+  const banner=byId('installBanner'), installButton=byId('installAction'), dismissedKey='ef_install_invite_dismissed_v1';
+  const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+  const isStandalone=()=>window.matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+  function showInvite(){if(isStandalone()||localStorage.getItem(dismissedKey)==='1')return;const mobile=window.matchMedia('(max-width: 760px)').matches||/Android|iPhone|iPad|iPod/i.test(navigator.userAgent);if(!mobile&&!deferredInstall)return;installButton.textContent=deferredInstall?'Installa app':(isIOS?'Come aggiungerla':'Installa / Aggiungi');banner.classList.add('show');banner.setAttribute('aria-hidden','false')}
+  window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();deferredInstall=event;showInvite()});
+  function openInstallGuide(){byId('installGuideSteps').textContent=isIOS?'Su iPhone o iPad: apri questa pagina in Safari, tocca Condividi, scegli “Aggiungi alla schermata Home” e poi tocca Aggiungi.':'Su Android: apri il menu ⋮ del browser e scegli “Installa app” oppure “Aggiungi a schermata Home”.';byId('installGuide').classList.add('show')}
+  window.closeInstallGuide=()=>byId('installGuide').classList.remove('show');
+  async function handleInstall(){if(deferredInstall){const promptEvent=deferredInstall;deferredInstall=null;try{await promptEvent.prompt();const choice=await promptEvent.userChoice;if(choice.outcome==='accepted'){localStorage.setItem(dismissedKey,'1');banner.classList.remove('show')}else showInvite()}catch{openInstallGuide()}return}openInstallGuide()}
+  installButton.addEventListener('click',handleInstall);
+  byId('sideInstallAction').addEventListener('click',()=>{closeMenu();handleInstall()});
+  byId('dismissInstall').addEventListener('click',()=>{banner.classList.remove('show');banner.setAttribute('aria-hidden','true');localStorage.setItem(dismissedKey,'1')});
+  window.addEventListener('appinstalled',()=>{banner.classList.remove('show');banner.setAttribute('aria-hidden','true');localStorage.setItem(dismissedKey,'1')});
+  const isLocalHost=['localhost','127.0.0.1'].includes(location.hostname);
+  if('serviceWorker'in navigator&&!isLocalHost)navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
+  if(window.matchMedia('(max-width:760px)').matches||/Android|iPhone|iPad|iPod/i.test(navigator.userAgent))window.setTimeout(showInvite,3200);
+})();
 </script>
 </body></html>
 
