@@ -74,6 +74,12 @@ footer{background:#f7efe3;border-top:1px solid var(--line);padding:28px 22px;tex
 .cookie-notice{position:fixed;z-index:70;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));transform:translateX(-50%);width:min(760px,calc(100vw - 24px));display:none;align-items:center;gap:18px;padding:17px 18px;border:1px solid #ead7b4;border-radius:18px;background:#fffdf9;box-shadow:0 14px 45px #38271930}.cookie-notice.show{display:flex}.cookie-copy{flex:1;color:#5f4b35;font-size:13px;line-height:1.5}.cookie-copy strong{display:block;color:#76500f;font:18px Georgia,serif;margin-bottom:3px}.cookie-copy a{color:#76500f;font-weight:700}.cookie-actions{display:flex;align-items:center;gap:8px}.cookie-actions .pill{white-space:nowrap}.cookie-dismiss{border:1px solid #d9c7a6;border-radius:22px;background:white;color:#76500f;padding:10px 13px;font-weight:700}@media(max-width:560px){.cookie-notice{align-items:stretch;flex-direction:column;gap:10px;padding:15px}.cookie-actions{justify-content:flex-end}}
 
 .whatsapp-float{position:fixed;z-index:48;right:22px;bottom:calc(22px + env(safe-area-inset-bottom));width:74px;height:74px;display:grid;place-items:center;border:0;border-radius:50%;background:#20c763;color:#fff;box-shadow:0 10px 28px #183e2a55;transition:transform .2s,box-shadow .2s;animation:whatsapp-bob 3s ease-in-out infinite}.whatsapp-float:before{content:"";position:absolute;inset:-6px;border:2px solid #25d36688;border-radius:50%;animation:whatsapp-ring 2.4s ease-out infinite}.whatsapp-float:hover{transform:translateY(-3px) scale(1.05);box-shadow:0 14px 34px #183e2a70}.whatsapp-float svg{width:36px;height:36px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.whatsapp-float:focus-visible{outline:3px solid #a77a22;outline-offset:4px}.whatsapp-badge{position:absolute;top:-1px;right:-1px;width:24px;height:24px;display:grid;place-items:center;border:2px solid white;border-radius:50%;background:#d94343;color:white;font:700 12px Arial;box-shadow:0 2px 7px #0002}.whatsapp-chat{position:fixed;z-index:48;right:24px;bottom:calc(108px + env(safe-area-inset-bottom));width:min(340px,calc(100vw - 28px));padding:0;border:1px solid #e9e0d2;border-radius:18px;background:#fff;box-shadow:0 14px 42px #38271935;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(12px) scale(.97);transform-origin:bottom right;transition:opacity .25s,transform .25s,visibility .25s;overflow:hidden}.whatsapp-chat.show{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0) scale(1)}.whatsapp-chat-head{display:flex;align-items:center;gap:11px;padding:13px 15px;background:#168b51;color:white}.whatsapp-chat-mark{width:39px;height:39px;display:grid;place-items:center;border-radius:50%;background:#ffffff25}.whatsapp-chat-mark svg{width:22px;height:22px;fill:none;stroke:white;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.whatsapp-chat-title{flex:1}.whatsapp-chat-title strong{display:block;font:700 14px Arial}.whatsapp-chat-title span{display:block;margin-top:3px;font:11px Arial;opacity:.88}.whatsapp-chat-close{width:30px;height:30px;border:0;border-radius:50%;background:#ffffff20;color:white;font-size:20px}.whatsapp-chat-body{padding:16px;background:#f7f5ef}.whatsapp-chat-message{position:relative;max-width:92%;padding:12px 13px;border:1px solid #e9e3d8;border-radius:4px 15px 15px 15px;background:white;color:#382719;font:14px/1.45 Arial;box-shadow:0 2px 5px #3827190b}.whatsapp-chat-time{display:block;margin-top:6px;text-align:right;color:#978c7d;font-size:10px}.whatsapp-chat-actions{display:flex;gap:8px;margin-top:13px}.whatsapp-chat-actions button{min-height:40px;border-radius:22px;padding:9px 13px;font-weight:700}.whatsapp-chat-yes{flex:1;border:0;background:#168b51;color:white}.whatsapp-chat-later{border:1px solid #ded5c7;background:#fff;color:#685744}.whatsapp-chat-hint{margin:10px 2px 0;color:#867866;font-size:10px;line-height:1.4}@keyframes whatsapp-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}@keyframes whatsapp-ring{0%{transform:scale(.88);opacity:.65}70%,100%{transform:scale(1.28);opacity:0}}@media(max-width:560px){.whatsapp-float{width:68px;height:68px;right:14px}.whatsapp-float svg{width:33px;height:33px}.whatsapp-chat{right:14px;width:min(340px,calc(100vw - 28px))}}@media(prefers-reduced-motion:reduce){.whatsapp-float,.whatsapp-float:before{animation:none}.whatsapp-float,.whatsapp-chat{transition:none}}
+
+/* Mobile comfort: keep installation in the menu and let customers move WhatsApp out of the way. */
+.install-floating{display:none!important}.install-banner{display:none!important}
+.whatsapp-float{touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}.whatsapp-float.is-dragging{cursor:grabbing;transition:none;animation:none;box-shadow:0 14px 34px #183e2a70}.whatsapp-float.is-dragging:before{animation:none}
+.whatsapp-chat{max-height:min(400px,calc(100dvh - 24px));overflow-y:auto;overscroll-behavior:contain}
+@media(max-width:760px){.whatsapp-float{width:54px;height:54px;right:10px;bottom:calc(12px + env(safe-area-inset-bottom))}.whatsapp-float svg{width:27px;height:27px}.whatsapp-float:before{inset:-3px}.whatsapp-badge{width:19px;height:19px;font-size:10px}.whatsapp-chat{width:min(330px,calc(100vw - 20px));right:10px}}
 </style>
 </head>
 <body>
@@ -194,8 +200,8 @@ if(!isLocalPreview)window.EF_SUPABASE_READY.then(ok=>{if(ok)loadSupabaseCatalog(
   const isMobile=()=>isIOS||isAndroid||window.matchMedia('(max-width: 760px)').matches;
   const isStandalone=()=>window.matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
   const isLocalHost=['localhost','127.0.0.1'].includes(location.hostname);
-  function setInstallVisibility(installed){appInstalled=installed;floatingInstall.hidden=installed||isLocalHost;if(installed){banner.classList.remove('show');banner.setAttribute('aria-hidden','true');return}if(!inviteDismissedThisPage&&isMobile()&&!isLocalHost)showInvite()}
-  function showInvite(){if(appInstalled||isStandalone()||isLocalHost||inviteDismissedThisPage)return;const title=byId('installTitle'),desc=byId('installDescription');title.textContent=isMobile()?'Porta EVENT FAVOURS con te':'Installa EVENT FAVOURS sul computer';desc.textContent=deferredInstall?'Un tocco e lo shop sarà sulla schermata Home.':'Aggiungi lo shop alla schermata Home o alle app del computer.';installButton.textContent=deferredInstall?'Installa adesso':'Aggiungi';banner.classList.add('show');banner.setAttribute('aria-hidden','false')}
+  function setInstallVisibility(installed){appInstalled=installed;floatingInstall.hidden=true;if(installed){banner.classList.remove('show');banner.setAttribute('aria-hidden','true')}}
+  
   async function detectInstalledApp(){
     if('getInstalledRelatedApps'in navigator){
       try{
@@ -209,7 +215,7 @@ if(!isLocalPreview)window.EF_SUPABASE_READY.then(ok=>{if(ok)loadSupabaseCatalog(
     return isStandalone();
   }
   async function refreshInstallState(){setInstallVisibility(await detectInstalledApp())}
-  window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();deferredInstall=event;showInvite()});
+  window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();deferredInstall=event;});
   function openInstallGuide(){
     const text=isIOS
       ?'Su iPhone: apri EVENT FAVOURS in Safari, tocca Condividi e scegli “Aggiungi alla schermata Home”.'
@@ -228,7 +234,7 @@ if(!isLocalPreview)window.EF_SUPABASE_READY.then(ok=>{if(ok)loadSupabaseCatalog(
     }
     if(deferredInstall){
       const promptEvent=deferredInstall;deferredInstall=null;
-      try{await promptEvent.prompt();const choice=await promptEvent.userChoice;if(choice.outcome==='accepted'){banner.classList.remove('show');banner.setAttribute('aria-hidden','true');inviteDismissedThisPage=true;setInstallVisibility(true)}else showInvite()}
+      try{await promptEvent.prompt();const choice=await promptEvent.userChoice;if(choice.outcome==='accepted'){banner.classList.remove('show');banner.setAttribute('aria-hidden','true');inviteDismissedThisPage=true;setInstallVisibility(true)}}
       catch{openInstallGuide()}
       return;
     }
@@ -242,7 +248,7 @@ if(!isLocalPreview)window.EF_SUPABASE_READY.then(ok=>{if(ok)loadSupabaseCatalog(
   const refreshWhenVisible=()=>{if(document.visibilityState==='visible')refreshInstallState()};
   window.addEventListener('focus',refreshInstallState);
   document.addEventListener('visibilitychange',refreshWhenVisible);
-  if(!isLocalHost)window.setTimeout(async()=>{await refreshInstallState();if(!appInstalled&&isMobile())showInvite()},1600);
+  if(!isLocalHost)window.setTimeout(refreshInstallState,1600);
 
   if('serviceWorker'in navigator&&!isLocalHost)navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
   if(!isLocalHost)window.EF_SUPABASE_READY.then(ok=>{if(ok)setupPushPromo()});
@@ -296,9 +302,23 @@ if(!isLocalPreview)window.EF_SUPABASE_READY.then(ok=>{if(ok)loadSupabaseCatalog(
 <button id="whatsappFloat" class="whatsapp-float" type="button" onclick="toggleWhatsAppWelcome()" aria-label="Apri il messaggio WhatsApp" title="Informazioni e preventivi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 11.8a8.2 8.2 0 0 1-12.1 7.1L4 20l1.2-4A8.2 8.2 0 1 1 20.2 11.8Z"></path><path d="M8.7 8.2c.2-.5.4-.5.7-.5h.5c.2 0 .4.1.5.4l.7 1.6c.1.2 0 .4-.1.6l-.5.6c-.2.2-.2.4-.1.6.5.8 1.2 1.5 2.1 2 .2.1.4.1.6-.1l.7-.8c.2-.2.4-.2.6-.1l1.5.7c.3.1.4.3.4.5 0 .4-.2 1.2-.8 1.6-.5.4-1.2.6-1.9.4-1.1-.3-2.4-.9-3.8-2.2-1.1-1-1.9-2.3-2.1-3.3-.2-.9.2-1.6.5-2Z"></path></svg><span class="whatsapp-badge" aria-hidden="true">1</span></button>
 <script>
 function dismissWhatsAppWelcome(){const panel=document.getElementById('whatsappWelcome');panel.classList.remove('show');try{sessionStorage.setItem('ef_whatsapp_welcome_dismissed_v1','1')}catch{}}
-function toggleWhatsAppWelcome(){const panel=document.getElementById('whatsappWelcome');panel.classList.toggle('show')}
+function toggleWhatsAppWelcome(){if(window.efWhatsAppSuppressClick){window.efWhatsAppSuppressClick=false;return}const panel=document.getElementById('whatsappWelcome');panel.classList.toggle('show');if(panel.classList.contains('show'))requestAnimationFrame(()=>window.efPlaceWhatsAppPanel?.())}
 function openWhatsAppInfo(){const phone=((window.EF_SUPABASE_CONFIG||{}).whatsapp||'+393345385735').replace(/\D/g,'');if(!phone){alert('Il contatto WhatsApp del negozio non è disponibile.');return}const message='Buongiorno EVENT FAVOURS, vorrei ricevere informazioni e un preventivo.';window.location.href='https://wa.me/'+phone+'?text='+encodeURIComponent(message)}
-(function(){const panel=document.getElementById('whatsappWelcome'),button=document.getElementById('whatsappFloat'),install=document.getElementById('installBanner');const offset=()=>install?.classList.contains('show')?'108px':'22px';const place=()=>{const b=offset();button.style.bottom='calc('+b+' + env(safe-area-inset-bottom))';panel.style.bottom='calc('+(parseInt(b,10)+86)+'px + env(safe-area-inset-bottom))'};place();new MutationObserver(place).observe(install,{attributes:true,attributeFilter:['class']});document.getElementById('dismissInstall').addEventListener('click',()=>setTimeout(place,0));window.addEventListener('appinstalled',place);try{if(sessionStorage.getItem('ef_whatsapp_welcome_dismissed_v1')!=='1')setTimeout(()=>panel.classList.add('show'),1800)}catch{setTimeout(()=>panel.classList.add('show'),1800)}})();
+(function(){
+ const panel=document.getElementById('whatsappWelcome'),button=document.getElementById('whatsappFloat'),key='ef_whatsapp_float_position_v1';
+ const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
+ function moveTo(x,y){const m=8,maxX=Math.max(m,innerWidth-button.offsetWidth-m),maxY=Math.max(m,innerHeight-button.offsetHeight-m);button.style.left=clamp(x,m,maxX)+'px';button.style.top=clamp(y,m,maxY)+'px';button.style.right='auto';button.style.bottom='auto'}
+ function placePanel(){if(!panel.classList.contains('show'))return;const m=10,b=button.getBoundingClientRect(),r=panel.getBoundingClientRect();let x=clamp(b.right-r.width,m,innerWidth-r.width-m),y=b.top-r.height-10;if(y<m)y=b.bottom+10;y=clamp(y,m,innerHeight-r.height-m);panel.style.left=x+'px';panel.style.top=y+'px';panel.style.right='auto';panel.style.bottom='auto'}
+ window.efPlaceWhatsAppPanel=placePanel;
+ try{const saved=JSON.parse(localStorage.getItem(key)||'null');if(saved&&Number.isFinite(saved.x)&&Number.isFinite(saved.y))moveTo(saved.x,saved.y)}catch{}
+ let drag=null;
+ button.addEventListener('pointerdown',e=>{if(e.button!==undefined&&e.button!==0)return;const r=button.getBoundingClientRect();drag={id:e.pointerId,x:e.clientX,y:e.clientY,left:r.left,top:r.top,moved:false};button.setPointerCapture?.(e.pointerId)});
+ button.addEventListener('pointermove',e=>{if(!drag||drag.id!==e.pointerId)return;const dx=e.clientX-drag.x,dy=e.clientY-drag.y;if(!drag.moved&&Math.hypot(dx,dy)<6)return;drag.moved=true;window.efWhatsAppSuppressClick=true;e.preventDefault();moveTo(drag.left+dx,drag.top+dy);placePanel();button.classList.add('is-dragging')});
+ const endDrag=e=>{if(!drag||drag.id!==e.pointerId)return;if(drag.moved){const r=button.getBoundingClientRect();try{localStorage.setItem(key,JSON.stringify({x:r.left,y:r.top}))}catch{}setTimeout(()=>{window.efWhatsAppSuppressClick=false},500)}drag=null;button.classList.remove('is-dragging')};
+ button.addEventListener('pointerup',endDrag);button.addEventListener('pointercancel',endDrag);
+ window.addEventListener('resize',()=>{const r=button.getBoundingClientRect();if(button.style.left)moveTo(r.left,r.top);placePanel()});
+ panel.addEventListener('transitionend',placePanel);
+})();
 </script>
 </body></html>
 
