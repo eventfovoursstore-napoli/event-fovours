@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,viewport-fit=cover">
   <meta name="theme-color" content="#a77a22">
   <link rel="manifest" href="./admin.webmanifest">
   <link rel="icon" type="image/png" sizes="192x192" href="../assets/app-icon-192.png">
@@ -44,11 +44,174 @@ header{min-height:84px;display:flex;justify-content:space-between;align-items:ce
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
 
 @media(max-width:680px){#adminInstallTop{padding:9px 11px;font-size:.82rem;white-space:nowrap}.admin-brand img{max-width:118px}}
+
+/* Premium admin dashboard and mobile-first editing experience */
+:root{--gold:#aa7c2a;--gold-dark:#80591b;--line:#e9dfd3;--paper:#fffefa;--shadow:0 12px 32px #4930180b}
+html{scroll-padding-top:calc(84px + env(safe-area-inset-top));-webkit-text-size-adjust:100%}
+body{min-width:320px;overflow-x:hidden}
+button,a{-webkit-tap-highlight-color:transparent}
+button{touch-action:manipulation}
+header{padding-top:env(safe-area-inset-top)}
+.welcome-card{align-items:flex-start;padding:30px 32px;min-height:190px}
+.welcome-copy{position:relative;z-index:1}
+.welcome-card h1{max-width:680px;font-size:clamp(1.75rem,3.2vw,2.5rem)}
+.welcome-card p{max-width:620px;line-height:1.55}
+.welcome-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}
+.welcome-link{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:10px 15px;border:1px solid #fff7;border-radius:12px;background:#fff;color:#795719;text-decoration:none;font-size:.88rem;font-weight:750;box-shadow:0 5px 16px #53390e1c}
+.welcome-link:hover{background:#fff8eb}
+.welcome-link-light{background:#ffffff16;color:white;border-color:#ffffff45}
+.welcome-link-light:hover{background:#ffffff28;color:white}
+.welcome-date{display:block;margin-top:13px;color:#fff9e2;font-size:.78rem;font-weight:700;letter-spacing:.03em;text-transform:capitalize}
+.welcome-mark{margin:10px 8px 0 0;font-size:3.8rem}
+.stats-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:0 0 15px}
+.stat-card{display:flex;align-items:center;gap:13px;min-width:0;padding:17px 18px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,#fffefa,#fffaf3);box-shadow:0 8px 24px #49301808}
+.stat-icon{width:45px;height:45px;flex:0 0 45px;display:grid;place-items:center;border-radius:15px;background:#f8efdf;color:#9a7023;font-size:1.3rem}
+.stat-card div{min-width:0}
+.stat-label{display:block;color:#75695d;font-size:.78rem;font-weight:700}
+.stat-card strong{display:block;margin:2px 0;color:#34271e;font:1.8rem/1.15 Georgia,serif}
+.stat-card small{display:block;color:#908477;font-size:.72rem;line-height:1.35}
+.quick-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0 0 21px}
+.quick-actions a{position:relative;display:grid;grid-template-columns:38px minmax(0,1fr);align-items:center;column-gap:11px;padding:14px;border:1px solid var(--line);border-radius:16px;background:#fffefa;color:var(--ink);text-decoration:none;transition:transform .18s,border-color .18s,box-shadow .18s}
+.quick-actions a:hover{transform:translateY(-2px);border-color:#d8c18f;box-shadow:0 10px 24px #4930180d}
+.quick-actions a>span{grid-row:span 2;width:38px;height:38px;display:grid;place-items:center;border-radius:12px;background:#faf2e4;color:#956c24;font-size:1.2rem}
+.quick-actions b{font-size:.84rem;line-height:1.3}
+.quick-actions small{margin-top:3px;color:#887b6d;font-size:.72rem;line-height:1.35}
+.content-panel{scroll-margin-top:calc(92px + env(safe-area-inset-top))}
+.admin-sidebar{border-top:3px solid #c4a05c}
+.admin-nav a.is-current{background:#f8f0e2;color:#765419;box-shadow:inset 3px 0 #b28b3d}
+.catalog-tools{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:10px;margin:-3px 0 15px;padding:12px;border:1px solid #eee4d8;border-radius:15px;background:#fcfaf6}
+.catalog-search{position:relative;min-width:0}
+.catalog-search>span{position:absolute;left:13px;top:50%;z-index:1;transform:translateY(-50%);color:#a77a22;font-size:1.4rem}
+.catalog-search input{margin:0;padding-left:41px;min-width:0}
+.catalog-filter{display:flex;align-items:center;gap:7px;white-space:nowrap}
+.catalog-filter>span{color:#796d60;font-size:.8rem;font-weight:700}
+.catalog-filter select{margin:0;min-width:130px}
+.results-count{color:#82776a;font-size:.8rem;font-weight:700;white-space:nowrap}
+.product{grid-template-columns:88px minmax(0,1fr) auto;gap:15px;padding:14px;border-radius:17px;transition:border-color .18s,box-shadow .18s}
+.product:hover{border-color:#ddc99f;box-shadow:0 8px 22px #4930180b}
+.product-media{width:88px;height:88px;display:grid;place-items:center;overflow:hidden;border-radius:14px;background:linear-gradient(145deg,#f7efe3,#f1e1d5);color:#b58d4a;font-size:1.8rem}
+.product-media img{width:100%;height:100%;object-fit:cover}
+.product-copy{min-width:0}
+.product-title{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.product-title h3{margin:0;font:1.08rem Georgia,serif;overflow-wrap:anywhere}
+.product-state{display:inline-flex;align-items:center;min-height:23px;padding:3px 8px;border-radius:20px;font-size:.68rem;font-weight:800;white-space:nowrap}
+.product-state.is-visible{background:#eaf5ec;color:#397548}
+.product-state.is-hidden{background:#f0ece7;color:#75695d}
+.product-meta{color:#6d5a45}
+.product-description{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+.product-actions{gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.product-actions button{padding:10px 12px;font-size:.82rem}
+.image-preview{margin-top:13px;width:min(100%,420px);aspect-ratio:16/9;overflow:hidden;border:1px solid var(--line);border-radius:15px;background:#f7f1e8}
+.image-preview img{width:100%;height:100%;display:block;object-fit:cover}
+.image-preview.hidden{display:none}
+.empty-state{display:grid;justify-items:center;gap:5px;padding:34px 18px;border:1px dashed #dfd1be;border-radius:16px;background:#fcfaf6;text-align:center;color:#766554}
+.empty-state>span{font-size:1.8rem;color:#aa7c2a}
+.empty-state strong{color:#423327}
+.empty-state p{margin:0;font-size:.87rem}
+#newsletterSubscribers{max-height:300px;overflow:auto;overscroll-behavior:contain}
+#newsletterSubscribers p{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:9px 2px;border-bottom:1px solid #f1ebe3;overflow-wrap:anywhere}
+#newsletterSubscribers p:last-child{border-bottom:0}
+#commercePanel label{margin:10px 0 15px}
+:focus-visible{outline-color:#c8a257}
+@media(max-width:960px){
+ .stats-grid{gap:10px}
+ .stat-card{padding:14px 12px;gap:10px}
+ .stat-icon{width:39px;height:39px;flex-basis:39px}
+ .quick-actions{gap:9px}
+ .quick-actions a{padding:12px}
+}
+@media(max-width:680px){
+ .wrap{padding:calc(8px + env(safe-area-inset-top)) 12px calc(112px + env(safe-area-inset-bottom))}
+ header{position:relative;min-height:62px;padding:5px 0 11px;margin-bottom:12px;align-items:center;gap:6px}
+ .admin-brand{min-width:0;gap:5px}
+ .admin-brand img{width:clamp(94px,28vw,125px);height:62px;object-fit:contain}
+ .admin-title{font-size:.68rem;line-height:1.2;padding-left:7px;letter-spacing:0}
+ header>div{gap:5px!important;flex:0 0 auto}
+ #adminInstallTop{min-height:42px;padding:8px 10px;font-size:.75rem;white-space:normal;line-height:1.2}
+ #signout{min-height:42px;padding:8px 10px;font-size:.8rem}
+ #status{font-size:.88rem}
+ #config,#login{margin:15px auto;padding:21px 17px}
+ label{font-size:.86rem}
+ input,textarea,select{font-size:16px;min-height:46px}
+ textarea{min-height:110px}
+ #manager:not(.hidden){display:block}
+ .admin-sidebar{position:sticky;top:0;z-index:18;margin:0 -12px 14px;padding:8px 10px;border-radius:0 0 16px 16px;border-top:0;border-bottom:1px solid var(--line);background:#fffdf8ed;backdrop-filter:blur(14px);box-shadow:0 6px 18px #3827190b}
+ .admin-nav{gap:6px;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+ .admin-nav a{scroll-snap-align:start;min-height:42px;padding:9px 12px;font-size:.78rem}
+ .nav-icon{font-size:1rem}
+ .admin-content{min-width:0}
+ .welcome-card{min-height:0;padding:20px 18px;border-radius:18px;margin-bottom:11px}
+ .welcome-card h1{font-size:1.55rem;line-height:1.12}
+ .welcome-card p{font-size:.87rem;line-height:1.45}
+ .welcome-actions{gap:7px;margin-top:13px}
+ .welcome-link{min-height:42px;padding:9px 11px;font-size:.78rem}
+ .welcome-date{font-size:.72rem}
+ .welcome-mark{font-size:2.3rem;margin:3px 0}
+ .stats-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-bottom:10px}
+ .stat-card{display:block;padding:11px 10px;border-radius:14px}
+ .stat-icon{width:33px;height:33px;margin-bottom:7px;border-radius:11px;font-size:1rem}
+ .stat-label{min-height:2.2em;font-size:.68rem;line-height:1.2}
+ .stat-card strong{font-size:1.45rem}
+ .stat-card small{font-size:.62rem;line-height:1.25}
+ .quick-actions{grid-template-columns:1fr;gap:7px;margin-bottom:14px}
+ .quick-actions a{grid-template-columns:36px minmax(0,1fr);padding:10px 12px;border-radius:14px}
+ .quick-actions a>span{width:35px;height:35px}
+ .quick-actions small{font-size:.7rem}
+ .panel{padding:17px 14px;border-radius:16px}
+ .section-heading{margin-bottom:15px;padding-bottom:13px}
+ .section-heading h2{font-size:1.2rem;line-height:1.2}
+ .section-heading p{font-size:.82rem;line-height:1.45}
+ .heading-mark{width:35px;height:35px;flex-basis:35px}
+ .editor-grid{gap:11px}
+ .editor-card,.photo-card{padding:14px;border-radius:14px}
+ .field-row{gap:10px}
+ .actions{gap:8px}
+ .actions button,.actions a{min-height:44px}
+ .editor-actions{align-items:stretch}
+ .editor-actions>div{width:100%}
+ .editor-actions>div button{flex:1}
+ .editor-actions>.muted{font-size:.77rem}
+ .catalog-tools{grid-template-columns:minmax(0,1fr) auto;gap:8px;padding:9px;margin-bottom:12px}
+ .catalog-search{grid-column:1/-1}
+ .catalog-search input{width:100%}
+ .catalog-filter{min-width:0}
+ .catalog-filter select{min-width:0;width:auto;max-width:175px}
+ .results-count{justify-self:end;font-size:.72rem}
+ .product{grid-template-columns:62px minmax(0,1fr);gap:10px;padding:11px;margin:9px 0;border-radius:15px}
+ .product-media{width:62px;height:62px;border-radius:12px}
+ .product-title h3{font-size:1rem}
+ .product-meta{font-size:.82rem}
+ .product-description{font-size:.78rem}
+ .product-actions{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+ .product-actions button{min-width:0;min-height:42px;padding:8px 5px;font-size:.73rem}
+ .image-preview{aspect-ratio:4/3}
+ #newsletterSubscribers{max-height:220px}
+ #campaignMessage{min-height:150px}
+ .admin-install{left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));width:auto;max-width:none}
+ .install-help{font-size:.78rem}
+}
+@media(max-width:380px){
+ .wrap{padding-left:9px;padding-right:9px}
+ .admin-brand img{width:88px;height:56px}
+ .admin-title{max-width:92px;font-size:.62rem}
+ #adminInstallTop{max-width:94px;padding:7px;font-size:.68rem}
+ .welcome-card h1{font-size:1.42rem}
+ .welcome-mark{font-size:1.9rem}
+ .stat-card{padding:9px 7px}
+ .stat-label{font-size:.62rem}
+ .stat-card small{font-size:.58rem}
+ .catalog-filter>span{font-size:.7rem}
+ .product-actions button{font-size:.68rem}
+ .panel{padding:15px 12px}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
 </style>
 </head>
 <body>
 <main class="wrap">
-  <header><a class="admin-brand" href="../index.html" aria-label="Vai alla vetrina EVENT FAVOURS"><img src="../assets/event-favours-logo.jpg" alt="EVENT FAVOURS"><span class="admin-title">· Amministrazione</span></a><div style="display:flex;gap:8px;align-items:center"><button id="adminInstallTop" class="secondary" type="button">📲 Installa sul telefono</button><button id="signout" class="secondary hidden">Esci</button></div></header>
+  <header><a class="admin-brand" href="../shop/" aria-label="Vai alla vetrina EVENT FAVOURS"><img src="../assets/event-favours-logo.jpg" alt="EVENT FAVOURS"><span class="admin-title">· Amministrazione</span></a><div style="display:flex;gap:8px;align-items:center"><button id="adminInstallTop" class="secondary" type="button">📲 Installa sul telefono</button><button id="signout" class="secondary hidden">Esci</button></div></header>
   <p id="status" class="message" role="status" aria-live="polite"></p>
   <section id="config" class="panel">
     <h2>Collega Supabase</h2>
@@ -78,7 +241,19 @@ header{min-height:84px;display:flex;justify-content:space-between;align-items:ce
       <div class="sidebar-note">Il tuo spazio per curare il catalogo e la vetrina del negozio.</div>
     </aside>
     <div class="admin-content">
-      <section class="welcome-card" id="overview"><div><span class="eyebrow">Il tuo spazio creativo</span><h1>Gestiamo ogni dettaglio con cura.</h1><p>Aggiorna lo shop e racconta le tue nuove creazioni.</p></div><span class="welcome-mark" aria-hidden="true">🎀</span></section>
+      <section class="welcome-card" id="overview">
+      <div class="welcome-copy"><span class="eyebrow">Il tuo spazio creativo</span><h1>Il tuo laboratorio, tutto sotto controllo.</h1><p>Gestisci la vetrina, aggiungi creazioni e resta in contatto con i tuoi clienti.</p><div class="welcome-actions"><a class="welcome-link" href="#productForm">＋ Nuovo prodotto</a><a class="welcome-link welcome-link-light" href="../shop/" target="_blank" rel="noopener">Apri lo shop ↗</a></div><small class="welcome-date" id="adminToday"></small></div><span class="welcome-mark" aria-hidden="true">🎀</span>
+    </section>
+    <section class="stats-grid" aria-label="Riepilogo del negozio">
+      <article class="stat-card"><span class="stat-icon">🎁</span><div><span class="stat-label">Prodotti in catalogo</span><strong id="statProducts">—</strong><small id="statProductsHint">In attesa di caricamento</small></div></article>
+      <article class="stat-card"><span class="stat-icon">✦</span><div><span class="stat-label">In vetrina</span><strong id="statVisible">—</strong><small id="statVisibleHint">Prodotti visibili ai clienti</small></div></article>
+      <article class="stat-card"><span class="stat-icon">✉</span><div><span class="stat-label">Newsletter attiva</span><strong id="statSubscribers">—</strong><small id="statSubscribersHint">Clienti consenzienti</small></div></article>
+    </section>
+    <section class="quick-actions" aria-label="Azioni rapide">
+      <a href="#productForm"><span>＋</span><b>Aggiungi una creazione</b><small>Foto, prezzo e descrizione</small></a>
+      <a href="#productsCatalog"><span>⌕</span><b>Gestisci il catalogo</b><small>Cerca, modifica o nascondi prodotti</small></a>
+      <a href="#shopSettings"><span>✦</span><b>Personalizza la vetrina</b><small>Testi, foto e colori del negozio</small></a>
+    </section>
     <section class="panel content-panel" id="shopSettings">
       <div class="section-heading"><div><span class="eyebrow">La tua vetrina</span><h2>Personalizza la pagina dello shop</h2><p class="muted">Modifica testi, immagini, occasioni e colori del tuo negozio.</p></div><span class="heading-mark">✦</span></div>
       <div class="grid">
@@ -114,7 +289,7 @@ header{min-height:84px;display:flex;justify-content:space-between;align-items:ce
             <label>Prezzo indicativo (€)<input id="price" type="number" min="0" step="0.01" placeholder="0,00" required></label></div>
             <label>Descrizione<textarea id="description" maxlength="2000" placeholder="Racconta materiali, colori e dettagli della creazione…"></textarea></label>
           </div>
-          <div class="editor-card"><h3>Foto del prodotto</h3><label>Carica una foto<input id="image" type="file" accept="image/jpeg,image/png,image/webp,image/gif"><span class="photo-help">Scegli un’immagine dalla galleria. JPG, PNG o WebP, massimo 5 MB.</span></label></div>
+          <div class="editor-card"><h3>Foto del prodotto</h3><label>Carica una foto<input id="image" type="file" accept="image/jpeg,image/png,image/webp,image/gif"><span class="photo-help">Scegli dalla galleria o scatta una foto. JPG, PNG o WebP, massimo 5 MB.</span></label><div id="imagePreview" class="image-preview hidden" aria-live="polite"></div></div>
         </div>
         <div class="editor-aside">
           <div class="editor-card"><h3>Pubblicazione</h3><label>Visibile nello shop<select id="active"><option value="true">Sì, mostra il prodotto</option><option value="false">No, tienilo nascosto</option></select></label><p class="photo-help">Puoi nascondere un prodotto senza eliminarlo.</p></div>
@@ -123,7 +298,7 @@ header{min-height:84px;display:flex;justify-content:space-between;align-items:ce
       </div>
       <div class="actions editor-actions"><div class="actions" style="margin:0"><button type="submit">Salva prodotto</button><button type="button" id="cancelEdit" class="secondary hidden">Annulla modifica</button></div><span class="muted">Puoi aggiornare i dettagli in qualsiasi momento.</span></div>
     </form>
-    <section class="panel content-panel" id="productsCatalog"><div class="section-heading"><div><span class="eyebrow">Le tue creazioni</span><h2>Catalogo prodotti</h2><p class="muted">Modifica i dettagli o scegli cosa mostrare nella vetrina.</p></div><span class="heading-mark">🎁</span></div><div id="products"></div></section>
+    <section class="panel content-panel" id="productsCatalog"><div class="section-heading"><div><span class="eyebrow">Le tue creazioni</span><h2>Catalogo prodotti</h2><p class="muted">Cerca, filtra e aggiorna le schede del tuo negozio.</p></div><span class="heading-mark">🎁</span></div><div class="catalog-tools" role="search"><label class="catalog-search"><span aria-hidden="true">⌕</span><input id="productSearch" type="search" placeholder="Cerca per nome, categoria o descrizione" autocomplete="off" enterkeyhint="search"></label><label class="catalog-filter"><span>Mostra</span><select id="productFilter"><option value="all">Tutti</option><option value="visible">In vetrina</option><option value="hidden">Nascosti</option><option value="no-photo">Senza foto</option></select></label><span id="catalogCount" class="results-count" role="status" aria-live="polite">—</span></div><div id="products"></div></section>
     <section class="panel content-panel" id="commercePanel"><div class="section-heading"><div><span class="eyebrow">Community</span><h2>Clienti e newsletter</h2><p class="muted">Puoi scaricare solo gli indirizzi che hanno dato il consenso alle offerte. Le richieste d’ordine e le spese di spedizione si concordano direttamente su WhatsApp; il sito non incassa pagamenti.</p></div><span class="heading-mark">✉</span></div>
       <div class="actions"><button type="button" class="secondary" id="exportNewsletter">Esporta iscritti consenzienti (CSV)</button></div>
       <p id="commerceStatus" class="muted" aria-live="polite"></p>
@@ -135,6 +310,41 @@ header{min-height:84px;display:flex;justify-content:space-between;align-items:ce
   </section>
 </main>
 <script>
+function updateAdminMetrics(products, subscribers=null){
+  const today=document.getElementById('adminToday');if(today)today.textContent=new Intl.DateTimeFormat('it-IT',{weekday:'long',day:'numeric',month:'long'}).format(new Date());
+  const list=Array.isArray(products)?products:[];
+  const total=document.getElementById('statProducts'),visible=document.getElementById('statVisible');
+  const totalHint=document.getElementById('statProductsHint'),visibleHint=document.getElementById('statVisibleHint');
+  if(total)total.textContent=list.length;
+  if(visible)visible.textContent=list.filter(p=>p.active).length;
+  if(totalHint)totalHint.textContent=list.length===1?'1 prodotto nel catalogo':list.length+' prodotti nel catalogo';
+  if(visibleHint)visibleHint.textContent=(list.length-(list.filter(p=>p.active).length))+' nascosti · '+list.filter(p=>p.active).length+' visibili';
+  if(subscribers!==null){const node=document.getElementById('statSubscribers'),hint=document.getElementById('statSubscribersHint');if(node)node.textContent=subscribers.count??'—';if(hint)hint.textContent=subscribers.hint||'Clienti consenzienti';}
+}
+let adminImageObjectUrl='';
+function previewAdminProductImage(source, isObjectUrl=false){
+  const preview=document.getElementById('imagePreview');
+  if(!preview)return;
+  if(adminImageObjectUrl){URL.revokeObjectURL(adminImageObjectUrl);adminImageObjectUrl='';}
+  preview.replaceChildren();
+  if(!source){preview.classList.add('hidden');return;}
+  if(isObjectUrl)adminImageObjectUrl=source;
+  const image=document.createElement('img');
+  image.src=source;image.alt='Anteprima della foto del prodotto';image.loading='lazy';
+  image.onerror=()=>{preview.classList.add('hidden');};
+  preview.appendChild(image);preview.classList.remove('hidden');
+}
+(function setupAdminPhotoPreview(){
+  const input=document.getElementById('image');
+  if(!input)return;
+  input.addEventListener('change',()=>{
+    const file=input.files&&input.files[0];
+    if(!file){previewAdminProductImage('');return;}
+    if(!file.type.startsWith('image/')){previewAdminProductImage('');return;}
+    previewAdminProductImage(URL.createObjectURL(file),true);
+  });
+})();
+window.EFProductImagePreview=previewAdminProductImage;
 // Local preview deliberately uses browser-only demo data and never contacts Supabase.
 function initializeLocalPreview() {
   const $ = id => document.getElementById(id);
@@ -165,10 +375,21 @@ function initializeLocalPreview() {
     say('Pagina shop salvata in locale. Apri l’anteprima per vederla.');
   };
   function draw() {
-    $('products').innerHTML = products.length ? products.map(p => `<article class="product"><img src="${esc(p.image_url || '')}" alt=""><div><h3>${esc(p.name)}</h3><p>${esc(p.category || 'Senza categoria')} · ${Number(p.price)>0?'€ '+Number(p.price).toFixed(2):'Prezzo da definire'}</p><p class="muted">${p.active ? 'Visibile' : 'Nascosto'}${p.description ? ' · '+esc(p.description) : ''}</p></div><div class="actions"><button class="secondary" data-local-edit="${esc(p.id)}">Modifica</button><button class="danger" data-local-delete="${esc(p.id)}">Elimina</button></div></article>`).join('') : '<p class="muted">Nessun prodotto di anteprima. Aggiungine uno qui sopra.</p>';
-    $('products').querySelectorAll('[data-local-edit]').forEach(b => b.onclick = () => { const p=products.find(x=>x.id===b.dataset.localEdit); if(!p)return; $('productId').value=p.id; $('name').value=p.name; $('category').value=p.category||''; $('price').value=p.price; $('description').value=p.description||''; $('active').value=String(p.active); $('sendPushNotification').checked=false; $('sendPushNotification').disabled=true; $('notifyChoice').classList.add('hidden'); $('formTitle').textContent='Modifica prodotto'; show('cancelEdit',true); window.scrollTo({top:0,behavior:'smooth'}); });
+    updateAdminMetrics(products,{count:'—',hint:'Solo anteprima locale'});
+    const query=$('productSearch').value.trim().toLocaleLowerCase('it-IT');
+    const filter=$('productFilter').value;
+    const rows=products.filter(p=>{
+      const text=[p.name,p.category,p.description].join(' ').toLocaleLowerCase('it-IT');
+      return (!query||text.includes(query))&&(filter==='all'||(filter==='visible'&&p.active)||(filter==='hidden'&&!p.active)||(filter==='no-photo'&&!p.image_url));
+    });
+    $('catalogCount').textContent=rows.length+' di '+products.length+' prodotti';
+    $('products').innerHTML = rows.length ? rows.map(p => `<article class="product"><div class="product-media">${p.image_url?'<img src="'+esc(p.image_url)+'" alt="" loading="lazy">':'<span aria-hidden="true">🎁</span>'}</div><div class="product-copy"><div class="product-title"><h3>${esc(p.name)}</h3><span class="product-state ${p.active?'is-visible':'is-hidden'}">${p.active?'In vetrina':'Nascosto'}</span></div><p class="product-meta">${esc(p.category || 'Senza categoria')} · ${Number(p.price)>0?'€ '+Number(p.price).toFixed(2):'Prezzo da definire'}</p><p class="muted product-description">${esc(p.description || 'Aggiungi una descrizione per presentare meglio questa creazione.')}</p></div><div class="actions product-actions"><button class="secondary" data-local-edit="${esc(p.id)}">Modifica</button><button class="secondary" data-local-toggle="${esc(p.id)}">${p.active?'Nascondi':'Mostra'}</button><button class="danger" data-local-delete="${esc(p.id)}">Elimina</button></div></article>`).join('') : '<div class="empty-state"><span>⌕</span><strong>Nessun prodotto trovato</strong><p>Prova a cambiare la ricerca o il filtro.</p></div>';
+    $('products').querySelectorAll('[data-local-edit]').forEach(b => b.onclick = () => { const p=products.find(x=>x.id===b.dataset.localEdit); if(!p)return; $('productId').value=p.id; $('name').value=p.name; $('category').value=p.category||''; $('price').value=p.price; $('description').value=p.description||''; $('active').value=String(p.active); window.EFProductImagePreview?.(p.image_url||''); $('sendPushNotification').checked=false; $('sendPushNotification').disabled=true; $('notifyChoice').classList.add('hidden'); $('formTitle').textContent='Modifica prodotto'; show('cancelEdit',true); $('productForm').scrollIntoView({behavior:'smooth',block:'start'}); });
+    $('products').querySelectorAll('[data-local-toggle]').forEach(b => b.onclick = () => { products=products.map(p=>p.id===b.dataset.localToggle?{...p,active:!p.active}:p); localStorage.setItem(key,JSON.stringify(products)); draw(); say('Visibilità aggiornata solo nell’anteprima locale.'); });
     $('products').querySelectorAll('[data-local-delete]').forEach(b => b.onclick = () => { products=products.filter(p=>p.id!==b.dataset.localDelete); localStorage.setItem(key,JSON.stringify(products)); draw(); say('Rimosso dall’anteprima locale.'); });
   }
+  $('productSearch').addEventListener('input',draw);
+  $('productFilter').addEventListener('change',draw);
   $('productForm').onsubmit = async e => {
     e.preventDefault(); const file=$('image').files[0]; let image_url=null;
     if(file){if(!file.type.startsWith('image/')||file.size>2*1024*1024)return say('Per l’anteprima scegli un’immagine sotto 2 MB.');image_url=await new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(file);});}
@@ -177,9 +398,9 @@ function initializeLocalPreview() {
     const p={id:id||crypto.randomUUID(),name:$('name').value.trim(),category:$('category').value.trim(),price:Number($('price').value),description:$('description').value.trim(),active:$('active').value==='true',image_url:image_url||old?.image_url||''};
     products=id?products.map(x=>x.id===id?p:x):[p,...products];
     try{localStorage.setItem(key,JSON.stringify(products));}catch{return say('Spazio del browser esaurito: prova una foto più piccola.');}
-    $('productForm').reset(); $('productId').value=''; $('formTitle').textContent='Aggiungi prodotto'; $('sendPushNotification').checked=false; $('sendPushNotification').disabled=false; $('notifyChoice').classList.remove('hidden'); draw(); say(wantsNotification?'Salvato solo nell’anteprima locale: la notifica si invia dopo la pubblicazione online.':'Salvato solo nell’anteprima locale.');
+    $('productForm').reset(); $('productId').value=''; $('formTitle').textContent='Aggiungi prodotto'; window.EFProductImagePreview?.(''); $('sendPushNotification').checked=false; $('sendPushNotification').disabled=false; $('notifyChoice').classList.remove('hidden'); draw(); say(wantsNotification?'Salvato solo nell’anteprima locale: la notifica si invia dopo la pubblicazione online.':'Salvato solo nell’anteprima locale.');
   };
-  $('cancelEdit').onclick=()=>{$('productForm').reset();$('productId').value='';$('formTitle').textContent='Aggiungi prodotto';$('sendPushNotification').checked=false;$('sendPushNotification').disabled=false;$('notifyChoice').classList.remove('hidden');show('cancelEdit',false);};
+  $('cancelEdit').onclick=()=>{$('productForm').reset();$('productId').value='';$('formTitle').textContent='Aggiungi prodotto';window.EFProductImagePreview?.('');$('sendPushNotification').checked=false;$('sendPushNotification').disabled=false;$('notifyChoice').classList.remove('hidden');show('cancelEdit',false);};
   draw(); say('Modalità locale attiva. Nessuna modifica viene inviata a Supabase.'); return true;
 }
 window.EF_SUPABASE_READY.then(() => {
@@ -236,14 +457,40 @@ window.EF_SUPABASE_READY.then(() => {
     if (error) say(`Accesso GitHub non riuscito: ${error.message}`);
   };
   $('signout').onclick = async () => { await db.auth.signOut(); setLoggedIn(false); say('Sei uscito.', false); };
+  let adminProducts=[];
+  function renderAdminCatalog(){
+    const query=$('productSearch').value.trim().toLocaleLowerCase('it-IT');
+    const filter=$('productFilter').value;
+    const rows=adminProducts.filter(p=>{
+      const text=[p.name,p.category,p.description].join(' ').toLocaleLowerCase('it-IT');
+      return (!query||text.includes(query))&&(filter==='all'||(filter==='visible'&&p.active)||(filter==='hidden'&&!p.active)||(filter==='no-photo'&&!p.image_url));
+    });
+    $('catalogCount').textContent=rows.length+' di '+adminProducts.length+' prodotti';
+    $('products').innerHTML=rows.length?rows.map(p=>`<article class="product"><div class="product-media">${p.image_url?'<img src="'+esc(p.image_url)+'" alt="" loading="lazy" onerror="this.parentElement.innerHTML=\'<span>🎁</span>\'">':'<span aria-hidden="true">🎁</span>'}</div><div class="product-copy"><div class="product-title"><h3>${esc(p.name)}</h3><span class="product-state ${p.active?'is-visible':'is-hidden'}">${p.active?'In vetrina':'Nascosto'}</span></div><p class="product-meta">${esc(p.category||'Senza categoria')} · € ${Number(p.price).toFixed(2)}</p><p class="muted product-description">${esc(p.description||'Nessuna descrizione aggiunta.')}</p></div><div class="actions product-actions"><button class="secondary" data-edit="${esc(p.id)}">Modifica</button><button class="secondary" data-toggle="${esc(p.id)}">${p.active?'Nascondi':'Mostra'}</button><button class="danger" data-delete="${esc(p.id)}">Elimina</button></div></article>`).join(''):'<div class="empty-state"><span>⌕</span><strong>Nessun prodotto trovato</strong><p>Prova a cambiare la ricerca o il filtro.</p></div>';
+    adminProducts.forEach(p=>{
+      $('products').querySelector(`[data-edit="${CSS.escape(String(p.id))}"]`)?.addEventListener('click',()=>editProduct(p));
+      $('products').querySelector(`[data-toggle="${CSS.escape(String(p.id))}"]`)?.addEventListener('click',()=>toggleProductVisibility(p));
+      $('products').querySelector(`[data-delete="${CSS.escape(String(p.id))}"]`)?.addEventListener('click',()=>deleteProduct(p));
+    });
+  }
+  $('productSearch').addEventListener('input',renderAdminCatalog);
+  $('productFilter').addEventListener('change',renderAdminCatalog);
   async function loadProducts() {
-    const {data, error} = await db.from('products').select('*').order('created_at', {ascending:false});
-    if (error) return say(error.message);
-    $('products').innerHTML = data?.length ? data.map(p => `<article class="product"><img src="${esc(p.image_url || '')}" alt="" onerror="this.style.visibility='hidden'"><div><h3>${esc(p.name)}</h3><p>${esc(p.category || 'Senza categoria')} · € ${Number(p.price).toFixed(2)}</p><p class="muted">${p.active ? 'Visibile' : 'Nascosto'}${p.description ? ' · '+esc(p.description) : ''}</p></div><div class="actions"><button class="secondary" data-edit="${esc(p.id)}">Modifica</button><button class="danger" data-delete="${esc(p.id)}">Elimina</button></div></article>`).join('') : '<p class="muted">Nessun prodotto ancora.</p>';
-    data?.forEach(p => { const edit = $('products').querySelector(`[data-edit="${CSS.escape(String(p.id))}"]`); edit?.addEventListener('click', () => editProduct(p)); const del = $('products').querySelector(`[data-delete="${CSS.escape(String(p.id))}"]`); del?.addEventListener('click', () => deleteProduct(p)); });
+    const {data,error}=await db.from('products').select('*').order('created_at',{ascending:false});
+    if(error)return say(error.message);
+    adminProducts=Array.isArray(data)?data:[];
+    updateAdminMetrics(adminProducts);
+    renderAdminCatalog();
+  }
+  function editProduct(p) { $('productId').value=p.id; $('name').value=p.name||''; $('category').value=p.category||''; $('price').value=p.price; $('description').value=p.description||''; $('active').value=String(p.active); window.EFProductImagePreview?.(p.image_url||''); $('sendPushNotification').checked=false; $('sendPushNotification').disabled=true; $('notifyChoice').classList.add('hidden'); $('formTitle').textContent='Modifica prodotto'; show('cancelEdit',true); $('productForm').scrollIntoView({behavior:'smooth',block:'start'}); }
+  async function toggleProductVisibility(p) {
+    const {error}=await db.from('products').update({active:!p.active}).eq('id',p.id);
+    if(error)return say(error.message);
+    say(p.active?'Prodotto nascosto dalla vetrina.':'Prodotto pubblicato nella vetrina.',false);
+    await loadProducts();
   }
   function editProduct(p) { $('productId').value=p.id; $('name').value=p.name||''; $('category').value=p.category||''; $('price').value=p.price; $('description').value=p.description||''; $('active').value=String(p.active); $('sendPushNotification').checked=false; $('sendPushNotification').disabled=true; $('notifyChoice').classList.add('hidden'); $('formTitle').textContent='Modifica prodotto'; show('cancelEdit',true); window.scrollTo({top:0,behavior:'smooth'}); }
-  function resetForm() { $('productForm').reset(); $('productId').value=''; $('formTitle').textContent='Aggiungi prodotto'; $('sendPushNotification').checked=false; $('sendPushNotification').disabled=false; $('notifyChoice').classList.remove('hidden'); show('cancelEdit',false); }
+  function resetForm() { $('productForm').reset(); $('productId').value=''; $('formTitle').textContent='Aggiungi prodotto'; window.EFProductImagePreview?.(''); $('sendPushNotification').checked=false; $('sendPushNotification').disabled=false; $('notifyChoice').classList.remove('hidden'); show('cancelEdit',false); }
   $('cancelEdit').onclick = resetForm;
   $('productForm').onsubmit = async event => {
     event.preventDefault(); if (!db) return;
@@ -274,7 +521,7 @@ window.EF_SUPABASE_READY.then(() => {
   async function loadCommerce() {
     show('commercePanel',true);
     const subscribers=await db.from('newsletter_subscribers').select('email,consent_at').is('unsubscribed_at',null).order('consent_at',{ascending:false});
-    $('newsletterSubscribers').innerHTML=subscribers.error?'<p class="muted">Lista disponibile dopo la configurazione del database.</p>':subscribers.data?.length?subscribers.data.map(s=>`<p>${esc(s.email)} · consenso ${esc(new Date(s.consent_at).toLocaleDateString('it-IT'))}</p>`).join(''):'<p class="muted">Nessun iscritto consenziente al momento.</p>';
+    $('newsletterSubscribers').innerHTML=subscribers.error?'<p class="muted">Lista disponibile dopo la configurazione del database.</p>':subscribers.data?.length?subscribers.data.map(s=>`<p>${esc(s.email)} <span>· consenso ${esc(new Date(s.consent_at).toLocaleDateString('it-IT'))}</span></p>`).join(''):'<p class="muted">Nessun iscritto consenziente al momento.</p>'; updateAdminMetrics(adminProducts,{count:subscribers.error?'—':(subscribers.data||[]).length,hint:subscribers.error?'Lista non disponibile':'Iscritti con consenso attivo'});
     $('exportNewsletter').disabled=!!subscribers.error||!subscribers.data?.length;
     $('exportNewsletter').onclick=()=>exportSubscribers(subscribers.data||[]);
     $('sendCampaign').disabled=!!subscribers.error||!subscribers.data?.length;
