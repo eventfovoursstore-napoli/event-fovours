@@ -1,4 +1,4 @@
-const CACHE_NAME='event-favours-admin-v1';
+const CACHE_NAME='event-favours-admin-v2';
 const APP_SHELL=['./','./index.html','./admin.webmanifest','../assets/admin-app-icon.svg','../assets/event-favours-logo.jpg','../assets/app-icon-192.png'];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE_NAME).then(cache=>cache.addAll(APP_SHELL)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('event-favours-admin-')&&key!==CACHE_NAME).map(key=>caches.delete(key)))).then(()=>self.clients.claim()))});
