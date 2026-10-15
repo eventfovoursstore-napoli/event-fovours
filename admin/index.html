@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,viewport-fit=cover">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#a77a22">
   <link rel="manifest" href="./admin.webmanifest">
   <link rel="icon" type="image/png" sizes="192x192" href="../assets/app-icon-192.png">
@@ -520,7 +520,7 @@ window.EF_SUPABASE_READY.then(() => {
   async function deleteProduct(p) { if (!confirm(`Eliminare “${p.name}”?`)) return; const {error}=await db.from('products').delete().eq('id',p.id); if(error)return say(error.message); say('Prodotto eliminato.',false); loadProducts(); }
   async function loadCommerce() {
     show('commercePanel',true);
-    const subscribers=await db.from('newsletter_subscribers').select('email,consent_at').is('unsubscribed_at',null).order('consent_at',{ascending:false});
+    const subscribers=await db.from('newsletter_subscribers').select('email,consent_at').order('consent_at',{ascending:false});
     $('newsletterSubscribers').innerHTML=subscribers.error?'<p class="muted">Lista disponibile dopo la configurazione del database.</p>':subscribers.data?.length?subscribers.data.map(s=>`<p>${esc(s.email)} <span>· consenso ${esc(new Date(s.consent_at).toLocaleDateString('it-IT'))}</span></p>`).join(''):'<p class="muted">Nessun iscritto consenziente al momento.</p>'; updateAdminMetrics(adminProducts,{count:subscribers.error?'—':(subscribers.data||[]).length,hint:subscribers.error?'Lista non disponibile':'Iscritti con consenso attivo'});
     $('exportNewsletter').disabled=!!subscribers.error||!subscribers.data?.length;
     $('exportNewsletter').onclick=()=>exportSubscribers(subscribers.data||[]);
@@ -528,7 +528,24 @@ window.EF_SUPABASE_READY.then(() => {
     $('sendCampaign').onclick=()=>sendMarketingCampaign(subscribers.data?.length||0);
   }
   function exportSubscribers(rows){if(!rows.length)return;const csv='email,consenso\r\n'+rows.map(r=>`"${String(r.email).replaceAll('"','""')}","${new Date(r.consent_at).toISOString()}"`).join('\r\n');const url=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='event-favours-iscritti-consenzienti.csv';a.click();URL.revokeObjectURL(url);}
-  async function sendMarketingCampaign(recipientCount){const subject=$('campaignSubject').value.trim(),message=$('campaignMessage').value.trim();if(subject.length<3||message.length<10)return $('commerceStatus').textContent='Inserisci oggetto e messaggio della campagna.';if(!confirm(`Inviare questa email pubblicitaria a ${recipientCount} iscritti che hanno dato il consenso?`))return;const button=$('sendCampaign');button.disabled=true;button.textContent='Invio in corso…';const{data,error}=await db.functions.invoke('send-marketing-campaign',{body:{subject,message}});button.disabled=false;button.textContent='Invia campagna';$('commerceStatus').textContent=error?`Invio non riuscito: ${error.message}`:data?.ok?`Campagna inviata a ${data.recipients} contatti. ID Brevo: ${data.campaign_id}`:data?.error||'Invio non riuscito.';if(data?.ok){$('campaignSubject').value='';$('campaignMessage').value='';}}
+  async function sendMarketingCampaign(recipientCount){
+    const subject=$('campaignSubject').value.trim(),message=$('campaignMessage').value.trim();
+    if(subject.length<3||message.length<10){$('commerceStatus').textContent='Inserisci oggetto e messaggio validi.';return}
+    if(!confirm(`Inviare questa email a ${recipientCount} iscritti che hanno dato il consenso?`))return;
+    const button=$('sendCampaign');button.disabled=true;button.textContent='Invio in corso…';$('commerceStatus').textContent='Sto preparando la lista e inviando la campagna…';
+    try{
+      const{data,error}=await db.functions.invoke('send-marketing-campaign',{body:{subject,message}});
+      if(error){
+        let detail=error.message;
+        try{const response=error.context;if(response?.json){const body=await response.json();detail=body?.error||detail}}catch{}
+        $('commerceStatus').textContent='Invio non riuscito: '+detail;
+      }else if(data?.ok){
+        $('commerceStatus').textContent=`Campagna inviata a ${data.recipients} contatti. ID Brevo: ${data.campaign_id}`;
+        $('campaignSubject').value='';$('campaignMessage').value='';
+      }else $('commerceStatus').textContent=data?.error||'Invio non riuscito.';
+    }catch{$('commerceStatus').textContent='Invio non riuscito. Controlla la connessione e riprova.'}
+    finally{button.disabled=false;button.textContent='Invia campagna'}
+  }
   if (db) authorizeCurrentSession();
 });
 </script>
