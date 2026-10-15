@@ -42,6 +42,8 @@ header{min-height:84px;display:flex;justify-content:space-between;align-items:ce
 @media(max-width:960px){#manager:not(.hidden){grid-template-columns:190px minmax(0,1fr);gap:16px}.admin-sidebar{padding:14px 9px}.admin-nav a{padding:11px 9px}.editor-grid{grid-template-columns:1fr}.editor-aside{grid-template-columns:1fr 1fr}}
 @media(max-width:680px){.wrap{padding:10px 12px 42px}header{min-height:68px;margin-bottom:18px;gap:8px}.admin-brand{gap:5px}.admin-brand img{width:128px;height:64px}.admin-title{padding-left:8px;font-size:.75rem}.panel{padding:19px 16px;border-radius:17px;margin-bottom:14px}.grid{grid-template-columns:1fr;gap:13px}.full{grid-column:auto}#config,#login{margin:20px auto;padding:23px 19px}#manager:not(.hidden){display:block}.admin-sidebar{position:static;margin-bottom:14px;padding:10px;border-radius:15px}.sidebar-brand{display:none}.admin-nav{display:flex;overflow-x:auto;gap:6px;padding-bottom:2px}.admin-nav a{flex:0 0 auto;padding:10px 12px;font-size:.81rem;background:#fbf7f2}.nav-icon{width:auto}.sidebar-note{display:none}.welcome-card{padding:21px 20px;border-radius:18px;margin-bottom:14px}.welcome-card h1{font-size:1.55rem}.welcome-card p{font-size:.9rem}.welcome-mark{font-size:2.2rem}.section-heading{gap:10px}.section-heading h2{font-size:1.22rem}.heading-mark{width:37px;height:37px;flex-basis:37px}.field-row,.editor-aside{grid-template-columns:1fr}.product{grid-template-columns:58px minmax(0,1fr);gap:11px;padding:12px}.product img{width:58px;height:58px}.product .actions{grid-column:1/-1}.product .actions button{flex:1}.admin-install{padding:12px;gap:8px}.admin-install-copy small{font-size:.76rem}.admin-install button,.admin-install a{padding:10px 12px;font-size:.82rem}.admin-install .close-install{padding:5px}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+
+@media(max-width:680px){#adminInstallTop{padding:9px 11px;font-size:.82rem;white-space:nowrap}.admin-brand img{max-width:118px}}
 </style>
 </head>
 <body>
@@ -132,7 +134,6 @@ header{min-height:84px;display:flex;justify-content:space-between;align-items:ce
     </div>
   </section>
 </main>
-<aside id="adminInstallBanner" class="admin-install hidden" aria-live="polite"><span class="admin-install-icon" aria-hidden="true">📲</span><div class="admin-install-copy"><strong>Gestisci lo shop dal telefono</strong><small>Aggiungi EVENT FAVOURS Admin alla schermata Home.</small><p id="adminInstallHelp" class="install-help muted" hidden></p></div><button id="adminInstallAction" type="button">Installa</button><a id="adminOpenInChrome" class="secondary" hidden style="text-decoration:none;text-align:center" href="#">Apri in Chrome</a><button id="adminInstallDismiss" class="close-install" type="button" aria-label="Chiudi">×</button></aside>
 <script>
 // Local preview deliberately uses browser-only demo data and never contacts Supabase.
 function initializeLocalPreview() {
@@ -286,50 +287,39 @@ window.EF_SUPABASE_READY.then(() => {
 </script>
 <script>
 (function setupAdminInstall(){
-  const banner=document.getElementById('adminInstallBanner'), help=document.getElementById('adminInstallHelp');
-  const action=document.getElementById('adminInstallAction'), topButton=document.getElementById('adminInstallTop');
-  const dismissed='ef_admin_install_dismissed_v1'; let promptEvent=null;
-  const standalone=()=>matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
-  const mobile=()=>matchMedia('(max-width: 760px)').matches||/Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-  const show=()=>{if(!standalone()&&mobile()&&localStorage.getItem(dismissed)!=='1')banner.classList.remove('hidden')};
-  window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();promptEvent=event;show()});
-  const openChrome=document.getElementById('adminOpenInChrome');
-  function showHelp(){
-    help.hidden=false;
-    if(/Android/i.test(navigator.userAgent)&&standalone()){
-      help.textContent='Hai aperto l’admin dentro l’app dello shop. Aprilo in Chrome per installare una seconda icona dedicata.';
-      openChrome.hidden=false;
-      openChrome.href='intent://'+location.host+location.pathname+location.search+'#Intent;scheme=https;package=com.android.chrome;end';
-      action.textContent='Mostra istruzioni';
-      return;
-    }
+  const button=document.getElementById('adminInstallTop');
+  const status=document.getElementById('status');
+  let installPrompt=null;
+  const isStandalone=()=>matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+  const say=message=>{status.textContent=message;status.style.color='#76500f';};
+  window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();installPrompt=event;});
+  window.addEventListener('appinstalled',()=>{installPrompt=null;say('EVENT FAVOURS Admin è stata installata sul telefono.');});
+  function explainUnavailable(){
     if(/iPhone|iPad|iPod/i.test(navigator.userAgent)){
-      help.textContent='Su iPhone: apri questa pagina in Safari, tocca Condividi e scegli “Aggiungi alla schermata Home”.';
+      say('Per installare su iPhone: apri questa pagina in Safari, tocca Condividi e scegli “Aggiungi alla schermata Home”.');
     }else{
-      help.textContent='Apri questa pagina in Chrome, poi usa ⋮ → “Installa app” oppure “Aggiungi a schermata Home”.';
+      say('Il browser non offre il comando diretto. Apri questa pagina in Chrome e usa ⋮ → “Installa app”.');
     }
   }
   async function install(){
-    if(standalone()&&/Android/i.test(navigator.userAgent)){
+    if(isStandalone()&&/Android/i.test(navigator.userAgent)){
       const target='intent://'+location.host+location.pathname+location.search+'#Intent;scheme=https;package=com.android.chrome;end';
-      openChrome.href=target;
       location.href=target;
-      window.setTimeout(showHelp,900);
+      window.setTimeout(()=>say('In Chrome premi di nuovo “Installa sul telefono” per aggiungere l’icona Admin.'),900);
       return;
     }
-    if(standalone()){showHelp();return}
-    if(promptEvent){
-      const saved=promptEvent;promptEvent=null;
-      try{await saved.prompt();const choice=await saved.userChoice;if(choice.outcome==='accepted'){banner.classList.add('hidden');localStorage.setItem(dismissed,'1')}else showHelp()}
-      catch{showHelp()}
-    }else showHelp();
+    if(isStandalone()){say('EVENT FAVOURS Admin è già installata.');return;}
+    if(!installPrompt){explainUnavailable();return;}
+    const prompt=installPrompt;installPrompt=null;
+    try{
+      await prompt.prompt();
+      const choice=await prompt.userChoice;
+      if(choice.outcome==='accepted')say('Richiesta d’installazione avviata.');
+      else say('Installazione annullata. Puoi riprovare quando vuoi.');
+    }catch{explainUnavailable();}
   }
-  action.addEventListener('click',install);
-  topButton.addEventListener('click',()=>{banner.classList.remove('hidden');install()});
-  document.getElementById('adminInstallDismiss').addEventListener('click',()=>{banner.classList.add('hidden');localStorage.setItem(dismissed,'1')});
-  window.addEventListener('appinstalled',()=>{banner.classList.add('hidden');localStorage.setItem(dismissed,'1')});
+  button.addEventListener('click',install);
   if('serviceWorker'in navigator&&!['localhost','127.0.0.1'].includes(location.hostname))navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
-  if(mobile())setTimeout(show,1200);
 })();
 </script>
 </body>
