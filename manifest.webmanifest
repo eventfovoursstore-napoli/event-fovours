@@ -2,8 +2,8 @@
   "name": "EVENT FAVOURS — Bomboniere per ogni occasione",
   "short_name": "EVENT FAVOURS",
   "description": "Scopri bomboniere curate con amore e chiedi un preventivo per il tuo evento.",
-  "start_url": "./",
-  "scope": "./",
+  "start_url": "./shop/",
+  "scope": "./shop/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#fbf7f0",
@@ -28,5 +28,12 @@
       "purpose": "any"
     }
   ],
-  "id": "https://eventfovoursstore-napoli.github.io/event-fovours/"
+  "id": "https://eventfovoursstore-napoli.github.io/event-fovours/",
+  "related_applications": [
+    {
+      "platform": "webapp",
+      "url": "./manifest.webmanifest",
+      "id": "https://eventfovoursstore-napoli.github.io/event-fovours/"
+    }
+  ]
 }
