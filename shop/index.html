@@ -1,12 +1,12 @@
 <!doctype html>
 <html lang="it">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#a77a22">
 <link rel="manifest" href="../manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="192x192" href="../assets/app-icon-192.png">
 <link rel="apple-touch-icon" sizes="180x180" href="../assets/app-icon-180.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="EVENT FAVOURS">
 <title>EVENT FAVOURS — Bomboniere per ogni occasione</title>
 <script>
@@ -80,6 +80,79 @@ footer{background:#f7efe3;border-top:1px solid var(--line);padding:28px 22px;tex
 .whatsapp-float{touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}.whatsapp-float.is-dragging{cursor:grabbing;transition:none;animation:none;box-shadow:0 14px 34px #183e2a70}.whatsapp-float.is-dragging:before{animation:none}
 .whatsapp-chat{max-height:min(400px,calc(100dvh - 24px));overflow-y:auto;overscroll-behavior:contain}
 @media(max-width:760px){.whatsapp-float{width:54px;height:54px;right:10px;bottom:calc(12px + env(safe-area-inset-bottom))}.whatsapp-float svg{width:27px;height:27px}.whatsapp-float:before{inset:-3px}.whatsapp-badge{width:19px;height:19px;font-size:10px}.whatsapp-chat{width:min(330px,calc(100vw - 20px));right:10px}}
+
+/* Mobile-first finishing pass: safe areas, comfortable touch targets and compact storefront. */
+html{-webkit-text-size-adjust:100%;scroll-padding-top:calc(78px + env(safe-area-inset-top))}
+body{min-width:320px;overflow-x:hidden}
+img{max-width:100%}
+button,a{-webkit-tap-highlight-color:transparent}
+button{touch-action:manipulation}
+header{padding-top:env(safe-area-inset-top)}
+@media(max-width:760px){
+ .top{min-height:64px;padding:5px 12px;gap:7px}
+ .top-brand{gap:7px;flex:1;min-width:0}
+ .menu-toggle{width:40px;height:40px;flex-basis:40px}
+ .brand{min-width:0}
+ .brand-logo{width:clamp(112px,36vw,148px);height:auto;max-height:62px}
+ nav{gap:1px;flex:0 0 auto}
+ .nav-action{width:40px;height:42px;justify-content:center;padding:7px!important}
+ .nav-action svg{width:20px;height:20px}
+ .cart-count{position:absolute;transform:translate(12px,-10px)}
+ .hero{margin:8px auto 15px;padding-left:12px;padding-right:12px}
+ .hero-inner{min-height:0}
+ .hero-art{height:clamp(170px,54vw,270px);min-height:0}
+ .hero-copy{padding:18px 19px 20px}
+ .hero h1{font-size:clamp(27px,7.2vw,36px);line-height:1.08}
+ .hero p{font-size:15px;line-height:1.48}
+ .section-head{margin:27px 0 13px}
+ .section-head h2{font-size:25px;line-height:1.15}
+ .section-head p{font-size:13px;line-height:1.45}
+ .categories{gap:9px}
+ .category{min-height:94px;padding:14px 9px;border-radius:14px}
+ .category span{font-size:26px;margin-bottom:5px}
+ .toolbar{gap:8px;margin:12px 0 15px}
+ .toolbar input,.toolbar select{min-height:46px;font-size:16px}
+ .products{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .card{min-width:0;border-radius:14px}
+ .photo{height:auto;aspect-ratio:1.04/1}
+ .card-body{padding:11px 10px 12px}
+ .card h3{font-size:16px;line-height:1.25;overflow-wrap:anywhere}
+ .desc{font-size:12px;line-height:1.45}
+ .price{font-size:18px;margin:9px 0}
+ .card-actions{display:grid;grid-template-columns:1fr;gap:7px}
+ .card-actions button,.outline,.pill{min-height:44px}
+ .card-actions button{padding:9px 10px;font-size:13px}
+ .push-promo{margin:0 12px 18px}
+ .modal-back{align-items:flex-end;padding:0}
+ .modal{width:100%;max-width:none;max-height:min(88dvh,760px);border-radius:23px 23px 0 0;padding:20px 17px calc(18px + env(safe-area-inset-bottom));overscroll-behavior:contain}
+ .modal h2{font-size:24px}
+ .product-detail{gap:13px}
+ .detail-photo,.detail-photo img{min-height:190px;max-height:38dvh}
+ .cart-line{grid-template-columns:48px minmax(0,1fr) auto;gap:9px}
+ .cart-icon{width:48px;height:48px;font-size:25px}
+ .cookie-notice{bottom:calc(10px + env(safe-area-inset-bottom));max-height:48dvh;overflow:auto}
+ .cookie-actions{display:grid;grid-template-columns:1fr 1fr}
+ .cookie-actions button{min-height:44px}
+ .whatsapp-float{width:52px;height:52px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom))}
+ .whatsapp-float svg{width:26px;height:26px}
+ .whatsapp-float:before{inset:-3px}
+ .whatsapp-chat{width:min(330px,calc(100vw - 20px));max-height:min(62dvh,480px);right:10px}
+ footer{padding:24px 16px calc(24px + env(safe-area-inset-bottom))}
+}
+@media(max-width:380px){
+ .top{padding-left:8px;padding-right:8px;gap:5px}
+ .menu-toggle{width:37px;height:37px;flex-basis:37px}
+ .brand-logo{width:clamp(104px,34vw,124px);max-height:56px}
+ .nav-action{width:36px;height:40px}
+ .wrap,.hero{padding-left:10px;padding-right:10px}
+ .products{gap:8px}
+ .card-body{padding:9px 8px}
+ .card h3{font-size:15px}
+ .card-actions button{font-size:12px}
+}
+@media(prefers-reduced-motion:reduce){
+ .hero-slide,.hero-arrow,.hero-dot,.whatsapp-float,.whatsapp-float:before,.whatsapp-chat{transition:none;animation:none}
+}
 </style>
 </head>
 <body>
@@ -305,20 +378,86 @@ function dismissWhatsAppWelcome(){const panel=document.getElementById('whatsappW
 function toggleWhatsAppWelcome(){if(window.efWhatsAppSuppressClick){window.efWhatsAppSuppressClick=false;return}const panel=document.getElementById('whatsappWelcome');panel.classList.toggle('show');if(panel.classList.contains('show'))requestAnimationFrame(()=>window.efPlaceWhatsAppPanel?.())}
 function openWhatsAppInfo(){const phone=((window.EF_SUPABASE_CONFIG||{}).whatsapp||'+393345385735').replace(/\D/g,'');if(!phone){alert('Il contatto WhatsApp del negozio non è disponibile.');return}const message='Buongiorno EVENT FAVOURS, vorrei ricevere informazioni e un preventivo.';window.location.href='https://wa.me/'+phone+'?text='+encodeURIComponent(message)}
 (function(){
- const panel=document.getElementById('whatsappWelcome'),button=document.getElementById('whatsappFloat'),key='ef_whatsapp_float_position_v1';
+ const panel=document.getElementById('whatsappWelcome');
+ const button=document.getElementById('whatsappFloat');
+ if(!panel||!button)return;
+ const key='ef_whatsapp_float_position_v2';
+ const legacyKey='ef_whatsapp_float_position_v1';
+ let insetCache=null;
  const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
- function moveTo(x,y){const m=8,maxX=Math.max(m,innerWidth-button.offsetWidth-m),maxY=Math.max(m,innerHeight-button.offsetHeight-m);button.style.left=clamp(x,m,maxX)+'px';button.style.top=clamp(y,m,maxY)+'px';button.style.right='auto';button.style.bottom='auto'}
- function placePanel(){if(!panel.classList.contains('show'))return;const m=10,b=button.getBoundingClientRect(),r=panel.getBoundingClientRect();let x=clamp(b.right-r.width,m,innerWidth-r.width-m),y=b.top-r.height-10;if(y<m)y=b.bottom+10;y=clamp(y,m,innerHeight-r.height-m);panel.style.left=x+'px';panel.style.top=y+'px';panel.style.right='auto';panel.style.bottom='auto'}
+ function safeInsets(){
+   if(insetCache)return insetCache;
+   const probe=document.createElement('div');
+   probe.style.cssText='position:fixed;visibility:hidden;pointer-events:none;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)';
+   document.body.appendChild(probe);
+   const styles=getComputedStyle(probe);
+   const insets={top:parseFloat(styles.paddingTop)||0,right:parseFloat(styles.paddingRight)||0,bottom:parseFloat(styles.paddingBottom)||0,left:parseFloat(styles.paddingLeft)||0};
+   probe.remove();
+   insetCache=insets;
+   return insetCache;
+ }
+ function limits(){
+   const inset=safeInsets(),margin=10;
+   const width=document.documentElement.clientWidth||window.innerWidth||0;
+   const height=document.documentElement.clientHeight||window.innerHeight||0;
+   return {left:margin+inset.left,right:Math.max(margin+inset.left,width-button.offsetWidth-margin-inset.right),top:margin+inset.top,bottom:Math.max(margin+inset.top,height-button.offsetHeight-margin-inset.bottom)};
+ }
+ function moveTo(x,y){
+   const b=limits();
+   button.style.left=clamp(x,b.left,b.right)+'px';
+   button.style.top=clamp(y,b.top,b.bottom)+'px';
+   button.style.right='auto';
+   button.style.bottom='auto';
+ }
+ function restorePosition(){
+   try{
+     const saved=JSON.parse(localStorage.getItem(key)||'null');
+     if(saved&&saved.version===2&&Number.isFinite(saved.x)&&Number.isFinite(saved.y)&&saved.x>=0&&saved.x<=1&&saved.y>=0&&saved.y<=1){
+       const b=limits();
+       moveTo(b.left+saved.x*(b.right-b.left),b.top+saved.y*(b.bottom-b.top));
+       button.dataset.hasSavedPosition='true';
+     }else{
+       localStorage.removeItem(key);
+       localStorage.removeItem(legacyKey);
+       delete button.dataset.hasSavedPosition;
+       button.style.left='';
+       button.style.top='';
+       button.style.right='';
+       button.style.bottom='';
+     }
+   }catch{
+     try{localStorage.removeItem(key);localStorage.removeItem(legacyKey)}catch{}
+     delete button.dataset.hasSavedPosition;
+   }
+ }
+ function savePosition(){
+   const b=limits(),r=button.getBoundingClientRect();
+   const x=b.right===b.left?1:(r.left-b.left)/(b.right-b.left);
+   const y=b.bottom===b.top?1:(r.top-b.top)/(b.bottom-b.top);
+   try{localStorage.setItem(key,JSON.stringify({version:2,x:clamp(x,0,1),y:clamp(y,0,1)}));button.dataset.hasSavedPosition='true'}catch{}
+ }
+ function placePanel(){
+   if(!panel.classList.contains('show'))return;
+   const margin=10,b=button.getBoundingClientRect(),r=panel.getBoundingClientRect();
+   let x=clamp(b.right-r.width,margin,Math.max(margin,document.documentElement.clientWidth-r.width-margin));
+   let y=b.top-r.height-10;
+   if(y<margin)y=b.bottom+10;
+   y=clamp(y,margin,Math.max(margin,document.documentElement.clientHeight-r.height-margin));
+   panel.style.left=x+'px';panel.style.top=y+'px';panel.style.right='auto';panel.style.bottom='auto';
+ }
  window.efPlaceWhatsAppPanel=placePanel;
- try{const saved=JSON.parse(localStorage.getItem(key)||'null');if(saved&&Number.isFinite(saved.x)&&Number.isFinite(saved.y))moveTo(saved.x,saved.y)}catch{}
+ restorePosition();
  let drag=null;
  button.addEventListener('pointerdown',e=>{if(e.button!==undefined&&e.button!==0)return;const r=button.getBoundingClientRect();drag={id:e.pointerId,x:e.clientX,y:e.clientY,left:r.left,top:r.top,moved:false};button.setPointerCapture?.(e.pointerId)});
  button.addEventListener('pointermove',e=>{if(!drag||drag.id!==e.pointerId)return;const dx=e.clientX-drag.x,dy=e.clientY-drag.y;if(!drag.moved&&Math.hypot(dx,dy)<6)return;drag.moved=true;window.efWhatsAppSuppressClick=true;e.preventDefault();moveTo(drag.left+dx,drag.top+dy);placePanel();button.classList.add('is-dragging')});
- const endDrag=e=>{if(!drag||drag.id!==e.pointerId)return;if(drag.moved){const r=button.getBoundingClientRect();try{localStorage.setItem(key,JSON.stringify({x:r.left,y:r.top}))}catch{}setTimeout(()=>{window.efWhatsAppSuppressClick=false},500)}drag=null;button.classList.remove('is-dragging')};
+ const endDrag=e=>{if(!drag||drag.id!==e.pointerId)return;if(drag.moved){savePosition();setTimeout(()=>{window.efWhatsAppSuppressClick=false},500)}drag=null;button.classList.remove('is-dragging')};
  button.addEventListener('pointerup',endDrag);button.addEventListener('pointercancel',endDrag);
- window.addEventListener('resize',()=>{const r=button.getBoundingClientRect();if(button.style.left)moveTo(r.left,r.top);placePanel()});
+ const reposition=()=>{if(button.dataset.hasSavedPosition==='true')restorePosition();placePanel()};
+ window.addEventListener('resize',reposition);
+ window.visualViewport?.addEventListener('resize',reposition);
+ window.addEventListener('orientationchange',()=>{insetCache=null;setTimeout(reposition,150)});
  panel.addEventListener('transitionend',placePanel);
-})();
+})();;
 </script>
 </body></html>
 
